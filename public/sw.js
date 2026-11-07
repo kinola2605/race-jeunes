@@ -1,7 +1,7 @@
 // Service worker minimal (FR-160) : ressources statiques en cache, page hors ligne.
 // Les pages et données personnalisées ne sont jamais mises en cache.
-const CACHE = "race-v1";
-const STATIC = ["/hors-ligne", "/logo/logo.svg", "/logo/logo.svg", "/fonts/poppins-latin-400.woff2", "/fonts/poppins-latin-500.woff2", "/fonts/poppins-latin-600.woff2", "/fonts/poppins-latin-700.woff2"];
+const CACHE = "race-v1.0.0";
+const STATIC = ["/hors-ligne", "/icon.svg", "/logo/logo.svg", "/logo/logo.svg", "/fonts/poppins-latin-400.woff2", "/fonts/poppins-latin-500.woff2", "/fonts/poppins-latin-600.woff2", "/fonts/poppins-latin-700.woff2"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((c) => c.addAll(STATIC)).then(() => self.skipWaiting()));
