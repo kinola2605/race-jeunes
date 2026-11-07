@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  qualite:
+    name: Lint, typage, tests unitaires
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx prisma generate
+      - name: Tokens à jour
+        run: npm run tokens && git diff --exit-code src/styles/tokens.css
+      - run: npm run lint
+      - run: npm run typecheck
+      - name: Tests unitaires (moteur de points, couverture 100 %)
+        run: npm run test:coverage
+
+  e2e:
+    name: Build et tests E2E
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: race
+          POSTGRES_PASSWORD: race
+          POSTGRES_DB: race
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U race -d race" --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      DATABASE_URL: postgresql://race:race@localhost:5432/race
+      COOKIE_SECURE: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx prisma migrate deploy
+      - run: npm run db:seed
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report
+          retention-days: 7
+
+  docker:
+    name: docker compose up
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose up -d --build
+      - name: Attendre l'application
+        run: |
+          for i in $(seq 1 60); do
+            if curl -fsS http://localhost:3000/api/health; then echo; break; fi
+            sleep 5
+          done
+          curl -fsS http://localhost:3000/connexion | grep -q "Race jeunes"
+      - if: failure()
+        run: docker compose logs
+      - run: docker compose down -v
