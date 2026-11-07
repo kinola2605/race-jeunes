@@ -1,0 +1,35 @@
+# Démarrage : docker compose up   →   http://localhost:3000
+# Par défaut, des données de démonstration sont chargées (SEED_DEMO=true). Voir README pour la production.
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: race
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-race}
+      POSTGRES_DB: race
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U race -d race"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://race:${POSTGRES_PASSWORD:-race}@db:5432/race
+      ADMIN_PSEUDO: ${ADMIN_PSEUDO:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      SEED_DEMO: ${SEED_DEMO:-true}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+    ports:
+      - "${APP_PORT:-3000}:3000"
+
+volumes:
+  db-data:

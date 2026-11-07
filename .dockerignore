@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.github
+.local-db
+coverage
+playwright-report
+test-results
+design
+specs
+.specify
+.env
+.env.*
+*.log

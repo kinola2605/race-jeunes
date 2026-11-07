@@ -1,0 +1,5 @@
+design/
+.next/
+coverage/
+prisma/migrations/
+src/styles/tokens.css

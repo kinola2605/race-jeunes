@@ -1,0 +1,266 @@
+// Modèle de données — Race jeunes. Aucun champ de donnée personnelle (constitution III).
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  PLAYER
+  ADMIN
+}
+
+enum AccountStatus {
+  ACTIVE
+  DISABLED
+}
+
+enum SeasonStatus {
+  DRAFT
+  OPEN
+  CLOSED
+  ARCHIVED
+}
+
+enum RankingMode {
+  FROZEN
+  EVOLVING
+}
+
+enum RankingVisibility {
+  ALL
+  ENROLLED
+  SELF
+}
+
+enum RuleSetStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum MatchStatus {
+  PENDING
+  VALIDATED
+  REFUSED
+  CANCELLED
+}
+
+enum MatchKind {
+  NORMAL
+  WALKOVER
+  RETIREMENT
+}
+
+enum Side {
+  A
+  B
+}
+
+/// Compte (joueur ou admin). Le pseudo est le seul identifiant.
+model User {
+  id                 String        @id @default(cuid())
+  pseudo             String
+  /// pseudo en minuscules, pour l'unicité sans distinction de casse
+  pseudoKey          String        @unique
+  passwordHash       String
+  role               Role          @default(PLAYER)
+  status             AccountStatus @default(ACTIVE)
+  mustChangePassword Boolean       @default(true)
+  /// classement FFT actuel (null pour un admin non joueur)
+  ranking            String?
+  passwordChangedAt  DateTime?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  sessions       Session[]
+  tags           UserTag[]
+  rankingChanges RankingChange[] @relation("rankingSubject")
+  enrollments    Enrollment[]
+  matchesAsA     Match[]         @relation("sideA")
+  matchesAsB     Match[]         @relation("sideB")
+  pointsEntries  PointsEntry[]
+}
+
+model Session {
+  /// SHA-256 du jeton du cookie (le jeton lui-même n'est jamais stocké)
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+/// Compteur anti-abus des connexions (clé = empreinte du pseudo ou de l'origine réseau).
+model LoginThrottle {
+  key         String    @id
+  failures    Int       @default(0)
+  windowStart DateTime  @default(now())
+  lockedUntil DateTime?
+  updatedAt   DateTime  @updatedAt
+}
+
+model Tag {
+  id    String    @id @default(cuid())
+  name  String    @unique
+  users UserTag[]
+}
+
+model UserTag {
+  userId String
+  tagId  String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([userId, tagId])
+}
+
+/// Historique des changements de classement (FR-023).
+model RankingChange {
+  id          String   @id @default(cuid())
+  userId      String
+  from        String?
+  to          String
+  effectiveAt DateTime @default(now())
+  changedById String?
+  user        User     @relation("rankingSubject", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, effectiveAt])
+}
+
+model Season {
+  id          String            @id @default(cuid())
+  slug        String            @unique
+  title       String
+  startsOn    DateTime?         @db.Date
+  endsOn      DateTime?         @db.Date
+  status      SeasonStatus      @default(DRAFT)
+  rankingMode RankingMode       @default(FROZEN)
+  visibility  RankingVisibility @default(ALL)
+  createdAt   DateTime          @default(now())
+  openedAt    DateTime?
+  closedAt    DateTime?
+
+  ruleSets    ScoringRuleSet[]
+  enrollments Enrollment[]
+  matches     Match[]
+  recalcRuns  RecalcRun[]
+}
+
+/// Barème d'une saison, versionné. `rules` respecte le schéma RuleSet de src/scoring/rules.ts.
+model ScoringRuleSet {
+  id          String        @id @default(cuid())
+  seasonId    String
+  version     Int
+  status      RuleSetStatus @default(DRAFT)
+  rules       Json
+  /// barème source en cas de duplication (traçabilité)
+  copiedFromId String?
+  createdAt   DateTime      @default(now())
+  publishedAt DateTime?
+  season      Season        @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  entries     PointsEntry[]
+
+  @@unique([seasonId, version])
+}
+
+model Enrollment {
+  id              String   @id @default(cuid())
+  seasonId        String
+  userId          String
+  startingRanking String
+  createdAt       DateTime @default(now())
+  season          Season   @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  user            User     @relation(fields: [userId], references: [id])
+
+  @@unique([seasonId, userId])
+}
+
+/// Match. Côté A = joueur de l'application ayant déclaré ou pour qui l'admin saisit.
+/// Côté B = autre engagé (playerBId) ou adversaire extérieur (externalLabel + externalRanking).
+model Match {
+  id              String      @id @default(cuid())
+  seasonId        String
+  playedOn        DateTime    @db.Date
+  playerAId       String
+  playerBId       String?
+  externalLabel   String?
+  externalRanking String?
+  winner          Side
+  /// score du point de vue du côté A, normalisé (« 6/4 3/6 10-8 »)
+  score           String?
+  kind            MatchKind   @default(NORMAL)
+  status          MatchStatus @default(PENDING)
+  refusalReason   String?
+  createdById     String
+  validatedById   String?
+  validatedAt     DateTime?
+  /// classements de référence figés à la validation (FR-106)
+  rankingA        String?
+  rankingB        String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  season  Season        @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  playerA User          @relation("sideA", fields: [playerAId], references: [id])
+  playerB User?         @relation("sideB", fields: [playerBId], references: [id])
+  entries PointsEntry[]
+
+  @@index([seasonId, status])
+  @@index([playerAId])
+  @@index([playerBId])
+}
+
+/// Points attribués à un joueur pour un match validé, avec la version de barème utilisée.
+model PointsEntry {
+  id        String         @id @default(cuid())
+  matchId   String
+  userId    String
+  ruleSetId String
+  points    Int
+  gap       Int
+  isPerf    Boolean
+  won       Boolean
+  breakdown Json
+  createdAt DateTime       @default(now())
+  match     Match          @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  user      User           @relation(fields: [userId], references: [id])
+  ruleSet   ScoringRuleSet @relation(fields: [ruleSetId], references: [id])
+
+  @@unique([matchId, userId])
+  @@index([userId])
+}
+
+/// Trace d'un recalcul explicite (FR-066).
+model RecalcRun {
+  id           String   @id @default(cuid())
+  seasonId     String
+  ruleSetId    String
+  matchCount   Int
+  changedCount Int
+  summary      Json
+  createdById  String
+  createdAt    DateTime @default(now())
+  season       Season   @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+}
+
+/// Journal d'audit, en ajout seul (FR-142).
+model AuditLog {
+  id          String   @id @default(cuid())
+  at          DateTime @default(now())
+  actorId     String?
+  actorPseudo String
+  type        String
+  action      String
+  target      String?
+  details     Json?
+
+  @@index([at])
+  @@index([type])
+}
