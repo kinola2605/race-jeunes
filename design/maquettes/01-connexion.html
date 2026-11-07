@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr" data-dir="b" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Connexion · Race jeunes (maquette)</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-screen="01 · Connexion">
+<a class="skip" href="#main">Aller au contenu</a>
+<div class="app">
+<main id="main" class="main main-narrow">
+
+<div class="center" style="margin:var(--s-6) 0 var(--s-8)">
+  <img class="logo-on-dark" src="../assets/logo/logo.svg" alt="" width="120" height="120" style="margin:0 auto"><img class="logo-on-light" src="../assets/logo/logo.svg" alt="" width="120" height="120" style="margin:0 auto">
+  <span class="eyebrow mt-4">Mon club de tennis</span>
+  <h1 class="page-title">Race jeunes</h1>
+</div>
+
+<form class="court" action="03-joueur-accueil.html" method="get" novalidate>
+  <div class="field">
+    <label for="pseudo">Pseudo</label>
+    <input class="input" id="pseudo" name="pseudo" autocomplete="username" autocapitalize="none" spellcheck="false" required value="AceDuMatin">
+  </div>
+  <div class="field">
+    <label for="mdp">Mot de passe</label>
+    <div class="input-wrap">
+      <input class="input" id="mdp" name="mdp" type="password" autocomplete="current-password" required value="motdepasse">
+      <button class="icon-btn" type="button" data-toggle-pw="mdp" aria-pressed="false" aria-label="Afficher le mot de passe"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-eye"/></svg></button>
+    </div>
+  </div>
+  <button class="btn btn-primary btn-block" type="submit">Se connecter</button>
+</form>
+
+<div class="stack mt-8 small muted" style="--gap:var(--s-3)">
+  <p class="row" style="flex-wrap:nowrap;align-items:flex-start"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><span><strong class="strong" style="color:var(--text)">Pas encore de compte ?</strong> Les comptes sont créés uniquement par le club. Adressez-vous à votre enseignant·e.</span></p>
+  <p class="row" style="flex-wrap:nowrap;align-items:flex-start"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-key"/></svg><span><strong class="strong" style="color:var(--text)">Mot de passe oublié ?</strong> Demandez une réinitialisation à l'administrateur du club.</span></p>
+</div>
+
+</main>
+<footer class="foot">Aucune donnée personnelle collectée · aucun cookie de suivi · <a class="link" href="14-etats.html">Confidentialité</a></footer></div>
+<script src="js/proto.js"></script>
+</body>
+</html>

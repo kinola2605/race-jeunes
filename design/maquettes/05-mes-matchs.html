@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="fr" data-dir="b" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Mes matchs · Race jeunes (maquette)</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-screen="05 · Joueur — historique et détail du calcul">
+<a class="skip" href="#main">Aller au contenu</a>
+<div class="app">
+<header class="topbar">
+  <a class="brand" href="03-joueur-accueil.html"><img class="logo logo-on-dark" src="../assets/logo/logo.svg" alt="Mon club de tennis"><img class="logo logo-on-light" src="../assets/logo/logo.svg" alt="Mon club de tennis"><span class="brand-txt"><span class="caps">Race jeunes</span><span class="brand-name">Saison 2026-2027</span></span></a>
+  <a class="user-chip" href="02-changement-mdp.html?volontaire=1" aria-label="Mon compte : AceDuMatin (Joueur)"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-user"/></svg><span>AceDuMatin</span></a>
+</header>
+<nav class="appnav" aria-label="Navigation principale"><a class="nav-brand" href="03-joueur-accueil.html"><img class="logo logo-on-dark" src="../assets/logo/logo.svg" alt="Mon club de tennis"><img class="logo logo-on-light" src="../assets/logo/logo.svg" alt="Mon club de tennis"><span class="brand-txt"><span class="caps">Race jeunes</span><span class="brand-name">Club</span></span></a><ul><li><a href="03-joueur-accueil.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-home"/></svg><span>Accueil</span></a></li><li><a href="04-classement.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-trophy"/></svg><span>Classement</span></a></li><li><a href="05-mes-matchs.html" aria-current="page"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-list"/></svg><span>Matchs</span></a></li><li><a href="12a-saisie-match.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><span>Saisir</span></a></li><li><a href="06-saisons-passees.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-calendar"/></svg><span>Saisons</span></a></li></ul></nav>
+<main id="main" class="main ">
+
+<div class="page-head">
+  <span class="eyebrow">Mes matchs</span>
+  <h1 class="page-title">Race jeunes 2026-2027</h1>
+  <p class="lead small">13 matchs · 9 V · 4 D · 3 perfs · 186 pts</p>
+</div>
+
+<div class="toolbar">
+  <div class="seg" role="tablist" aria-label="Filtrer">
+    <button type="button" role="tab" aria-selected="true">Tous</button>
+    <button type="button" role="tab" aria-selected="false">Victoires</button>
+    <button type="button" role="tab" aria-selected="false">Défaites</button>
+    <button type="button" role="tab" aria-selected="false">En attente</button>
+  </div>
+  <a class="btn btn-secondary btn-sm" href="06-saisons-passees.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-calendar"/></svg> Autre saison</a>
+</div>
+
+<ul class="list" aria-label="Liste des matchs">
+  <li>
+    <div class="item">
+      <span class="res res-win" aria-hidden="true">V</span>
+      <div class="item-main"><div class="item-title"><span class="sr-only">Victoire contre</span>Volée92 <span class="subtle small">30/4</span></div><div class="item-meta">Mer. 5 nov. · 6/2 7/5</div></div>
+      <div class="item-end"><span class="badge badge-wait"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-clock"/></svg>En attente</span><div class="small subtle">≈ +4 pts</div></div>
+    </div>
+  </li>
+  <li id="m1">
+    <details class="disclose" open>
+      <summary class="item">
+        <span class="res res-win" aria-hidden="true">V</span>
+        <div class="item-main"><div class="item-title"><span class="sr-only">Victoire contre</span>SliceMaster <span class="subtle small">30/1</span> <span class="badge badge-perf"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-perf"/></svg>Perf</span></div><div class="item-meta">Sam. 1 nov. · 6/4 6/3 · <span class="badge badge-ok"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Validé</span></div></div>
+        <div class="item-end strong" style="color:var(--accent-2)">+20</div>
+        <span class="chev"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chev-r"/></svg></span>
+      </summary>
+      <div class="disclose-body">
+        <div class="cases"><div class="case">
+          <h3 class="case-title">Comment ces 20 points sont calculés</h3>
+          <div class="calc">
+            <div class="calc-row"><span>Mon classement de référence</span><span>30/2 <span class="subtle">(figé au 1er oct.)</span></span></div>
+            <div class="calc-row"><span>Classement de l'adversaire</span><span>30/1</span></div>
+            <div class="calc-row"><span>Écart</span><span>+1 échelon → <strong>perf</strong></span></div>
+            <div class="calc-row"><span>Barème « Race jeunes 2026-2027 » v3 · Victoire +1</span><span class="num">20</span></div>
+            <div class="calc-row"><span>Bonus</span><span class="num">0</span></div>
+            <div class="calc-row"><span>Plafond 60 pts / match</span><span>non atteint</span></div>
+            <div class="calc-row calc-total"><span>Points gagnés</span><span class="num">+20 pts</span></div>
+          </div>
+          <p class="small subtle mt-4 mb-0">Saisi par AceDuMatin le 1 nov. · validé par admin.club le 2 nov.</p>
+        </div></div>
+      </div>
+    </details>
+  </li>
+  <li>
+    <div class="item">
+      <span class="res res-loss" aria-hidden="true">D</span>
+      <div class="item-main"><div class="item-title"><span class="sr-only">Défaite contre</span>TieBreakeuse <span class="subtle small">15/4</span></div><div class="item-meta">Mer. 29 oct. · 3/6 2/6 · <span class="badge badge-ok"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Validé</span></div></div>
+      <div class="item-end strong">+2</div><span class="chev"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chev-r"/></svg></span>
+    </div>
+  </li>
+  <li>
+    <div class="item">
+      <span class="res res-win" aria-hidden="true">V</span>
+      <div class="item-main"><div class="item-title"><span class="sr-only">Victoire contre</span>Ext. · Tournoi des Tilleuls, tableau 13 ans <span class="subtle small">30/2</span></div><div class="item-meta">Dim. 26 oct. · 6/3 4/6 10-7 · <span class="badge badge-ok"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Validé</span></div></div>
+      <div class="item-end strong">+10</div><span class="chev"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chev-r"/></svg></span>
+    </div>
+  </li>
+  <li>
+    <div class="item">
+      <span class="res res-wo" aria-hidden="true">WO</span>
+      <div class="item-main"><div class="item-title"><span class="sr-only">Victoire par forfait contre</span>PetitPont <span class="subtle small">30/3</span></div><div class="item-meta">Mer. 22 oct. · forfait adverse · <span class="badge badge-ok"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Validé</span></div></div>
+      <div class="item-end strong">+0</div><span class="chev"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chev-r"/></svg></span>
+    </div>
+  </li>
+  <li>
+    <div class="item">
+      <span class="res res-loss" aria-hidden="true">D</span>
+      <div class="item-main"><div class="item-title"><span class="sr-only">Défaite contre</span>LiftCroisé <span class="subtle small">15/5</span></div><div class="item-meta">Sam. 18 oct. · 4/6 6/7 · <span class="badge badge-ko"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-x"/></svg>Refusé</span> <span class="small">« Score incomplet, à ressaisir »</span></div></div>
+      <div class="item-end subtle">—</div><span class="chev"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chev-r"/></svg></span>
+    </div>
+  </li>
+  <li>
+    <div class="item">
+      <span class="res res-wo" aria-hidden="true">—</span>
+      <div class="item-main"><div class="item-title" style="text-decoration:line-through"><span class="sr-only">Match annulé contre</span>AmortiZen</div><div class="item-meta">Mer. 15 oct. · pluie · <span class="badge badge-off"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ban"/></svg>Annulé</span></div></div>
+      <div class="item-end subtle">—</div><span class="chev"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chev-r"/></svg></span>
+    </div>
+  </li>
+</ul>
+<p class="center mt-6"><button class="btn btn-secondary" type="button">Voir les 6 matchs plus anciens</button></p>
+
+</main>
+</div>
+<script src="js/proto.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fr" data-dir="b" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Classement · Race jeunes (maquette)</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-screen="04 · Joueur — classement de la Race">
+<a class="skip" href="#main">Aller au contenu</a>
+<div class="app">
+<header class="topbar">
+  <a class="brand" href="03-joueur-accueil.html"><img class="logo logo-on-dark" src="../assets/logo/logo.svg" alt="Mon club de tennis"><img class="logo logo-on-light" src="../assets/logo/logo.svg" alt="Mon club de tennis"><span class="brand-txt"><span class="caps">Race jeunes</span><span class="brand-name">Saison 2026-2027</span></span></a>
+  <a class="user-chip" href="02-changement-mdp.html?volontaire=1" aria-label="Mon compte : AceDuMatin (Joueur)"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-user"/></svg><span>AceDuMatin</span></a>
+</header>
+<nav class="appnav" aria-label="Navigation principale"><a class="nav-brand" href="03-joueur-accueil.html"><img class="logo logo-on-dark" src="../assets/logo/logo.svg" alt="Mon club de tennis"><img class="logo logo-on-light" src="../assets/logo/logo.svg" alt="Mon club de tennis"><span class="brand-txt"><span class="caps">Race jeunes</span><span class="brand-name">Club</span></span></a><ul><li><a href="03-joueur-accueil.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-home"/></svg><span>Accueil</span></a></li><li><a href="04-classement.html" aria-current="page"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-trophy"/></svg><span>Classement</span></a></li><li><a href="05-mes-matchs.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-list"/></svg><span>Matchs</span></a></li><li><a href="12a-saisie-match.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><span>Saisir</span></a></li><li><a href="06-saisons-passees.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-calendar"/></svg><span>Saisons</span></a></li></ul></nav>
+<main id="main" class="main ">
+
+<div class="page-head">
+  <span class="eyebrow">Classement de la Race</span>
+  <h1 class="page-title">Race jeunes 2026-2027</h1>
+  <p class="lead small">23 engagés · mis à jour le 6 nov. à 21 h 14 · seuls les matchs validés comptent</p>
+</div>
+
+<div class="toolbar">
+  <div class="field mb-0 grow" style="min-width:220px">
+    <label for="saison" class="sr-only">Saison</label>
+    <select class="select" id="saison">
+      <option selected>Race jeunes 2026-2027 — ouverte</option>
+      <option>Race jeunes 2025-2026 — clôturée</option>
+      <option>Race d'été 2025 — archivée</option>
+    </select>
+  </div>
+  <div class="field mb-0" style="min-width:160px">
+    <label for="cl" class="sr-only">Filtrer par classement</label>
+    <select class="select" id="cl"><option>Tous classements</option><option>15/x</option><option>30/x</option><option>40 et NC</option></select>
+  </div>
+</div>
+<div class="chips mb-4" role="group" aria-label="Filtrer par étiquette">
+  <button class="chip" type="button" aria-pressed="true">Tous</button>
+  <button class="chip" type="button" aria-pressed="false"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-tag"/></svg>Groupe A</button>
+  <button class="chip" type="button" aria-pressed="false"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-tag"/></svg>Groupe B</button>
+  <button class="chip" type="button" aria-pressed="false"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-tag"/></svg>Entraînement mercredi</button>
+</div>
+
+<div class="hide-tablet-up">
+<ol class="rank" aria-label="Classement, 10 premiers sur 23">
+<li class="rank-row"><span class="rank-pos">1</span><div class="item-main"><div class="item-title">TieBreakeuse <span class="trend trend-up"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-up"/></svg><span class="sr-only">monte de</span>1</span></div><div class="item-meta">15/4 · 14 V · 2 D · Groupe A</div></div><span class="rank-pts">264<small>pts</small></span></li>
+<li class="rank-row"><span class="rank-pos">2</span><div class="item-main"><div class="item-title">LiftCroisé <span class="trend trend-down"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-down"/></svg><span class="sr-only">descend de</span>1</span></div><div class="item-meta">15/5 · 12 V · 3 D · Groupe A</div></div><span class="rank-pts">231<small>pts</small></span></li>
+<li class="rank-row"><span class="rank-pos">3</span><div class="item-main"><div class="item-title">SmashTonic</div><div class="item-meta">30 · 11 V · 5 D · Groupe A</div></div><span class="rank-pts">200<small>pts</small></span></li>
+<li class="rank-row is-me" aria-current="true"><span class="rank-pos">4</span><div class="item-main"><div class="item-title">AceDuMatin <span class="badge badge-me">Vous</span> <span class="trend trend-up"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-up"/></svg><span class="sr-only">monte de</span>2</span></div><div class="item-meta">30/2 · 9 V · 4 D · Groupe B</div></div><span class="rank-pts">186<small>pts</small></span></li>
+<li class="rank-row"><span class="rank-pos">5</span><div class="item-main"><div class="item-title">Revers2Feu <span class="trend trend-down"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-down"/></svg><span class="sr-only">descend de</span>1</span></div><div class="item-meta">30/1 · 10 V · 6 D · Groupe B</div></div><span class="rank-pts">178<small>pts</small></span></li>
+<li class="rank-row"><span class="rank-pos">6</span><div class="item-main"><div class="item-title">PetitPont <span class="trend trend-down"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-down"/></svg><span class="sr-only">descend de</span>1</span></div><div class="item-meta">30/3 · 8 V · 3 D · Groupe B</div></div><span class="rank-pts">161<small>pts</small></span></li>
+<li class="rank-row"><span class="rank-pos">7</span><div class="item-main"><div class="item-title">AmortiZen</div><div class="item-meta">30/1 · 7 V · 6 D · Groupe A</div></div><span class="rank-pts">140<small>pts</small></span></li>
+<li class="rank-row"><span class="rank-pos">8</span><div class="item-main"><div class="item-title">Volée92 <span class="trend trend-up"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-up"/></svg><span class="sr-only">monte de</span>3</span></div><div class="item-meta">30/4 · 7 V · 5 D · Groupe B</div></div><span class="rank-pts">131<small>pts</small></span></li>
+<li class="rank-row"><span class="rank-pos">9</span><div class="item-main"><div class="item-title">TopSpinou</div><div class="item-meta">30/2 · 6 V · 7 D · Groupe B</div></div><span class="rank-pts">118<small>pts</small></span></li>
+<li class="rank-row"><span class="rank-pos">10</span><div class="item-main"><div class="item-title">SliceMaster <span class="trend trend-down"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-down"/></svg><span class="sr-only">descend de</span>2</span></div><div class="item-meta">30/1 · 5 V · 6 D · Groupe A</div></div><span class="rank-pts">97<small>pts</small></span></li>
+</ol>
+</div>
+<div class="table-wrap hide-mobile">
+<table class="table">
+  <caption class="sr-only">Classement de la Race jeunes 2026-2027</caption>
+  <thead><tr><th class="num">Rang</th><th>Pseudo</th><th>Classement</th><th>Étiquette</th><th class="num">Matchs</th><th class="num">V</th><th class="num">D</th><th class="num">Perfs</th><th class="num">Points</th><th><span class="sr-only">Actions</span></th></tr></thead>
+  <tbody>
+<tr><td class="num strong">1</td><td class="strong">TieBreakeuse</td><td>15/4</td><td><span class="badge badge-tag">Groupe A</span></td><td class="num">16</td><td class="num">14</td><td class="num">2</td><td class="num">5</td><td class="num strong">264</td><td><a class="link" href="#detail">Détail</a></td></tr>
+<tr><td class="num strong">2</td><td class="strong">LiftCroisé</td><td>15/5</td><td><span class="badge badge-tag">Groupe A</span></td><td class="num">15</td><td class="num">12</td><td class="num">3</td><td class="num">4</td><td class="num strong">231</td><td><a class="link" href="#detail">Détail</a></td></tr>
+<tr><td class="num strong">3</td><td class="strong">SmashTonic</td><td>30</td><td><span class="badge badge-tag">Groupe A</span></td><td class="num">16</td><td class="num">11</td><td class="num">5</td><td class="num">4</td><td class="num strong">200</td><td><a class="link" href="#detail">Détail</a></td></tr>
+<tr class="is-selected" aria-current="true"><td class="num strong">4</td><td class="strong">AceDuMatin <span class="badge badge-me">Vous</span></td><td>30/2</td><td><span class="badge badge-tag">Groupe B</span></td><td class="num">13</td><td class="num">9</td><td class="num">4</td><td class="num">3</td><td class="num strong">186</td><td><a class="link" href="#detail">Détail</a></td></tr>
+<tr><td class="num strong">5</td><td class="strong">Revers2Feu</td><td>30/1</td><td><span class="badge badge-tag">Groupe B</span></td><td class="num">16</td><td class="num">10</td><td class="num">6</td><td class="num">3</td><td class="num strong">178</td><td><a class="link" href="#detail">Détail</a></td></tr>
+<tr><td class="num strong">6</td><td class="strong">PetitPont</td><td>30/3</td><td><span class="badge badge-tag">Groupe B</span></td><td class="num">11</td><td class="num">8</td><td class="num">3</td><td class="num">3</td><td class="num strong">161</td><td><a class="link" href="#detail">Détail</a></td></tr>
+<tr><td class="num strong">7</td><td class="strong">AmortiZen</td><td>30/1</td><td><span class="badge badge-tag">Groupe A</span></td><td class="num">13</td><td class="num">7</td><td class="num">6</td><td class="num">1</td><td class="num strong">140</td><td><a class="link" href="#detail">Détail</a></td></tr>
+<tr><td class="num strong">8</td><td class="strong">Volée92</td><td>30/4</td><td><span class="badge badge-tag">Groupe B</span></td><td class="num">12</td><td class="num">7</td><td class="num">5</td><td class="num">2</td><td class="num strong">131</td><td><a class="link" href="#detail">Détail</a></td></tr>
+<tr><td class="num strong">9</td><td class="strong">TopSpinou</td><td>30/2</td><td><span class="badge badge-tag">Groupe B</span></td><td class="num">13</td><td class="num">6</td><td class="num">7</td><td class="num">1</td><td class="num strong">118</td><td><a class="link" href="#detail">Détail</a></td></tr>
+<tr><td class="num strong">10</td><td class="strong">SliceMaster</td><td>30/1</td><td><span class="badge badge-tag">Groupe A</span></td><td class="num">11</td><td class="num">5</td><td class="num">6</td><td class="num">0</td><td class="num strong">97</td><td><a class="link" href="#detail">Détail</a></td></tr>
+  </tbody>
+</table>
+</div>
+<p class="center mt-4"><button class="btn btn-secondary" type="button">Afficher les 13 suivants</button></p>
+
+<section class="section" id="detail" aria-labelledby="t-detail">
+  <h2 class="section-title" id="t-detail">Détail du calcul — TieBreakeuse</h2>
+  <div class="cases cases-2">
+    <div class="case">
+      <div class="calc">
+        <div class="calc-row"><span>Victoires simples (×6)</span><span class="num">60</span></div>
+        <div class="calc-row"><span>Perfs +1 échelon (×3)</span><span class="num">60</span></div>
+        <div class="calc-row"><span>Perfs +2 échelons (×2)</span><span class="num">60</span></div>
+        <div class="calc-row"><span>Victoires contre moins bien classé (×3)</span><span class="num">12</span></div>
+        <div class="calc-row"><span>Défaites contre mieux classé (×2)</span><span class="num">4</span></div>
+        <div class="calc-row"><span>Bonus assiduité (16 matchs validés)</span><span class="num">15</span></div>
+        <div class="calc-row"><span>Plafond 60 pts / match</span><span class="num">0</span></div>
+        <div class="calc-row calc-total"><span>Total</span><span class="num">264 pts</span></div>
+      </div>
+    </div>
+    <div class="case">
+      <p class="small muted">Barème appliqué : <strong>Race jeunes 2026-2027 · version 3</strong> (publiée le 12 oct.). Classement de référence figé au début de la saison.</p>
+      <p class="small muted mb-0">Le détail match par match est visible par chaque joueur dans « Mes matchs ». <span class="subtle">[Visibilité des matchs des autres : à clarifier]</span></p>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+<script src="js/proto.js"></script>
+</body>
+</html>

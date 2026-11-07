@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fr" data-dir="b" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Suivi · Race jeunes (maquette)</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-screen="07 · Admin — tableau de bord de suivi">
+<a class="skip" href="#main">Aller au contenu</a>
+<div class="app">
+<header class="topbar">
+  <a class="brand" href="07-admin-suivi.html"><img class="logo logo-on-dark" src="../assets/logo/logo.svg" alt="Mon club de tennis"><img class="logo logo-on-light" src="../assets/logo/logo.svg" alt="Mon club de tennis"><span class="brand-txt"><span class="caps">Race jeunes</span><span class="brand-name">Saison 2026-2027</span></span></a>
+  <a class="user-chip" href="02-changement-mdp.html?volontaire=1" aria-label="Mon compte : admin.club (Admin)"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-user"/></svg><span>admin.club</span><span class="role-tag">Admin</span></a>
+</header>
+<nav class="appnav" aria-label="Navigation principale"><a class="nav-brand" href="07-admin-suivi.html"><img class="logo logo-on-dark" src="../assets/logo/logo.svg" alt="Mon club de tennis"><img class="logo logo-on-light" src="../assets/logo/logo.svg" alt="Mon club de tennis"><span class="brand-txt"><span class="caps">Race jeunes</span><span class="brand-name">Club</span></span></a><ul><li><a href="07-admin-suivi.html" aria-current="page"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-activity"/></svg><span>Suivi</span></a></li><li><a href="12b-validation.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ball"/></svg><span>Matchs</span></a></li><li><a href="08a-admin-joueurs.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg><span>Joueurs</span></a></li><li><a href="09a-admin-saisons.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-calendar"/></svg><span>Saisons</span></a></li><li><a href="13-admin-journal.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-journal"/></svg><span>Journal</span></a></li></ul></nav>
+<main id="main" class="main ">
+
+<div class="page-head">
+  <span class="eyebrow">Tableau de bord · Race jeunes 2026-2027</span>
+  <h1 class="page-title">Suivi</h1>
+</div>
+
+<div class="cases cases-4 stats">
+  <a class="case" href="12b-validation.html" style="text-decoration:none"><span class="stat-label">Matchs à valider</span><span class="stat-value" style="color:var(--warning)">6</span><span class="small subtle"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-clock"/></svg> le plus ancien : 4 j</span></a>
+  <a class="case" href="#anomalies" style="text-decoration:none"><span class="stat-label">Anomalies</span><span class="stat-value" style="color:var(--error)">2</span><span class="small subtle"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg> à vérifier</span></a>
+  <a class="case" href="#mdp" style="text-decoration:none"><span class="stat-label">Mdp temporaires</span><span class="stat-value">4</span><span class="small subtle"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-key"/></svg> jamais changés</span></a>
+  <a class="case" href="#sans-match" style="text-decoration:none"><span class="stat-label">Sans match</span><span class="stat-value">5</span><span class="small subtle"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg> sur 23 engagés</span></a>
+</div>
+
+<div class="layout-2">
+<section class="section" aria-labelledby="t-valider">
+  <div class="row-between mb-4"><h2 class="section-title mb-0" id="t-valider">À valider</h2><a class="link small" href="12b-validation.html">Tout voir (6)</a></div>
+  <ul class="list">
+    <li><div class="item"><div class="item-main"><div class="item-title">Volée92 <span class="subtle small">30/4</span> <span class="subtle">vs</span> AceDuMatin <span class="subtle small">30/2</span></div><div class="item-meta">5 nov. · 2/6 5/7 · vainqueur AceDuMatin · saisi par AceDuMatin</div></div>
+      <div class="row" style="gap:6px"><button class="btn btn-secondary btn-sm" type="button" aria-label="Valider le match Volée92 contre AceDuMatin"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Valider</button><button class="btn btn-ghost btn-sm" type="button" aria-label="Refuser"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-x"/></svg></button></div></div></li>
+    <li><div class="item"><div class="item-main"><div class="item-title">TopSpinou <span class="subtle small">30/2</span> <span class="subtle">vs</span> Ext. · TC voisin, interclubs <span class="subtle small">30/1</span></div><div class="item-meta">4 nov. · 6/4 3/6 10-8 · vainqueur TopSpinou · saisi par TopSpinou</div></div>
+      <div class="row" style="gap:6px"><button class="btn btn-secondary btn-sm" type="button"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Valider</button><button class="btn btn-ghost btn-sm" type="button" aria-label="Refuser"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-x"/></svg></button></div></div></li>
+    <li><div class="item"><div class="item-main"><div class="item-title">SmashTonic <span class="subtle small">30</span> <span class="subtle">vs</span> LiftCroisé <span class="subtle small">15/5</span></div><div class="item-meta">3 nov. · 7/6 6/4 · vainqueur SmashTonic · saisi par admin.club</div></div>
+      <div class="row" style="gap:6px"><button class="btn btn-secondary btn-sm" type="button"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Valider</button><button class="btn btn-ghost btn-sm" type="button" aria-label="Refuser"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-x"/></svg></button></div></div></li>
+  </ul>
+</section>
+
+<section class="section" id="anomalies" aria-labelledby="t-ano">
+  <h2 class="section-title" id="t-ano">Anomalies</h2>
+  <div class="stack" style="--gap:var(--s-3)">
+    <div class="alert alert-ko"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><div class="alert-body"><span class="alert-title">Doublon probable</span><p class="small">Revers2Feu vs PetitPont, 2 nov. : deux saisies (une par chaque joueur), scores identiques.</p><a class="link small" href="12b-validation.html">Fusionner ou refuser</a></div></div>
+    <div class="alert alert-warn"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><div class="alert-body"><span class="alert-title">Classement adversaire manquant</span><p class="small">Ext. « Tournoi des Érables » (saisi par AmortiZen le 30 oct.) : classement non renseigné, traité comme NC.</p><a class="link small" href="12b-validation.html">Compléter</a></div></div>
+  </div>
+</section>
+
+<section class="section" id="mdp" aria-labelledby="t-mdp">
+  <h2 class="section-title" id="t-mdp">Mots de passe temporaires jamais changés</h2>
+  <ul class="list">
+    <li><div class="item"><span class="badge badge-wait"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-key"/></svg>Temporaire</span><div class="item-main"><div class="item-title">FiletMignon</div><div class="item-meta">remis il y a 21 j · jamais connecté</div></div><a class="btn btn-ghost btn-sm" href="08c-admin-remise-mdp.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-refresh"/></svg>Réinitialiser</a></div></li>
+    <li><div class="item"><span class="badge badge-wait"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-key"/></svg>Temporaire</span><div class="item-main"><div class="item-title">LigneDeFond</div><div class="item-meta">remis il y a 12 j</div></div><a class="btn btn-ghost btn-sm" href="08c-admin-remise-mdp.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-refresh"/></svg>Réinitialiser</a></div></li>
+    <li><div class="item"><span class="badge badge-wait"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-key"/></svg>Temporaire</span><div class="item-main"><div class="item-title">JeuBlanc</div><div class="item-meta">remis il y a 3 j</div></div><a class="btn btn-ghost btn-sm" href="08c-admin-remise-mdp.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-refresh"/></svg>Réinitialiser</a></div></li>
+    <li><div class="item"><span class="badge badge-wait"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-key"/></svg>Temporaire</span><div class="item-main"><div class="item-title">Chip&amp;Charge</div><div class="item-meta">remis hier</div></div><a class="btn btn-ghost btn-sm" href="08c-admin-remise-mdp.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-refresh"/></svg>Réinitialiser</a></div></li>
+  </ul>
+</section>
+
+<section class="section" id="sans-match" aria-labelledby="t-sm">
+  <h2 class="section-title" id="t-sm">Engagés sans match validé</h2>
+  <div class="chips" style="flex-wrap:wrap">
+    <span class="chip">FiletMignon · 40</span><span class="chip">LigneDeFond · 30/5</span><span class="chip">DoubleFaute · 30/4</span><span class="chip">JeuBlanc · NC</span><span class="chip">PassingShot · 30/3</span>
+  </div>
+</section>
+</div>
+
+<div class="actions"><a class="btn btn-secondary" href="#"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-download"/></svg>Exporter le classement (CSV)</a><a class="btn btn-secondary" href="#"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-download"/></svg>Exporter les matchs (CSV)</a></div>
+
+</main>
+</div>
+<script src="js/proto.js"></script>
+</body>
+</html>

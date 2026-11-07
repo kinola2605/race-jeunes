@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="fr" data-dir="b" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Nouveau mot de passe · Race jeunes (maquette)</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-screen="02 · Changement de mot de passe obligatoire">
+<a class="skip" href="#main">Aller au contenu</a>
+<div class="app">
+<main id="main" class="main main-narrow">
+
+<div class="page-head">
+  <span class="eyebrow">Première connexion · AceDuMatin</span>
+  <h1 class="page-title">Choisissez votre mot de passe</h1>
+  <p class="lead">Le mot de passe remis par le club est temporaire. Vous devez le remplacer pour continuer.</p>
+</div>
+
+<form action="03-joueur-accueil.html" method="get" novalidate>
+  <div class="field">
+    <label for="old">Mot de passe temporaire</label>
+    <div class="input-wrap">
+      <input class="input mono" id="old" type="password" autocomplete="current-password" value="K7mQ-x4Rt-9pLw">
+      <button class="icon-btn" type="button" data-toggle-pw="old" aria-pressed="false" aria-label="Afficher le mot de passe"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-eye"/></svg></button>
+    </div>
+  </div>
+  <div class="field">
+    <label for="new">Nouveau mot de passe</label>
+    <div class="input-wrap">
+      <input class="input" id="new" type="password" autocomplete="new-password" aria-describedby="rules" value="revers-lifte-2026">
+      <button class="icon-btn" type="button" data-toggle-pw="new" aria-pressed="false" aria-label="Afficher le mot de passe"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-eye"/></svg></button>
+    </div>
+    <div class="meter" aria-hidden="true"><span style="width:80%"></span></div>
+    <ul class="pw-rules" id="rules" aria-label="Règles du mot de passe">
+      <li class="ok"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Au moins 10 caractères</span></li>
+      <li class="ok"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Différent du mot de passe temporaire</span></li>
+      <li class="ok"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>Ne contient pas votre pseudo</span></li>
+      <li class="todo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-clock"/></svg><span>Conseil : une phrase de 3-4 mots est plus simple à retenir</span></li>
+    </ul>
+  </div>
+  <div class="field field-invalid">
+    <label for="confirm">Confirmer le nouveau mot de passe</label>
+    <input class="input" id="confirm" type="password" autocomplete="new-password" aria-invalid="true" aria-describedby="confirm-err" value="revers-lifte-2025">
+    <p class="error-msg" id="confirm-err"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><span>Les deux mots de passe ne correspondent pas.</span></p>
+  </div>
+  <div class="actions-stack">
+    <button class="btn btn-primary btn-block" type="submit">Enregistrer et continuer</button>
+    <a class="btn btn-ghost btn-block" href="01-connexion.html">Se déconnecter</a>
+  </div>
+</form>
+
+</main>
+</div>
+<script src="js/proto.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="fr" data-dir="b" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>États · Race jeunes (maquette)</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-screen="14 · États vides, erreurs, chargement, données personnelles">
+<a class="skip" href="#main">Aller au contenu</a>
+<div class="app">
+<header class="topbar">
+  <a class="brand" href="03-joueur-accueil.html"><img class="logo logo-on-dark" src="../assets/logo/logo.svg" alt="Mon club de tennis"><img class="logo logo-on-light" src="../assets/logo/logo.svg" alt="Mon club de tennis"><span class="brand-txt"><span class="caps">Race jeunes</span><span class="brand-name">Saison 2026-2027</span></span></a>
+  <a class="user-chip" href="02-changement-mdp.html?volontaire=1" aria-label="Mon compte : AceDuMatin (Joueur)"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-user"/></svg><span>AceDuMatin</span></a>
+</header>
+<nav class="appnav" aria-label="Navigation principale"><a class="nav-brand" href="03-joueur-accueil.html"><img class="logo logo-on-dark" src="../assets/logo/logo.svg" alt="Mon club de tennis"><img class="logo logo-on-light" src="../assets/logo/logo.svg" alt="Mon club de tennis"><span class="brand-txt"><span class="caps">Race jeunes</span><span class="brand-name">Club</span></span></a><ul><li><a href="03-joueur-accueil.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-home"/></svg><span>Accueil</span></a></li><li><a href="04-classement.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-trophy"/></svg><span>Classement</span></a></li><li><a href="05-mes-matchs.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-list"/></svg><span>Matchs</span></a></li><li><a href="12a-saisie-match.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><span>Saisir</span></a></li><li><a href="06-saisons-passees.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-calendar"/></svg><span>Saisons</span></a></li></ul></nav>
+<main id="main" class="main ">
+
+<div class="page-head">
+  <span class="eyebrow">Transverse</span>
+  <h1 class="page-title">États et messages</h1>
+  <p class="lead small">Catalogue des états vides, erreurs, chargements et avertissements.</p>
+</div>
+
+<section class="section" aria-labelledby="t-vide">
+  <h2 class="section-title" id="t-vide">États vides</h2>
+  <div class="cases cases-3">
+    <div class="case"><div class="empty"><svg class="ic ic-xl" aria-hidden="true" focusable="false"><use href="#i-trophy"/></svg><h3>Pas encore de classement</h3><p>Aucun match validé pour cette saison. Le classement apparaîtra après la première validation.</p></div></div>
+    <div class="case"><div class="empty"><svg class="ic ic-xl" aria-hidden="true" focusable="false"><use href="#i-list"/></svg><h3>Aucun match pour l'instant</h3><p>Déclarez votre premier match après l'avoir joué.</p><a class="btn btn-primary" href="12a-saisie-match.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg>Déclarer un match</a></div></div>
+    <div class="case"><div class="empty"><svg class="ic ic-xl" aria-hidden="true" focusable="false"><use href="#i-calendar"/></svg><h3>Vous n'êtes engagé·e dans aucune saison ouverte</h3><p>Le club vous engagera dans la prochaine Race. Vos saisons passées restent consultables.</p></div></div>
+    <div class="case"><div class="empty"><svg class="ic ic-xl" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><h3>Rien à valider</h3><p>Tous les matchs déclarés ont été traités.</p></div></div>
+    <div class="case"><div class="empty"><svg class="ic ic-xl" aria-hidden="true" focusable="false"><use href="#i-users"/></svg><h3>Aucun joueur engagé</h3><p>Engagez des joueurs pour ouvrir la saison.</p><a class="btn btn-primary" href="11-admin-engagements.html">Engager des joueurs</a></div></div>
+    <div class="case"><div class="empty"><svg class="ic ic-xl" aria-hidden="true" focusable="false"><use href="#i-search"/></svg><h3>Aucun résultat</h3><p>Aucun pseudo ne correspond à « zzz ».</p></div></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="t-err">
+  <h2 class="section-title" id="t-err">Erreurs</h2>
+  <div class="stack" style="--gap:var(--s-3)">
+    <div class="alert alert-ko" role="alert"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><div class="alert-body"><span class="alert-title">Pseudo ou mot de passe incorrect.</span><p class="small">Message identique que le pseudo existe ou non.</p></div></div>
+    <div class="alert alert-ko" role="alert"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-lock"/></svg><div class="alert-body"><span class="alert-title">Trop de tentatives.</span><p class="small">Réessayez dans 15 minutes. <span class="subtle">(même message pour tout pseudo)</span></p></div></div>
+    <div class="alert alert-ko" role="alert"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-lock"/></svg><div class="alert-body"><span class="alert-title">Ce compte est désactivé.</span><p class="small">Adressez-vous au club. <span class="subtle">(affiché uniquement après un mot de passe correct)</span></p></div></div>
+    <div class="alert alert-warn" role="alert"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-clock"/></svg><div class="alert-body"><span class="alert-title">Session expirée</span><p class="small">Reconnectez-vous pour continuer. Votre saisie en cours est conservée sur cet appareil.</p><a class="btn btn-secondary btn-sm mt-2" href="01-connexion.html">Se reconnecter</a></div></div>
+    <div class="alert alert-info" role="status"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-offline"/></svg><div class="alert-body"><span class="alert-title">Hors connexion</span><p class="small">Vous consultez les dernières données chargées (6 nov., 21 h 14). La saisie de match sera envoyée au retour du réseau. <span class="subtle">[file d'attente hors ligne : à clarifier]</span></p></div></div>
+    <div class="alert alert-ko" role="alert"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ban"/></svg><div class="alert-body"><span class="alert-title">Accès refusé</span><p class="small">Cette page est réservée aux administrateurs.</p></div></div>
+    <div class="alert alert-ko" role="alert"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-lock"/></svg><div class="alert-body"><span class="alert-title">Saison clôturée</span><p class="small">« Race jeunes 2025-2026 » est en lecture seule : aucune saisie ni modification possible.</p></div></div>
+    <div class="cases"><div class="case"><div class="empty"><svg class="ic ic-xl" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><h3>Page introuvable</h3><p>Le lien est peut-être ancien.</p><a class="btn btn-secondary" href="03-joueur-accueil.html">Retour à l'accueil</a></div></div></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="t-load">
+  <h2 class="section-title" id="t-load">Chargement</h2>
+  <div class="layout-2">
+    <div aria-busy="true" aria-label="Chargement du classement">
+      <div class="rank-row"><span class="sk" style="height:24px;width:24px;margin:auto"></span><div><span class="sk" style="height:16px;width:60%"></span><span class="sk mt-2" style="height:12px;width:40%"></span></div><span class="sk" style="height:20px;width:44px"></span></div>
+      <div class="rank-row"><span class="sk" style="height:24px;width:24px;margin:auto"></span><div><span class="sk" style="height:16px;width:50%"></span><span class="sk mt-2" style="height:12px;width:35%"></span></div><span class="sk" style="height:20px;width:44px"></span></div>
+      <div class="rank-row"><span class="sk" style="height:24px;width:24px;margin:auto"></span><div><span class="sk" style="height:16px;width:70%"></span><span class="sk mt-2" style="height:12px;width:30%"></span></div><span class="sk" style="height:20px;width:44px"></span></div>
+    </div>
+    <div class="stack">
+      <button class="btn btn-primary btn-block" type="button" aria-busy="true" disabled><span class="spinner" style="width:18px;height:18px;border-width:2px;border-top-color:currentColor"></span>Envoi en cours…</button>
+      <div class="row"><span class="spinner" role="status" aria-label="Recalcul en cours"></span><span class="small muted">Recalcul de 37 matchs… ne fermez pas la page.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="t-pii">
+  <h2 class="section-title" id="t-pii">Données personnelles</h2>
+  <div class="layout-2">
+    <div>
+      <div class="field"><label for="ex1">Libellé de l'adversaire extérieur</label><input class="input" id="ex1" value="Tournoi des Tilleuls" aria-describedby="ex1-pii"><div id="ex1-pii"><p class="notice-pii"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-shield"/></svg><span><strong>Ne saisissez aucune donnée personnelle</strong> (nom réel, etc.).</span></p></div></div>
+      <div class="field"><label for="ex2">Note</label><input class="input" id="ex2" value="Contre Jean Dupont" aria-describedby="ex2-w">
+        <p class="error-msg" id="ex2-w" style="color:var(--warning)"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><span>Ce texte ressemble à un nom réel. Utilisez un pseudo ou un libellé neutre.</span></p></div>
+    </div>
+    <div class="cases"><div class="case">
+      <h3 class="case-title"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-shield"/></svg> Confidentialité</h3>
+      <p class="small muted">Cette application n'enregistre ni nom, ni prénom, ni e-mail, ni date de naissance, ni téléphone, ni photo. Vous êtes identifié·e uniquement par un pseudo attribué par le club.</p>
+      <p class="small muted mb-0">Aucun cookie de suivi, aucun outil de statistiques, aucune ressource chargée depuis un service externe.</p>
+    </div></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="t-ok">
+  <h2 class="section-title" id="t-ok">Confirmations</h2>
+  <div class="stack" style="--gap:var(--s-3)">
+    <div class="alert alert-ok" role="status"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><div class="alert-body"><span class="alert-title">Match envoyé</span><p class="small">Il apparaîtra dans votre classement après validation par le club.</p></div></div>
+    <div class="alert alert-ok" role="status"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><div class="alert-body"><span class="alert-title">Mot de passe modifié</span><p class="small">Vos autres sessions ont été déconnectées.</p></div></div>
+  </div>
+</section>
+
+</main>
+</div>
+<script src="js/proto.js"></script>
+</body>
+</html>

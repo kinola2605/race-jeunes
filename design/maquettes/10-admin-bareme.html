@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="fr" data-dir="b" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Barème · Race jeunes (maquette)</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-screen="10 · Admin — éditeur de barème">
+<a class="skip" href="#main">Aller au contenu</a>
+<div class="app">
+<header class="topbar">
+  <a class="brand" href="07-admin-suivi.html"><img class="logo logo-on-dark" src="../assets/logo/logo.svg" alt="Mon club de tennis"><img class="logo logo-on-light" src="../assets/logo/logo.svg" alt="Mon club de tennis"><span class="brand-txt"><span class="caps">Race jeunes</span><span class="brand-name">Saison 2026-2027</span></span></a>
+  <a class="user-chip" href="02-changement-mdp.html?volontaire=1" aria-label="Mon compte : admin.club (Admin)"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-user"/></svg><span>admin.club</span><span class="role-tag">Admin</span></a>
+</header>
+<nav class="appnav" aria-label="Navigation principale"><a class="nav-brand" href="07-admin-suivi.html"><img class="logo logo-on-dark" src="../assets/logo/logo.svg" alt="Mon club de tennis"><img class="logo logo-on-light" src="../assets/logo/logo.svg" alt="Mon club de tennis"><span class="brand-txt"><span class="caps">Race jeunes</span><span class="brand-name">Club</span></span></a><ul><li><a href="07-admin-suivi.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-activity"/></svg><span>Suivi</span></a></li><li><a href="12b-validation.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ball"/></svg><span>Matchs</span></a></li><li><a href="08a-admin-joueurs.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg><span>Joueurs</span></a></li><li><a href="09a-admin-saisons.html" aria-current="page"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-calendar"/></svg><span>Saisons</span></a></li><li><a href="13-admin-journal.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-journal"/></svg><span>Journal</span></a></li></ul></nav>
+<main id="main" class="main ">
+
+<div class="page-head">
+  <span class="eyebrow"><a class="link" href="09a-admin-saisons.html">Saisons</a> / race-jeunes-2026-27 / Barème</span>
+  <h1 class="page-title">Éditeur de barème</h1>
+  <p class="lead small">En vigueur : <strong>v3</strong> (publiée le 12 oct.) · Brouillon : <strong>v4</strong> — 2 cellules modifiées, non publié</p>
+</div>
+
+<div class="toolbar">
+  <div class="seg" role="tablist" aria-label="Sections de l'éditeur">
+    <button type="button" role="tab" data-tab="p-table" aria-selected="true">Table</button>
+    <button type="button" role="tab" data-tab="p-params" aria-selected="false">Paramètres</button>
+    <button type="button" role="tab" data-tab="p-sim" aria-selected="false">Simulateur</button>
+    <button type="button" role="tab" data-tab="p-impact" aria-selected="false">Impact</button>
+  </div>
+</div>
+
+<section id="p-table" role="tabpanel" aria-label="Table de points">
+  <div class="row-between mb-4">
+    <div class="seg" aria-label="Forme du barème">
+      <button type="button" aria-pressed="false">Par écart d'échelons</button>
+      <button type="button" aria-pressed="true">Table complète</button>
+    </div>
+    <div class="seg" aria-label="Résultat">
+      <button type="button" aria-pressed="true">Victoire</button>
+      <button type="button" aria-pressed="false">Défaite</button>
+    </div>
+  </div>
+  <div class="table-wrap" style="max-height:440px;border:1px solid var(--line-soft)">
+<table class="matrix"><thead><tr><th scope="col">Joueur ↓<br>Adversaire →</th><th scope="col">NC</th><th scope="col">40</th><th scope="col">30/5</th><th scope="col">30/4</th><th scope="col">30/3</th><th scope="col">30/2</th><th scope="col">30/1</th><th scope="col">30</th><th scope="col">15/5</th><th scope="col">15/4</th><th scope="col">15/3</th><th scope="col">15/2</th><th scope="col">15/1</th></tr></thead><tbody><tr><th scope="row">40</th><td><input inputmode="numeric" value="10" aria-label="Victoire 40 contre NC : points"></td><td class="diag"><input inputmode="numeric" value="10" aria-label="Victoire 40 contre 40 : points"></td><td class="perf"><input inputmode="numeric" value="20" aria-label="Victoire 40 contre 30/5 : points"></td><td class="perf"><input inputmode="numeric" value="30" aria-label="Victoire 40 contre 30/4 : points"></td><td class="perf"><input inputmode="numeric" value="40" aria-label="Victoire 40 contre 30/3 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 40 contre 30/2 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 40 contre 30/1 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 40 contre 30 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 40 contre 15/5 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 40 contre 15/4 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 40 contre 15/3 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 40 contre 15/2 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 40 contre 15/1 : points"></td></tr><tr><th scope="row">30/5</th><td><input inputmode="numeric" value="6" aria-label="Victoire 30/5 contre NC : points"></td><td><input inputmode="numeric" value="6" aria-label="Victoire 30/5 contre 40 : points"></td><td class="diag"><input inputmode="numeric" value="10" aria-label="Victoire 30/5 contre 30/5 : points"></td><td class="perf"><input inputmode="numeric" value="20" aria-label="Victoire 30/5 contre 30/4 : points"></td><td class="perf"><input inputmode="numeric" value="30" aria-label="Victoire 30/5 contre 30/3 : points"></td><td class="perf"><input inputmode="numeric" value="40" aria-label="Victoire 30/5 contre 30/2 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/5 contre 30/1 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/5 contre 30 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/5 contre 15/5 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/5 contre 15/4 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/5 contre 15/3 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/5 contre 15/2 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/5 contre 15/1 : points"></td></tr><tr><th scope="row">30/4</th><td><input inputmode="numeric" value="4" aria-label="Victoire 30/4 contre NC : points"></td><td><input inputmode="numeric" value="4" aria-label="Victoire 30/4 contre 40 : points"></td><td><input inputmode="numeric" value="6" aria-label="Victoire 30/4 contre 30/5 : points"></td><td class="diag"><input inputmode="numeric" value="10" aria-label="Victoire 30/4 contre 30/4 : points"></td><td class="perf"><input inputmode="numeric" value="20" aria-label="Victoire 30/4 contre 30/3 : points"></td><td class="perf"><input inputmode="numeric" value="30" aria-label="Victoire 30/4 contre 30/2 : points"></td><td class="perf"><input inputmode="numeric" value="40" aria-label="Victoire 30/4 contre 30/1 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/4 contre 30 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/4 contre 15/5 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/4 contre 15/4 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/4 contre 15/3 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/4 contre 15/2 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/4 contre 15/1 : points"></td></tr><tr><th scope="row">30/3</th><td><input inputmode="numeric" value="2" aria-label="Victoire 30/3 contre NC : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 30/3 contre 40 : points"></td><td><input inputmode="numeric" value="4" aria-label="Victoire 30/3 contre 30/5 : points"></td><td><input inputmode="numeric" value="6" aria-label="Victoire 30/3 contre 30/4 : points"></td><td class="diag"><input inputmode="numeric" value="10" aria-label="Victoire 30/3 contre 30/3 : points"></td><td class="perf changed"><input inputmode="numeric" value="25" aria-label="Victoire 30/3 contre 30/2 : points"></td><td class="perf"><input inputmode="numeric" value="30" aria-label="Victoire 30/3 contre 30/1 : points"></td><td class="perf"><input inputmode="numeric" value="40" aria-label="Victoire 30/3 contre 30 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/3 contre 15/5 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/3 contre 15/4 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/3 contre 15/3 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/3 contre 15/2 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/3 contre 15/1 : points"></td></tr><tr><th scope="row">30/2</th><td><input inputmode="numeric" value="2" aria-label="Victoire 30/2 contre NC : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 30/2 contre 40 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 30/2 contre 30/5 : points"></td><td><input inputmode="numeric" value="4" aria-label="Victoire 30/2 contre 30/4 : points"></td><td><input inputmode="numeric" value="6" aria-label="Victoire 30/2 contre 30/3 : points"></td><td class="diag"><input inputmode="numeric" value="10" aria-label="Victoire 30/2 contre 30/2 : points"></td><td class="perf changed"><input inputmode="numeric" value="25" aria-label="Victoire 30/2 contre 30/1 : points"></td><td class="perf"><input inputmode="numeric" value="30" aria-label="Victoire 30/2 contre 30 : points"></td><td class="perf"><input inputmode="numeric" value="40" aria-label="Victoire 30/2 contre 15/5 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/2 contre 15/4 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/2 contre 15/3 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/2 contre 15/2 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/2 contre 15/1 : points"></td></tr><tr><th scope="row">30/1</th><td><input inputmode="numeric" value="2" aria-label="Victoire 30/1 contre NC : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 30/1 contre 40 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 30/1 contre 30/5 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 30/1 contre 30/4 : points"></td><td><input inputmode="numeric" value="4" aria-label="Victoire 30/1 contre 30/3 : points"></td><td><input inputmode="numeric" value="6" aria-label="Victoire 30/1 contre 30/2 : points"></td><td class="diag"><input inputmode="numeric" value="10" aria-label="Victoire 30/1 contre 30/1 : points"></td><td class="perf"><input inputmode="numeric" value="20" aria-label="Victoire 30/1 contre 30 : points"></td><td class="perf"><input inputmode="numeric" value="30" aria-label="Victoire 30/1 contre 15/5 : points"></td><td class="perf"><input inputmode="numeric" value="40" aria-label="Victoire 30/1 contre 15/4 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/1 contre 15/3 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/1 contre 15/2 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30/1 contre 15/1 : points"></td></tr><tr><th scope="row">30</th><td><input inputmode="numeric" value="2" aria-label="Victoire 30 contre NC : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 30 contre 40 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 30 contre 30/5 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 30 contre 30/4 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 30 contre 30/3 : points"></td><td><input inputmode="numeric" value="4" aria-label="Victoire 30 contre 30/2 : points"></td><td><input inputmode="numeric" value="6" aria-label="Victoire 30 contre 30/1 : points"></td><td class="diag"><input inputmode="numeric" value="10" aria-label="Victoire 30 contre 30 : points"></td><td class="perf"><input inputmode="numeric" value="20" aria-label="Victoire 30 contre 15/5 : points"></td><td class="perf"><input inputmode="numeric" value="30" aria-label="Victoire 30 contre 15/4 : points"></td><td class="perf"><input inputmode="numeric" value="40" aria-label="Victoire 30 contre 15/3 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30 contre 15/2 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 30 contre 15/1 : points"></td></tr><tr><th scope="row">15/5</th><td><input inputmode="numeric" value="2" aria-label="Victoire 15/5 contre NC : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/5 contre 40 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/5 contre 30/5 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/5 contre 30/4 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/5 contre 30/3 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/5 contre 30/2 : points"></td><td><input inputmode="numeric" value="4" aria-label="Victoire 15/5 contre 30/1 : points"></td><td><input inputmode="numeric" value="6" aria-label="Victoire 15/5 contre 30 : points"></td><td class="diag"><input inputmode="numeric" value="10" aria-label="Victoire 15/5 contre 15/5 : points"></td><td class="perf"><input inputmode="numeric" value="20" aria-label="Victoire 15/5 contre 15/4 : points"></td><td class="perf"><input inputmode="numeric" value="30" aria-label="Victoire 15/5 contre 15/3 : points"></td><td class="perf"><input inputmode="numeric" value="40" aria-label="Victoire 15/5 contre 15/2 : points"></td><td class="perf"><input inputmode="numeric" value="50" aria-label="Victoire 15/5 contre 15/1 : points"></td></tr><tr><th scope="row">15/4</th><td><input inputmode="numeric" value="2" aria-label="Victoire 15/4 contre NC : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/4 contre 40 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/4 contre 30/5 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/4 contre 30/4 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/4 contre 30/3 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/4 contre 30/2 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/4 contre 30/1 : points"></td><td><input inputmode="numeric" value="4" aria-label="Victoire 15/4 contre 30 : points"></td><td><input inputmode="numeric" value="6" aria-label="Victoire 15/4 contre 15/5 : points"></td><td class="diag"><input inputmode="numeric" value="10" aria-label="Victoire 15/4 contre 15/4 : points"></td><td class="perf"><input inputmode="numeric" value="20" aria-label="Victoire 15/4 contre 15/3 : points"></td><td class="perf"><input inputmode="numeric" value="30" aria-label="Victoire 15/4 contre 15/2 : points"></td><td class="perf"><input inputmode="numeric" value="40" aria-label="Victoire 15/4 contre 15/1 : points"></td></tr><tr><th scope="row">15/3</th><td><input inputmode="numeric" value="2" aria-label="Victoire 15/3 contre NC : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/3 contre 40 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/3 contre 30/5 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/3 contre 30/4 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/3 contre 30/3 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/3 contre 30/2 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/3 contre 30/1 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/3 contre 30 : points"></td><td><input inputmode="numeric" value="4" aria-label="Victoire 15/3 contre 15/5 : points"></td><td><input inputmode="numeric" value="6" aria-label="Victoire 15/3 contre 15/4 : points"></td><td class="diag"><input inputmode="numeric" value="10" aria-label="Victoire 15/3 contre 15/3 : points"></td><td class="perf"><input inputmode="numeric" value="20" aria-label="Victoire 15/3 contre 15/2 : points"></td><td class="perf"><input inputmode="numeric" value="30" aria-label="Victoire 15/3 contre 15/1 : points"></td></tr><tr><th scope="row">15/2</th><td><input inputmode="numeric" value="2" aria-label="Victoire 15/2 contre NC : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/2 contre 40 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/2 contre 30/5 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/2 contre 30/4 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/2 contre 30/3 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/2 contre 30/2 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/2 contre 30/1 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/2 contre 30 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/2 contre 15/5 : points"></td><td><input inputmode="numeric" value="4" aria-label="Victoire 15/2 contre 15/4 : points"></td><td><input inputmode="numeric" value="6" aria-label="Victoire 15/2 contre 15/3 : points"></td><td class="diag"><input inputmode="numeric" value="10" aria-label="Victoire 15/2 contre 15/2 : points"></td><td class="perf"><input inputmode="numeric" value="20" aria-label="Victoire 15/2 contre 15/1 : points"></td></tr><tr><th scope="row">15/1</th><td><input inputmode="numeric" value="2" aria-label="Victoire 15/1 contre NC : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/1 contre 40 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/1 contre 30/5 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/1 contre 30/4 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/1 contre 30/3 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/1 contre 30/2 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/1 contre 30/1 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/1 contre 30 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/1 contre 15/5 : points"></td><td><input inputmode="numeric" value="2" aria-label="Victoire 15/1 contre 15/4 : points"></td><td><input inputmode="numeric" value="4" aria-label="Victoire 15/1 contre 15/3 : points"></td><td><input inputmode="numeric" value="6" aria-label="Victoire 15/1 contre 15/2 : points"></td><td class="diag invalid"><input inputmode="numeric" value="" aria-label="Victoire 15/1 contre 15/1 : points"></td></tr></tbody></table>
+  </div>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--surface-raised);box-shadow:inset 0 0 0 1px var(--text-subtle)"></i>Classement égal (diagonale)</span>
+    <span><b style="color:var(--accent-2)">20</b> Perf (adversaire mieux classé)</span>
+    <span><i class="sw" style="background:var(--highlight)"></i><u class="strong">25</u> Modifié dans le brouillon</span>
+  </div>
+  <div class="alert alert-ko mt-4"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><div class="alert-body"><span class="alert-title">Validation : 1 erreur bloquante, 1 avertissement</span>
+    <ul class="small" style="margin:0;padding-left:1.2em"><li><strong>Erreur</strong> — cellule 15/1 × 15/1 vide : une valeur est requise pour publier.</li><li><strong>Avertissement</strong> — 30/2 × 30/1 et 30/3 × 30/2 valent 25 alors que les autres perfs +1 valent 20 (autorisé, mais non homogène).</li></ul></div></div>
+  <p class="small subtle mt-2">NC est traité comme 40 (paramètre). Barème fictif pour la maquette.</p>
+</section>
+
+<section id="p-params" role="tabpanel" aria-label="Paramètres" hidden>
+  <div class="cases cases-2">
+    <div class="case">
+      <h2 class="case-title">Plafonds</h2>
+      <div class="field"><label for="cap1">Plafond par match</label><input class="input" id="cap1" inputmode="numeric" value="60"></div>
+      <div class="field"><label for="cap2">Plafond par mois <span class="subtle small">(vide = aucun)</span></label><input class="input" id="cap2" inputmode="numeric" value=""></div>
+    </div>
+    <div class="case">
+      <h2 class="case-title">Cas particuliers</h2>
+      <div class="field"><label for="nc">Adversaire non classé traité comme</label><select class="select" id="nc"><option selected>40</option><option>NC (échelon propre)</option></select></div>
+      <div class="field"><label for="wo">Victoire par forfait (WO)</label><select class="select" id="wo"><option selected>0 pt</option><option>Points d'une victoire normale</option><option>Valeur fixe…</option></select></div>
+      <div class="field"><label for="ab">Victoire par abandon</label><select class="select" id="ab"><option selected>Points d'une victoire normale</option><option>0 pt</option></select></div>
+    </div>
+    <div class="case">
+      <h2 class="case-title">Bonus</h2>
+      <label class="check"><input type="checkbox" checked> Assiduité : +5 pts tous les 5 matchs validés</label>
+      <label class="check"><input type="checkbox"> Victoire en 2 sets secs : +2 pts</label>
+      <button class="btn btn-ghost btn-sm" type="button"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg>Ajouter un bonus</button>
+    </div>
+    <div class="case">
+      <h2 class="case-title">Défaites</h2>
+      <div class="field"><label for="d1">Défaite contre mieux classé</label><input class="input" id="d1" value="2"></div>
+      <div class="field"><label for="d2">Défaite à classement égal</label><input class="input" id="d2" value="1"></div>
+      <div class="field"><label for="d3">Défaite contre moins bien classé</label><input class="input" id="d3" value="0"></div>
+    </div>
+  </div>
+</section>
+
+<section id="p-sim" role="tabpanel" aria-label="Simulateur" hidden>
+  <div class="layout-2">
+    <div>
+      <div class="field"><label for="s1">Classement du joueur</label><select class="select" id="s1"><option selected>30/2</option></select></div>
+      <div class="field"><label for="s2">Classement de l'adversaire</label><select class="select" id="s2"><option selected>30/1</option></select></div>
+      <fieldset><legend>Résultat</legend><div class="big-choice"><label><input type="radio" name="sr" checked><span>Victoire</span></label><label><input type="radio" name="sr"><span>Défaite</span></label></div></fieldset>
+      <div class="field"><label for="s3">Barème</label><select class="select" id="s3"><option>v3 (en vigueur)</option><option selected>v4 (brouillon)</option></select></div>
+    </div>
+    <div>
+      <div class="preview-points"><div><span class="stat-label">Points simulés (v4)</span><span class="stat-value">25</span></div><div class="right small">v3 : 20 pts<br><strong>+5</strong></div></div>
+      <div class="calc mt-4">
+        <div class="calc-row"><span>Écart</span><span>+1 échelon (perf)</span></div>
+        <div class="calc-row"><span>Table · 30/2 × 30/1</span><span class="num">25</span></div>
+        <div class="calc-row"><span>Plafond 60</span><span>non atteint</span></div>
+        <div class="calc-row calc-total"><span>Total</span><span class="num">25 pts</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="p-impact" role="tabpanel" aria-label="Impact du recalcul" hidden>
+  <div class="cases cases-3 stats" style="grid-template-columns:repeat(3,1fr)">
+    <div class="case"><span class="stat-label">Matchs recalculés</span><span class="stat-value">37<small> / 112</small></span></div>
+    <div class="case"><span class="stat-label">Joueurs impactés</span><span class="stat-value">14</span></div>
+    <div class="case"><span class="stat-label">Changements de rang</span><span class="stat-value">5</span></div>
+  </div>
+  <div class="table-wrap mt-4">
+  <table class="table">
+    <caption class="sr-only">Changements de rang si v4 est publiée</caption>
+    <thead><tr><th>Pseudo</th><th class="num">Points v3</th><th class="num">Points v4</th><th class="num">Rang v3</th><th class="num">Rang v4</th></tr></thead>
+    <tbody>
+      <tr><td class="strong">AceDuMatin</td><td class="num">186</td><td class="num">196</td><td class="num">4</td><td class="num"><span class="trend trend-up"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-up"/></svg>3</span></td></tr>
+      <tr><td class="strong">SmashTonic</td><td class="num">200</td><td class="num">200</td><td class="num">3</td><td class="num"><span class="trend trend-down"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-down"/></svg>4</span></td></tr>
+      <tr><td class="strong">Volée92</td><td class="num">131</td><td class="num">146</td><td class="num">8</td><td class="num"><span class="trend trend-up"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-up"/></svg>7</span></td></tr>
+      <tr><td class="strong">AmortiZen</td><td class="num">140</td><td class="num">140</td><td class="num">7</td><td class="num"><span class="trend trend-down"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-down"/></svg>8</span></td></tr>
+      <tr><td class="strong">PetitPont</td><td class="num">161</td><td class="num">171</td><td class="num">6</td><td class="num">6</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="alert alert-info mt-6"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><div class="alert-body"><span class="alert-title">Aucun recalcul silencieux</span><p class="small">Publier v4 n'applique rien aux matchs passés tant que vous ne lancez pas le recalcul. L'opération est enregistrée dans le journal d'audit (avant / après).</p></div></div>
+  <div class="actions">
+    <button class="btn btn-primary" type="button"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-refresh"/></svg>Publier v4 et recalculer 37 matchs</button>
+    <button class="btn btn-secondary" type="button">Publier v4 pour les nouveaux matchs seulement</button>
+    <button class="btn btn-ghost" type="button">Abandonner le brouillon</button>
+  </div>
+</section>
+
+</main>
+</div>
+<script src="js/proto.js"></script>
+</body>
+</html>

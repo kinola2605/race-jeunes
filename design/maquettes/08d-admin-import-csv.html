@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr" data-dir="b" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Import CSV · Race jeunes (maquette)</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-screen="08d · Admin — import CSV et compte rendu">
+<a class="skip" href="#main">Aller au contenu</a>
+<div class="app">
+<header class="topbar">
+  <a class="brand" href="07-admin-suivi.html"><img class="logo logo-on-dark" src="../assets/logo/logo.svg" alt="Mon club de tennis"><img class="logo logo-on-light" src="../assets/logo/logo.svg" alt="Mon club de tennis"><span class="brand-txt"><span class="caps">Race jeunes</span><span class="brand-name">Saison 2026-2027</span></span></a>
+  <a class="user-chip" href="02-changement-mdp.html?volontaire=1" aria-label="Mon compte : admin.club (Admin)"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-user"/></svg><span>admin.club</span><span class="role-tag">Admin</span></a>
+</header>
+<nav class="appnav" aria-label="Navigation principale"><a class="nav-brand" href="07-admin-suivi.html"><img class="logo logo-on-dark" src="../assets/logo/logo.svg" alt="Mon club de tennis"><img class="logo logo-on-light" src="../assets/logo/logo.svg" alt="Mon club de tennis"><span class="brand-txt"><span class="caps">Race jeunes</span><span class="brand-name">Club</span></span></a><ul><li><a href="07-admin-suivi.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-activity"/></svg><span>Suivi</span></a></li><li><a href="12b-validation.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ball"/></svg><span>Matchs</span></a></li><li><a href="08a-admin-joueurs.html" aria-current="page"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg><span>Joueurs</span></a></li><li><a href="09a-admin-saisons.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-calendar"/></svg><span>Saisons</span></a></li><li><a href="13-admin-journal.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-journal"/></svg><span>Journal</span></a></li></ul></nav>
+<main id="main" class="main ">
+
+<div class="page-head">
+  <span class="eyebrow"><a class="link" href="08a-admin-joueurs.html">Joueurs</a> / Import</span>
+  <h1 class="page-title">Importer des joueurs</h1>
+</div>
+<div class="layout-2">
+<section aria-labelledby="t-e1">
+  <h2 class="section-title" id="t-e1">1. Fichier</h2>
+  <div class="handover" style="border-style:dashed">
+    <svg class="ic ic-xl" aria-hidden="true" focusable="false"><use href="#i-upload"/></svg>
+    <p class="strong mt-2 mb-0">Déposez un fichier CSV</p>
+    <p class="small subtle">ou</p>
+    <label class="btn btn-secondary" for="csv">Choisir un fichier<input class="sr-only" id="csv" type="file" accept=".csv,text/csv"></label>
+    <p class="small subtle mt-4 mb-0">eleves-groupe-b.csv · 17 lignes</p>
+  </div>
+  <div class="field mt-6">
+    <span class="label">Format attendu (2 colonnes uniquement)</span>
+    <pre class="mono small" style="margin:0;padding:var(--s-3);background:var(--surface-sunken);border:1px solid var(--line-soft);border-radius:var(--r-sm);overflow:auto">pseudo;classement
+Volée92;30/4
+JeuBlanc;NC</pre>
+    <p class="hint">Toute autre colonne est refusée (aucune donnée personnelle).</p>
+  </div>
+  <fieldset>
+    <legend>Si le pseudo existe déjà</legend>
+    <label class="check"><input type="radio" name="dup" checked> Ignorer la ligne</label>
+    <label class="check"><input type="radio" name="dup"> Mettre à jour le classement (historisé)</label>
+  </fieldset>
+  <label class="check"><input type="checkbox" checked> Engager les nouveaux comptes dans « Race jeunes 2026-2027 »</label>
+  <div class="actions"><button class="btn btn-primary" type="button">Vérifier le fichier</button></div>
+</section>
+
+<section aria-labelledby="t-e2">
+  <h2 class="section-title" id="t-e2">2. Compte rendu</h2>
+  <div class="cases cases-3 stats" style="grid-template-columns:repeat(3,1fr)">
+    <div class="case"><span class="stat-label">Créés</span><span class="stat-value" style="color:var(--success)">14</span></div>
+    <div class="case"><span class="stat-label">Ignorés</span><span class="stat-value">2</span></div>
+    <div class="case"><span class="stat-label">Erreurs</span><span class="stat-value" style="color:var(--error)">1</span></div>
+  </div>
+  <div class="table-wrap mt-4">
+  <table class="table">
+    <caption class="sr-only">Lignes non importées</caption>
+    <thead><tr><th class="num">Ligne</th><th>Pseudo</th><th>Résultat</th></tr></thead>
+    <tbody>
+      <tr><td class="num">4</td><td>AceDuMatin</td><td><span class="badge badge-off"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ban"/></svg>Ignoré</span> pseudo existant</td></tr>
+      <tr><td class="num">7</td><td>PetitPont</td><td><span class="badge badge-off"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-ban"/></svg>Ignoré</span> pseudo existant</td></tr>
+      <tr><td class="num">9</td><td>RetourGagnant</td><td><span class="badge badge-ko"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-x"/></svg>Erreur</span> classement « 30-2 » invalide</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="alert alert-warn mt-6"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><div class="alert-body"><span class="alert-title">Fiche des mots de passe : téléchargeable une seule fois</span><p class="small">14 mots de passe temporaires. Après téléchargement, ils ne seront plus jamais affichés.</p></div></div>
+  <div class="actions">
+    <button class="btn btn-primary" type="button"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-download"/></svg>Télécharger la fiche (PDF imprimable)</button>
+    <button class="btn btn-secondary" type="button" disabled aria-disabled="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Déjà téléchargée</button>
+  </div>
+  <p class="small subtle">État « Déjà téléchargée » montré à droite pour la maquette.</p>
+</section>
+</div>
+
+</main>
+</div>
+<script src="js/proto.js"></script>
+</body>
+</html>

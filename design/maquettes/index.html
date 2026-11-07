@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="fr" data-dir="b" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Maquettes · Race jeunes</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/app.css">
+<style>
+  .compare { display: grid; gap: var(--s-6); }
+  .pair { display: grid; gap: var(--s-4); grid-template-columns: 1fr; }
+  @media (min-width: 880px) { .pair { grid-template-columns: 1fr 1fr; } }
+  .frame { display: grid; gap: var(--s-2); justify-items: center; }
+  .frame iframe { width: 390px; max-width: 100%; height: 760px; border: 1px solid var(--line-soft); border-radius: 24px; background: var(--bg); }
+  .frame .caps { color: var(--text-subtle); }
+  .screens { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+  .screens a { display: flex; gap: var(--s-3); align-items: baseline; padding: var(--s-3) 0; border-bottom: 1px solid var(--line-soft); text-decoration: none; }
+  .screens .n { font-variant-numeric: tabular-nums; color: var(--text-subtle); min-width: 2.6em; font-weight: 600; }
+  .screens .d { color: var(--text-subtle); font-size: var(--fs-sm); }
+  .dirs { display: grid; gap: var(--s-4); }
+  @media (min-width: 768px) { .dirs { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body data-screen="Index des maquettes">
+<a class="skip" href="#main">Aller au contenu</a>
+<div class="app">
+<header class="topbar">
+  <span class="brand"><img class="logo logo-on-dark" src="../assets/logo/logo.svg" alt="Mon club de tennis"><img class="logo logo-on-light" src="../assets/logo/logo.svg" alt="Mon club de tennis"><span class="brand-txt"><span class="caps">Phase 0</span><span class="brand-name">Maquettes UX</span></span></span>
+</header>
+<main id="main" class="main">
+  <div class="page-head">
+    <span class="eyebrow">Race jeunes</span>
+    <h1 class="page-title">Maquettes à valider</h1>
+    <p class="lead">Données fictives, pseudos inventés, barèmes fictifs. Chaque écran se bascule en direction A ou B et en thème sombre ou clair via la barre « MAQUETTE » en haut (hors design).</p>
+  </div>
+
+  <section class="section" aria-labelledby="t-dirs">
+    <h2 class="section-title" id="t-dirs">Deux directions — B retenue le 7 nov. 2026</h2>
+    <div class="dirs">
+      <div class="cases"><div class="case">
+        <h3 class="case-title">A · Grille club <span class="badge badge-off">Non retenue</span></h3>
+        <p class="small muted mb-0">Fidèle au site : bandeau de navigation saumon en capitales, cases séparées par des filets saumon 1 px, titres centrés soulignés du trait 40 × 5, chiffres en graisse moyenne, bouton primaire saumon. Sur mobile, la grille est allégée (filets horizontaux seulement). Admin desktop : même bandeau en haut.</p>
+      </div></div>
+      <div class="cases"><div class="case">
+        <h3 class="case-title">B · Court <span class="badge badge-ok">✓ Retenue</span></h3>
+        <p class="small muted mb-0">Plus sportive et pensée pouce : barre d'onglets en bas sur mobile (barre latérale sur desktop), cartes arrondies 20 px sans filets, gros chiffres en gras, bloc « score » saumon, action primaire corail 52 px, titres à gauche avec sur-titre corail.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="t-cmp">
+    <h2 class="section-title" id="t-cmp">Comparaison A / B (archive, 390 px)</h2>
+    <div class="compare" data-keep-href>
+      <div>
+        <h3 class="case-title center">Joueur — tableau de bord</h3>
+        <div class="pair">
+          <div class="frame"><span class="caps">A · Grille club</span><iframe loading="lazy" title="Tableau de bord, direction A" src="03-joueur-accueil.html?dir=a&amp;theme=dark&amp;embed=1"></iframe></div>
+          <div class="frame"><span class="caps">B · Court</span><iframe loading="lazy" title="Tableau de bord, direction B" src="03-joueur-accueil.html?dir=b&amp;theme=dark&amp;embed=1"></iframe></div>
+        </div>
+      </div>
+      <div>
+        <h3 class="case-title center">Classement de la Race</h3>
+        <div class="pair">
+          <div class="frame"><span class="caps">A · Grille club</span><iframe loading="lazy" title="Classement, direction A" src="04-classement.html?dir=a&amp;theme=dark&amp;embed=1"></iframe></div>
+          <div class="frame"><span class="caps">B · Court</span><iframe loading="lazy" title="Classement, direction B" src="04-classement.html?dir=b&amp;theme=dark&amp;embed=1"></iframe></div>
+        </div>
+      </div>
+      <div>
+        <h3 class="case-title center">Saisie d'un match (bord de court)</h3>
+        <div class="pair">
+          <div class="frame"><span class="caps">A · Grille club</span><iframe loading="lazy" title="Saisie de match, direction A" src="12a-saisie-match.html?dir=a&amp;theme=dark&amp;embed=1"></iframe></div>
+          <div class="frame"><span class="caps">B · Court</span><iframe loading="lazy" title="Saisie de match, direction B" src="12a-saisie-match.html?dir=b&amp;theme=dark&amp;embed=1"></iframe></div>
+        </div>
+      </div>
+      <div>
+        <h3 class="case-title center">Connexion — thème clair (plein soleil)</h3>
+        <div class="pair">
+          <div class="frame"><span class="caps">A · clair</span><iframe loading="lazy" title="Connexion, direction A, thème clair" src="01-connexion.html?dir=a&amp;theme=light&amp;embed=1"></iframe></div>
+          <div class="frame"><span class="caps">B · clair</span><iframe loading="lazy" title="Connexion, direction B, thème clair" src="01-connexion.html?dir=b&amp;theme=light&amp;embed=1"></iframe></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="t-all">
+    <h2 class="section-title" id="t-all">Tous les écrans</h2>
+    <div class="layout-2">
+      <div>
+        <h3 class="case-title">Accès</h3>
+        <ul class="screens">
+          <li><a href="01-connexion.html"><span class="n">01</span><span>Connexion <span class="d">— sans lien « créer un compte »</span></span></a></li>
+          <li><a href="02-changement-mdp.html"><span class="n">02</span><span>Changement de mot de passe obligatoire</span></a></li>
+        </ul>
+        <h3 class="case-title mt-8">Joueur</h3>
+        <ul class="screens">
+          <li><a href="03-joueur-accueil.html"><span class="n">03</span><span>Tableau de bord</span></a></li>
+          <li><a href="04-classement.html"><span class="n">04</span><span>Classement de la Race <span class="d">— sélecteur de saison, filtres, détail du calcul</span></span></a></li>
+          <li><a href="05-mes-matchs.html"><span class="n">05</span><span>Mes matchs <span class="d">— détail du calcul d'un match</span></span></a></li>
+          <li><a href="06-saisons-passees.html"><span class="n">06</span><span>Saisons passées</span></a></li>
+          <li><a href="12a-saisie-match.html"><span class="n">12a</span><span>Déclarer un match <span class="d">— bord de court</span></span></a></li>
+        </ul>
+        <h3 class="case-title mt-8">Transverse</h3>
+        <ul class="screens">
+          <li><a href="14-etats.html"><span class="n">14</span><span>États vides, erreurs, chargement, données personnelles</span></a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="case-title">Admin <span class="d">(mobile et desktop ≥ 1024 px)</span></h3>
+        <ul class="screens">
+          <li><a href="07-admin-suivi.html"><span class="n">07</span><span>Tableau de bord de suivi</span></a></li>
+          <li><a href="08a-admin-joueurs.html"><span class="n">08a</span><span>Liste des joueurs</span></a></li>
+          <li><a href="08b-admin-joueur-nouveau.html"><span class="n">08b</span><span>Création d'un joueur</span></a></li>
+          <li><a href="08c-admin-remise-mdp.html"><span class="n">08c</span><span>Remise unique du mot de passe <span class="d">— fiche imprimable</span></span></a></li>
+          <li><a href="08d-admin-import-csv.html"><span class="n">08d</span><span>Import CSV et compte rendu</span></a></li>
+          <li><a href="09a-admin-saisons.html"><span class="n">09a</span><span>Liste des saisons</span></a></li>
+          <li><a href="09b-admin-saison-nouvelle.html"><span class="n">09b</span><span>Création d'une saison <span class="d">— duplication du barème</span></span></a></li>
+          <li><a href="09c-admin-saison-cloture.html"><span class="n">09c</span><span>Clôture avec confirmation</span></a></li>
+          <li><a href="10-admin-bareme.html"><span class="n">10</span><span>Éditeur de barème <span class="d">— table, paramètres, simulateur, impact</span></span></a></li>
+          <li><a href="11-admin-engagements.html"><span class="n">11</span><span>Engagements <span class="d">— individuel et en lot</span></span></a></li>
+          <li><a href="12b-validation.html"><span class="n">12b</span><span>File de validation des matchs</span></a></li>
+          <li><a href="13-admin-journal.html"><span class="n">13</span><span>Journal d'audit</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="small subtle mt-6">Les références aux exigences FR-xxx seront ajoutées à chaque écran en phase 2 (spécification). Charte : <a class="link" href="../identite.md">identite.md</a> · tokens : <a class="link" href="../tokens.json">tokens.json</a> · navigation : <a class="link" href="../parcours.md">parcours.md</a>.</p>
+  </section>
+</main>
+</div>
+<script src="js/proto.js"></script>
+</body>
+</html>

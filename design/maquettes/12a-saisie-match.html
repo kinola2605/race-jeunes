@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr" data-dir="b" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Déclarer un match · Race jeunes (maquette)</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-screen="12a · Saisie d'un match (bord de court)">
+<a class="skip" href="#main">Aller au contenu</a>
+<div class="app">
+<header class="topbar">
+  <a class="brand" href="03-joueur-accueil.html"><img class="logo logo-on-dark" src="../assets/logo/logo.svg" alt="Mon club de tennis"><img class="logo logo-on-light" src="../assets/logo/logo.svg" alt="Mon club de tennis"><span class="brand-txt"><span class="caps">Race jeunes</span><span class="brand-name">Saison 2026-2027</span></span></a>
+  <a class="user-chip" href="02-changement-mdp.html?volontaire=1" aria-label="Mon compte : AceDuMatin (Joueur)"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-user"/></svg><span>AceDuMatin</span></a>
+</header>
+<nav class="appnav" aria-label="Navigation principale"><a class="nav-brand" href="03-joueur-accueil.html"><img class="logo logo-on-dark" src="../assets/logo/logo.svg" alt="Mon club de tennis"><img class="logo logo-on-light" src="../assets/logo/logo.svg" alt="Mon club de tennis"><span class="brand-txt"><span class="caps">Race jeunes</span><span class="brand-name">Club</span></span></a><ul><li><a href="03-joueur-accueil.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-home"/></svg><span>Accueil</span></a></li><li><a href="04-classement.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-trophy"/></svg><span>Classement</span></a></li><li><a href="05-mes-matchs.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-list"/></svg><span>Matchs</span></a></li><li><a href="12a-saisie-match.html" aria-current="page"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><span>Saisir</span></a></li><li><a href="06-saisons-passees.html"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-calendar"/></svg><span>Saisons</span></a></li></ul></nav>
+<main id="main" class="main main-narrow">
+
+<div class="page-head">
+  <span class="eyebrow">Race jeunes 2026-2027</span>
+  <h1 class="page-title">Déclarer un match</h1>
+</div>
+<form class="court" action="05-mes-matchs.html" method="get" novalidate>
+  <div class="field"><label for="date">Date du match</label><input class="input" id="date" type="date" value="2026-11-07"></div>
+
+  <fieldset>
+    <legend>Adversaire</legend>
+    <div class="seg mb-4" role="tablist" aria-label="Type d'adversaire">
+      <button type="button" role="tab" data-tab="adv-club" aria-selected="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg>Joueur du club</button>
+      <button type="button" role="tab" data-tab="adv-ext" aria-selected="false">Extérieur</button>
+    </div>
+    <div id="adv-club" role="tabpanel">
+      <div class="search"><label for="adv" class="sr-only">Rechercher un engagé</label><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-search"/></svg><input class="input" id="adv" type="search" value="sli" autocomplete="off"></div>
+      <ul class="list mt-2" role="listbox" aria-label="Engagés correspondants">
+        <li role="option" aria-selected="true"><div class="item" style="min-height:var(--touch-court)"><span class="res" style="color:var(--accent)"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><div class="item-main"><div class="item-title">SliceMaster</div><div class="item-meta">30/1</div></div><span class="badge badge-perf"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-perf"/></svg>Perf possible</span></div></li>
+        <li role="option" aria-selected="false"><div class="item" style="min-height:var(--touch-court)"><span class="res" style="color:var(--text-subtle);border-style:dashed"></span><div class="item-main"><div class="item-title">SlicedBread</div><div class="item-meta">30/3</div></div></div></li>
+      </ul>
+    </div>
+    <div id="adv-ext" role="tabpanel" hidden>
+      <div class="field"><label for="lib">Libellé de l'adversaire</label><input class="input" id="lib" placeholder="ex. Tournoi des Tilleuls, tableau 13 ans" aria-describedby="lib-pii"><div id="lib-pii"><p class="notice-pii"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-shield"/></svg><span><strong>Ne saisissez aucune donnée personnelle</strong> (nom réel, etc.).</span></p></div></div>
+      <div class="field"><label for="clx">Classement de l'adversaire</label><select class="select" id="clx"><option>NC</option><option>40</option><option selected>30/2</option></select></div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Résultat</legend>
+    <div class="big-choice">
+      <label><input type="radio" name="res" checked><span><svg class="ic ic-lg" aria-hidden="true" focusable="false"><use href="#i-up"/></svg>J'ai gagné</span></label>
+      <label><input type="radio" name="res"><span><svg class="ic ic-lg" aria-hidden="true" focusable="false"><use href="#i-down"/></svg>J'ai perdu</span></label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Score <span class="subtle small">(jeux par set, vous d'abord)</span></legend>
+    <div class="sets">
+      <div class="set-row"><span class="strong">Set 1</span>
+        <div class="stepper" role="group" aria-label="Set 1, vos jeux"><button type="button" data-step="-" aria-label="Moins">−</button><output>6</output><button type="button" data-step="+" aria-label="Plus">+</button></div>
+        <div class="stepper" role="group" aria-label="Set 1, jeux adverses"><button type="button" data-step="-" aria-label="Moins">−</button><output>4</output><button type="button" data-step="+" aria-label="Plus">+</button></div></div>
+      <div class="set-row"><span class="strong">Set 2</span>
+        <div class="stepper" role="group" aria-label="Set 2, vos jeux"><button type="button" data-step="-" aria-label="Moins">−</button><output>6</output><button type="button" data-step="+" aria-label="Plus">+</button></div>
+        <div class="stepper" role="group" aria-label="Set 2, jeux adverses"><button type="button" data-step="-" aria-label="Moins">−</button><output>3</output><button type="button" data-step="+" aria-label="Plus">+</button></div></div>
+      <button class="btn btn-ghost" type="button"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg>Ajouter un 3e set / super tie-break</button>
+    </div>
+    <label class="check mt-2"><input type="checkbox"> Abandon ou forfait</label>
+  </fieldset>
+
+  <div class="preview-points" role="status">
+    <div><span class="stat-label">Points estimés</span><span class="stat-value">+20</span></div>
+    <div class="right small"><strong>Perf</strong> : +1 échelon<br>30/2 bat 30/1</div>
+  </div>
+  <p class="small subtle mt-2">Le match sera <strong>validé par le club</strong> avant d'être compté.</p>
+
+  <div class="sticky-cta"><button class="btn btn-primary btn-block" type="submit">Envoyer le match</button></div>
+</form>
+
+</main>
+</div>
+<script src="js/proto.js"></script>
+</body>
+</html>

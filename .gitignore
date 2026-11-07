@@ -1,0 +1,15 @@
+node_modules/
+.next/
+out/
+coverage/
+playwright-report/
+test-results/
+.env
+.env.*
+!.env.example
+*.log
+.local-db/
+next-env.d.ts
+*.tsbuildinfo
+.claude/
+__pycache__/
