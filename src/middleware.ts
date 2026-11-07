@@ -4,7 +4,7 @@ import { NextResponse, type NextRequest } from "next/server";
  * Filtre rapide : sans cookie de session, toute page non publique renvoie vers /connexion.
  * La vraie vérification (session valide, rôle) est faite côté serveur dans chaque page et action.
  */
-const PUBLIC = ["/connexion", "/hors-ligne", "/manifest.webmanifest", "/sw.js", "/favicon.ico"];
+const PUBLIC = ["/connexion", "/hors-ligne", "/manifest.webmanifest", "/sw.js", "/favicon.ico", "/icon.svg"];
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;

@@ -1,3 +1,14 @@
+<p align="center">
+  <img src="docs/assets/banner.svg" alt="Race jeunes" width="100%">
+</p>
+
+<p align="center">
+  <a href="https://github.com/kinola2605/race-jeunes/actions/workflows/ci.yml"><img src="https://github.com/kinola2605/race-jeunes/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/kinola2605/race-jeunes/releases/tag/v1.0.0"><img src="https://img.shields.io/badge/version-1.0.0-FF7F5C" alt="Version 1.0.0"></a>
+  <img src="https://img.shields.io/badge/couverture_moteur-100%25-6FDC9C" alt="Couverture du moteur de points : 100 %">
+  <img src="https://img.shields.io/badge/donn%C3%A9es_personnelles-0-FDC2B2" alt="Zéro donnée personnelle">
+</p>
+
 # Race jeunes
 
 Application web (PWA mobile-first) de suivi de la **Race jeunes** du club : chaque joueur engagé cumule des
@@ -127,6 +138,12 @@ prisma/             schéma, migrations, données de démonstration
 design/             charte, tokens, maquettes validées
 specs/, .specify/   spécification (Spec Kit) : constitution, spec, plan, tâches
 ```
+
+## Logo
+
+Le logo du projet ([`docs/assets/logo.svg`](docs/assets/logo.svg)) est une création originale aux couleurs de
+la charte (bleu nuit, saumon, corail) : une balle, un podium et une trajectoire montante. Il sert d'icône à la
+PWA. Il est distinct du logo d'un club, utilisé dans l'interface sous réserve de l'accord du club.
 
 ## Licence
 

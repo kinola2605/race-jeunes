@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Suivi de la Race jeunes d'un club de tennis",
   manifest: "/manifest.webmanifest",
   robots: { index: false, follow: false },
-  icons: { icon: "/logo/logo.svg", apple: "/logo/logo.svg" },
+  icons: { icon: "/icon.svg", apple: "/icon.svg" },
   appleWebApp: { capable: true, title: "Race jeunes", statusBarStyle: "black-translucent" },
 };
 
