@@ -2,12 +2,15 @@
 
 generator client {
   provider      = "prisma-client-js"
-  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x", "rhel-openssl-3.0.x"]
 }
 
+// DATABASE_URL : URL poolée (Neon « -pooler »), rôle applicatif sans DDL — utilisée par l'application.
+// DATABASE_URL_UNPOOLED : URL directe, rôle propriétaire — utilisée uniquement par les migrations.
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 enum Role {
