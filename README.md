@@ -69,7 +69,7 @@ temporaire inconnu : ils illustrent le suivi « mot de passe jamais changé ». 
    Retirez ensuite `ADMIN_PASSWORD` du fichier `.env`. Alternative en ligne de commande :
 
    ```bash
-   docker compose exec app npx tsx scripts/bootstrap-admin.ts admin.club "mot-de-passe-initial"
+   docker compose exec app npx tsx scripts/bootstrap-admin.ts admin.club   # mot de passe demandé, non affiché
    ```
 
    Il n'existe **aucun** autre moyen de créer un compte : ensuite, seul un admin connecté crée les comptes
