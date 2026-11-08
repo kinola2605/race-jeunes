@@ -10,6 +10,7 @@
 import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { createInterface } from "node:readline/promises";
+import { parseEnv } from "node:util";
 
 const args = process.argv.slice(2);
 const envFile = args.find((a) => !a.startsWith("--"));
@@ -20,7 +21,8 @@ if (!envFile || !existsSync(envFile)) {
   console.error("Usage : npm run db:migrate:remote -- <fichier-env> [--yes] [--allow-destructive]");
   process.exit(1);
 }
-process.loadEnvFile(envFile);
+// Écrase les variables déjà présentes (shell, .env) : la cible est TOUJOURS celle du fichier.
+Object.assign(process.env, parseEnv(readFileSync(envFile, "utf8")));
 const direct = process.env.DATABASE_URL_UNPOOLED;
 if (!process.env.DATABASE_URL || !direct) {
   console.error(`${envFile} doit définir DATABASE_URL et DATABASE_URL_UNPOOLED.`);

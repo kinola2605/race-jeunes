@@ -11,6 +11,7 @@
 import { PrismaClient } from "@prisma/client";
 import { checkNewPassword, hashPassword } from "../src/server/auth/password";
 import { describeDatabase, runtimeDatabaseUrl } from "../src/server/db-url";
+import { loadEnvFileOverride } from "./env-file";
 
 const MIN_INTERACTIVE = 12;
 
@@ -60,7 +61,7 @@ function askHidden(prompt: string): Promise<string> {
 
 async function main() {
   const { envFile, pseudo: argPseudo } = parseArgs(process.argv.slice(2));
-  if (envFile) process.loadEnvFile(envFile);
+  if (envFile) loadEnvFileOverride(envFile);
 
   const pseudo = (argPseudo ?? process.env.ADMIN_PSEUDO ?? "").trim();
   if (!pseudo) {

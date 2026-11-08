@@ -11,11 +11,12 @@ import { PrismaClient, type Prisma } from "@prisma/client";
 import { PRESET_2025, PRESET_2026, computeMatchPoints, type Ranking, type RuleSet, rungOf } from "../src/scoring";
 import { hashPassword } from "../src/server/auth/password";
 import { describeDatabase, isLocalHost, runtimeDatabaseUrl } from "../src/server/db-url";
+import { loadEnvFileOverride } from "../scripts/env-file";
 
 // `--env-file <fichier>` : charge un fichier d'environnement local (ex. .env.neon.preview).
 const envFileIndex = process.argv.indexOf("--env-file");
 const envFile = envFileIndex > 0 ? process.argv[envFileIndex + 1] : undefined;
-if (envFile) process.loadEnvFile(envFile);
+if (envFile) loadEnvFileOverride(envFile);
 
 const rawUrl = process.env.DATABASE_URL ?? "";
 
