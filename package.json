@@ -1,12 +1,13 @@
 {
   "name": "race-jeunes",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "description": "Suivi de la Race jeunes d'un club de tennis — PWA en marque blanche, sans donnée personnelle",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "postinstall": "prisma generate",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
@@ -15,6 +16,8 @@
     "test:e2e": "playwright test",
     "tokens": "node scripts/build-tokens.mjs",
     "db:migrate": "prisma migrate deploy",
+    "db:migrate:remote": "node scripts/migrate.mjs",
+    "db:migrate:status": "prisma migrate status",
     "db:seed": "tsx prisma/seed.ts",
     "bootstrap-admin": "tsx scripts/bootstrap-admin.ts",
     "local-db": "node scripts/local-db.mjs"

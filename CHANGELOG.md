@@ -2,6 +2,22 @@
 
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), versions [SemVer](https://semver.org/lang/fr/).
 
+## [1.2.0] — 2026-11-08
+
+### Mise en production Vercel + Neon
+- Procédure complète dans `docs/DEPLOIEMENT.md` : Neon (Francfort), Vercel (région `fra1`), variables par
+  environnement, premier admin, rollback, sauvegardes, limites des offres gratuites.
+- Base : URL poolée pour l'application, URL directe (`DATABASE_URL_UNPOOLED`) pour les migrations,
+  SSL imposé, relance automatique au réveil à froid de Neon, rôle applicatif `race_app` sans DDL.
+- `npm run db:migrate:remote` : migrations avec confirmation, refus des migrations destructives sans option.
+- Seed de démonstration interdit en production ; mot de passe du premier admin saisi de façon masquée.
+
+### Sécurité
+- Nouvelle variable obligatoire en production : `SESSION_SECRET` (HMAC des sessions et des compteurs
+  anti-abus). **Les sessions existantes sont invalidées** à la mise à jour.
+- Écritures d'une autre origine refusées par le middleware (403), HSTS, API en `no-store`, service worker
+  qui ne met jamais l'API en cache.
+
 ## [1.1.0] — 2026-11-08
 
 ### Marque blanche

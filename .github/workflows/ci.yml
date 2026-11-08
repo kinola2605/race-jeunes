@@ -46,8 +46,11 @@ jobs:
           --health-cmd "pg_isready -U race -d race" --health-interval 5s --health-timeout 5s --health-retries 20
     env:
       DATABASE_URL: postgresql://race:race@localhost:5432/race
+      DATABASE_URL_UNPOOLED: postgresql://race:race@localhost:5432/race
       COOKIE_SECURE: "false"
     steps:
+      - name: Secret de session éphémère
+        run: echo "SESSION_SECRET=$(openssl rand -hex 32)" >> "$GITHUB_ENV"
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:

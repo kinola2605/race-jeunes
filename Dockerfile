@@ -20,6 +20,7 @@ COPY --from=build --chown=race:race /app/prisma ./prisma
 COPY --from=build --chown=race:race /app/scripts ./scripts
 COPY --from=build --chown=race:race /app/src/scoring ./src/scoring
 COPY --from=build --chown=race:race /app/src/server/auth/password.ts ./src/server/auth/password.ts
+COPY --from=build --chown=race:race /app/src/server/db-url.ts ./src/server/db-url.ts
 COPY --from=build --chown=race:race /app/tsconfig.json ./tsconfig.json
 RUN npx prisma generate && chown -R race:race node_modules/.prisma node_modules/@prisma
 USER race

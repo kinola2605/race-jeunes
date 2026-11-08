@@ -2,12 +2,40 @@
  * Données de démonstration (FR-165) : deux saisons aux barèmes différents, ~20 pseudos, des matchs.
  * Tous les pseudos sont inventés. Idempotent : ne fait rien si une saison existe déjà.
  * Lancement : npm run db:seed (ou automatiquement au démarrage Docker si SEED_DEMO=true).
+ *
+ * Données de TEST uniquement : l'admin de démo a un mot de passe public. Garde-fous :
+ * - refus absolu en production Vercel (VERCEL_ENV=production) ;
+ * - refus sur une base distante (Neon…) sauf `--base-de-test` explicite (ex. branche Neon « preview »).
  */
 import { PrismaClient, type Prisma } from "@prisma/client";
 import { PRESET_2025, PRESET_2026, computeMatchPoints, type Ranking, type RuleSet, rungOf } from "../src/scoring";
 import { hashPassword } from "../src/server/auth/password";
+import { describeDatabase, isLocalHost, runtimeDatabaseUrl } from "../src/server/db-url";
+import { loadEnvFileOverride } from "../scripts/env-file";
 
-const db = new PrismaClient();
+// `--env-file <fichier>` : charge un fichier d'environnement local (ex. .env.neon.preview).
+const envFileIndex = process.argv.indexOf("--env-file");
+const envFile = envFileIndex > 0 ? process.argv[envFileIndex + 1] : undefined;
+if (envFile) loadEnvFileOverride(envFile);
+
+const rawUrl = process.env.DATABASE_URL ?? "";
+
+/** Raison du refus, ou null si le seed peut tourner sur cette base. */
+export function seedRefusal(env: NodeJS.ProcessEnv, url: string, argv: string[]): string | null {
+  if (env.VERCEL_ENV === "production") return "VERCEL_ENV=production : le seed de démonstration est interdit en production.";
+  let host: string;
+  try {
+    host = new URL(url).hostname;
+  } catch {
+    return "DATABASE_URL absente ou invalide.";
+  }
+  if (!isLocalHost(host) && !argv.includes("--base-de-test")) {
+    return `Base distante (${describeDatabase(url)}) : relancez avec --base-de-test si, et seulement si, c'est une base de test.`;
+  }
+  return null;
+}
+
+const db = new PrismaClient(rawUrl ? { datasourceUrl: runtimeDatabaseUrl(rawUrl) } : undefined);
 
 export const DEMO_ADMIN = { pseudo: "admin.demo", password: "demo-admin-2026" };
 export const DEMO_PLAYER_PASSWORD = "demo-joueur-2026";
@@ -155,6 +183,12 @@ async function seedSeason(opts: {
 }
 
 async function main() {
+  const refusal = seedRefusal(process.env, rawUrl, process.argv.slice(2));
+  if (refusal) {
+    console.error("Seed refusé. " + refusal);
+    process.exitCode = 1;
+    return;
+  }
   if ((await db.season.count()) > 0) {
     console.log("Seed ignoré : des saisons existent déjà.");
     return;

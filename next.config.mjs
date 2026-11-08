@@ -18,7 +18,8 @@ const csp = [
 
 /** @type {import("next").NextConfig} */
 const config = {
-  output: "standalone",
+  // Image Docker autonome ; inutile (et ignoré) sur Vercel, qui produit ses propres fonctions.
+  output: process.env.VERCEL ? undefined : "standalone",
   poweredByHeader: false,
   reactStrictMode: true,
   serverExternalPackages: ["@node-rs/argon2"],
@@ -33,7 +34,14 @@ const config = {
           { key: "X-Frame-Options", value: "DENY" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
           { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+          // HTTPS imposé pendant 2 ans (ignoré par les navigateurs en HTTP local).
+          ...(dev ? [] : [{ key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" }]),
         ],
+      },
+      {
+        // Réponses d'API jamais mises en cache (navigateur, service worker, CDN).
+        source: "/api/:path*",
+        headers: [{ key: "Cache-Control", value: "no-store" }],
       },
     ];
   },

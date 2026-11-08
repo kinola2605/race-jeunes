@@ -85,12 +85,15 @@ les pages et actions n'appellent que `server/services` après `requireUser()/req
 |---|---|
 | Création de compte non autorisée | aucune route publique hors `/connexion` ; actions de création appellent `requireAdmin()` ; test E2E + test unitaire de garde |
 | Énumération de pseudos | message unique ; hachage factice calculé quand le pseudo n'existe pas (temps constant approximatif) |
-| Force brute | table `LoginThrottle` (clé = SHA-256 du pseudo normalisé / de l'IP), 5 échecs / 15 min → blocage 15 min ; purge à 24 h |
-| Vol de session | cookie `HttpOnly`, `SameSite=Lax`, `Secure` en production ; jeton stocké haché ; expiration 30 j ; révocation à la désactivation, au changement et à la réinitialisation du mot de passe |
-| CSRF | Server Actions Next.js (vérification d'origine intégrée) ; routes d'export en GET sans effet de bord |
+| Force brute | table `LoginThrottle` (clé = HMAC-SHA256 `SESSION_SECRET` du pseudo normalisé / de l'IP, non réversible par énumération), 5 échecs / 15 min → blocage 15 min ; purge à 24 h |
+| Vol de session | cookie `HttpOnly`, `SameSite=Lax`, `Secure` en production ; jeton stocké sous forme d'empreinte HMAC (`SESSION_SECRET`) ; expiration 30 j ; révocation à la désactivation, au changement et à la réinitialisation du mot de passe |
+| CSRF | Server Actions Next.js (vérification d'origine intégrée) + middleware : 403 sur toute écriture d'une autre origine ou sans `Origin` ; routes d'export en GET sans effet de bord |
 | XSS | rendu React échappé, aucune injection HTML ; CSP `default-src 'self'` |
 | Injection | Prisma (requêtes paramétrées) ; validation Zod de toutes les entrées |
 | Escalade de privilège | vérification de rôle dans chaque action et chaque page (`requireAdmin`), jamais seulement dans la navigation |
+| Transport | HTTPS + HSTS (2 ans) ; base Neon en `sslmode=require` imposé par le code |
+| Privilèges base | l'application se connecte avec le rôle `race_app` (aucun DDL) ; migrations avec le rôle propriétaire, depuis le poste de l'admin technique |
+| Cache | API en `Cache-Control: no-store` ; le service worker ne met jamais l'API ni les pages en cache |
 | Fuite de secrets | `.env` ignoré, `.env.example` ; mots de passe temporaires jamais écrits en base ni dans les journaux |
 
 ## 7. Interface
@@ -103,6 +106,26 @@ les pages et actions n'appellent que `server/services` après `requireUser()/req
 - PWA : `manifest.webmanifest`, service worker minimal (ressources statiques + page hors ligne).
 
 ## 8. Déploiement
+
+Deux cibles, même code :
+
+**A. Production du club : Vercel (Hobby) + Neon (Free)** — procédure complète dans
+[`docs/DEPLOIEMENT.md`](../../docs/DEPLOIEMENT.md).
+
+- Fonctions en région `fra1` (`vercel.json`), base Neon `aws-eu-central-1` : données hébergées en UE.
+- `DATABASE_URL` = URL **poolée** (pgbouncer), rôle `race_app` sans DDL ; `src/server/db-url.ts` impose
+  `sslmode=require`, `pgbouncer=true` et `connect_timeout=15`. `src/server/db.ts` relance jusqu'à 3 fois
+  une connexion impossible (réveil à froid de Neon), jamais une requête déjà envoyée.
+- `DATABASE_URL_UNPOOLED` = URL **directe**, rôle propriétaire, utilisée **uniquement** par
+  `npm run db:migrate:remote` depuis le poste de l'admin technique (jamais présente dans Vercel).
+- Migrations jamais automatiques : script avec confirmation, refus des migrations destructives sans
+  `--allow-destructive`. Migrations additives uniquement (expand/contract) pour garder le rollback sûr.
+- Previews Vercel branchées sur la branche Neon `preview`, jamais sur la production.
+- `SESSION_SECRET` (≥ 32 caractères) obligatoire en production.
+- Premier admin : `npm run bootstrap-admin -- --env-file <fichier> <pseudo>`, mot de passe saisi masqué.
+- Seed de démonstration refusé si `VERCEL_ENV=production`, et sur toute base distante sans `--base-de-test`.
+
+**B. Auto-hébergement : Docker**
 
 - `Dockerfile` multi-étapes (Node 22 Alpine, sortie `standalone`).
 - `docker-compose.yml` : `db` (postgres:16-alpine, volume nommé, healthcheck) + `app`.

@@ -51,12 +51,19 @@ temporaire inconnu : ils illustrent le suivi « mot de passe jamais changé ». 
 
 > ⚠️ Ces identifiants sont publics : **ne jamais activer la démo en production** (`SEED_DEMO=false`).
 
-## Installation en production
+## Mise en ligne gratuite (Vercel + Neon)
+
+Hébergement géré, 100 % offres gratuites, données en UE (Francfort) : suivez
+**[docs/DEPLOIEMENT.md](docs/DEPLOIEMENT.md)** (création de la base, variables Vercel, premier admin,
+rollback, sauvegardes).
+
+## Installation en production (Docker)
 
 1. Copiez `.env.example` en `.env` et renseignez au minimum :
 
    ```bash
    POSTGRES_PASSWORD=un-mot-de-passe-long-et-aleatoire
+   SESSION_SECRET=au-moins-32-caracteres-aleatoires
    SEED_DEMO=false
    COOKIE_SECURE=true          # derrière un proxy HTTPS (recommandé)
    ADMIN_PSEUDO=admin.club
@@ -69,7 +76,7 @@ temporaire inconnu : ils illustrent le suivi « mot de passe jamais changé ». 
    Retirez ensuite `ADMIN_PASSWORD` du fichier `.env`. Alternative en ligne de commande :
 
    ```bash
-   docker compose exec app npx tsx scripts/bootstrap-admin.ts admin.club "mot-de-passe-initial"
+   docker compose exec app npx tsx scripts/bootstrap-admin.ts admin.club   # mot de passe demandé, non affiché
    ```
 
    Il n'existe **aucun** autre moyen de créer un compte : ensuite, seul un admin connecté crée les comptes
