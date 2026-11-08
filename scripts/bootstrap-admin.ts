@@ -5,6 +5,8 @@
  *   npm run bootstrap-admin -- --env-file .env.neon.production <pseudo>
  * Le mot de passe choisi ainsi n'a transité nulle part : il n'est pas à changer à la première connexion.
  *
+ * L'argument est le PSEUDO (jamais le mot de passe). Avec --env-file, ADMIN_PASSWORD est ignoré.
+ *
  * Usage Docker : variables ADMIN_PSEUDO et ADMIN_PASSWORD (mot de passe à changer à la première connexion).
  * Sans effet si le pseudo existe déjà.
  */
@@ -81,7 +83,9 @@ async function main() {
       return;
     }
 
-    let password = process.env.ADMIN_PASSWORD ?? "";
+    // Avec --env-file (base distante), on ignore toujours ADMIN_PASSWORD : Prisma a pu charger celui
+    // du .env local de développement. Le mot de passe est alors obligatoirement saisi au clavier.
+    let password = envFile ? "" : (process.env.ADMIN_PASSWORD ?? "");
     let interactive = false;
     if (!password) {
       if (!process.stdin.isTTY) {
