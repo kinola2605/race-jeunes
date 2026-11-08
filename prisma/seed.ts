@@ -12,6 +12,11 @@ import { PRESET_2025, PRESET_2026, computeMatchPoints, type Ranking, type RuleSe
 import { hashPassword } from "../src/server/auth/password";
 import { describeDatabase, isLocalHost, runtimeDatabaseUrl } from "../src/server/db-url";
 
+// `--env-file <fichier>` : charge un fichier d'environnement local (ex. .env.neon.preview).
+const envFileIndex = process.argv.indexOf("--env-file");
+const envFile = envFileIndex > 0 ? process.argv[envFileIndex + 1] : undefined;
+if (envFile) process.loadEnvFile(envFile);
+
 const rawUrl = process.env.DATABASE_URL ?? "";
 
 /** Raison du refus, ou null si le seed peut tourner sur cette base. */

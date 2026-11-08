@@ -1,6 +1,6 @@
 # Constitution — Race jeunes
 
-**Version** 1.0.0 · **Ratifiée** 2026-11-07 · **Dernier amendement** 2026-11-07
+**Version** 1.1.0 · **Ratifiée** 2026-11-07 · **Dernier amendement** 2026-11-08
 
 Cette constitution fixe les principes **non négociables** du projet. Toute spécification, tout plan,
 toute tâche et toute PR doivent s'y conformer. En cas de conflit, la constitution l'emporte.
@@ -31,6 +31,8 @@ toute tâche et toute PR doivent s'y conformer. En cas de conflit, la constituti
 - Les regroupements passent par des **étiquettes libres** sans lien avec une donnée personnelle.
 - Aucun cookie de traçage, aucun outil d'analytics, **aucune ressource chargée depuis un tiers**
   (polices, icônes, scripts : tout est auto-hébergé). Aucun envoi de données à un service externe.
+  L'hébergeur de l'application et de la base (ex. Vercel + Neon) n'est pas un « service externe » au sens
+  de ce principe, à condition que les données restent hébergées dans l'Union européenne.
 - Les journaux techniques ne contiennent ni mot de passe, ni jeton, ni adresse IP persistée.
 - Conservation : les saisons archivées et leurs matchs sont conservés sans limite de durée (données
   pseudonymes, intérêt historique du club) ; le journal d'audit est conservé 5 ans ; les sessions
@@ -77,7 +79,8 @@ toute tâche et toute PR doivent s'y conformer. En cas de conflit, la constituti
 ### IX. Simplicité
 - C'est une application de club (quelques centaines de joueurs). On choisit la solution la plus simple
   qui respecte les principes : pas de micro-services, pas de file de messages, pas de cache distribué.
-- Déploiement auto-hébergeable : `docker compose up` suffit.
+- Déploiement auto-hébergeable : `docker compose up` suffit. Un hébergement géré gratuit (Vercel + Neon)
+  est aussi supporté, sans infrastructure supplémentaire (voir `docs/DEPLOIEMENT.md`).
 
 ### X. Conventions
 - TypeScript strict, ESLint, Prettier. Pas de `any` non justifié.

@@ -83,6 +83,17 @@ Ordre : socle → stories par priorité. Chaque tâche est testable indépendamm
 - [x] T102 CI GitHub Actions : lint, typage, unitaires (couverture 100 %), E2E, `docker compose up`
 - [x] T103 README (démarrage, bootstrap admin, sauvegardes, conservation), CONTRIBUTING, LICENSE provisoire
 
+## Mise en production Vercel + Neon (v1.2)
+
+- [x] T110 Connexion Neon : URL poolée + directUrl, SSL imposé, relance au réveil à froid (`db-url.ts`, `db.ts`)
+- [x] T111 Rôle applicatif `race_app` sans DDL (`prisma/sql/role-applicatif.sql`)
+- [x] T112 Migrations distantes contrôlées (`npm run db:migrate:remote`), jamais au build
+- [x] T113 Seed interdit en production, bootstrap admin avec saisie masquée
+- [x] T114 `SESSION_SECRET` (HMAC des sessions et de l'anti-abus), CSRF par origine dans le middleware, HSTS, API `no-store`, service worker durci
+- [x] T115 `vercel.json` (fra1), `postinstall: prisma generate`, `.env.example`
+- [x] T116 E2E de recette : saison + barème, engagement, historique, refus non-admin, CSRF, en-têtes
+- [x] T117 `docs/DEPLOIEMENT.md` (étapes manuelles, variables, rollback, sauvegardes, limites gratuites)
+
 ## Suite (P3, hors v1)
 
 - [ ] T200 Rôle « saisisseur »
