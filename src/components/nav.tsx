@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Icon } from "./ui";
+import { BrandMark } from "./brand";
 import type { IconName } from "./icons";
 
 const NAV: Record<"PLAYER" | "ADMIN", { href: string; icon: IconName; label: string; exact?: boolean }[]> = {
@@ -28,12 +29,7 @@ export function AppNav({ role }: { role: "PLAYER" | "ADMIN" }) {
   return (
     <nav className="appnav" aria-label="Navigation principale">
       <Link className="nav-brand" href={home}>
-        <img className="logo logo-on-dark" src="/logo/logo.svg" alt="Mon club de tennis" />
-        <img className="logo logo-on-light" src="/logo/logo.svg" alt="Mon club de tennis" />
-        <span className="brand-txt">
-          <span className="caps">Race jeunes</span>
-          <span className="brand-name">Club</span>
-        </span>
+        <BrandMark />
       </Link>
       <ul>
         {items.map((item) => {

@@ -74,7 +74,7 @@ def shell(page):
             cur = ' aria-current="page"' if href == page.get("nav") else ""
             items.append(f'<li><a href="{href}"{cur}>{{{{i:{ic}}}}}<span>{label}</span></a></li>')
         nav = (f'<nav class="appnav" aria-label="Navigation principale">'
-               f'<a class="nav-brand" href="{home}">{LOGOS}<span class="brand-txt"><span class="caps">Race jeunes</span><span class="brand-name">Club</span></span></a>'
+               f'<a class="nav-brand" href="{home}">{LOGOS}<span class="brand-txt"><span class="caps">Race jeunes</span><span class="brand-name">Mon club</span></span></a>'
                f'<ul>{"".join(items)}</ul></nav>\n')
     body = f'<main id="main" class="main {main_cls}">\n{page["main"]}\n</main>\n'
     foot = page.get("foot", "")

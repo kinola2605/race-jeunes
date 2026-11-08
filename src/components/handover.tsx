@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { CopyButton, PrintButton } from "./forms";
 import { Alert } from "./ui";
+import { useBrand } from "./brand";
 
 /** E08c — remise unique du mot de passe temporaire (FR-021). Rien n'est conservé après avoir quitté l'écran. */
 export function Handover({ pseudo, password, context, doneHref, againHref }: { pseudo: string; password: string; context: "creation" | "reset"; doneHref: string; againHref?: string }) {
@@ -61,13 +62,14 @@ export function Handover({ pseudo, password, context, doneHref, againHref }: { p
 
 /** Fiche imprimable (une page par joueur). Sans nom réel, à détruire après la première connexion. */
 export function PrintSheet({ rows }: { rows: { pseudo: string; password: string }[] }) {
+  const brand = useBrand();
   return (
     <section className="print-sheet" aria-hidden="true">
       {rows.map((r) => (
         <div key={r.pseudo} style={{ border: "2px solid #000", padding: 24, maxWidth: 520, margin: "0 auto 24px", breakInside: "avoid", fontFamily: "var(--font-sans)", color: "#000" }}>
-          <img src="/logo/logo.svg" alt="" width={64} height={64} />
-          <h2 style={{ fontSize: 20, margin: "12px 0 4px" }}>Race jeunes — vos identifiants</h2>
-          <p style={{ margin: "0 0 16px" }}>Mon club de tennis</p>
+          <img src={brand.logoLight} alt="" width={64} height={64} />
+          <h2 style={{ fontSize: 20, margin: "12px 0 4px" }}>{brand.appName} — vos identifiants</h2>
+          {brand.clubName ? <p style={{ margin: "0 0 16px" }}>{brand.clubName}</p> : <div style={{ height: 12 }} />}
           <p style={{ margin: 0 }}>
             Pseudo : <strong style={{ fontSize: 20 }}>{r.pseudo}</strong>
           </p>
@@ -75,7 +77,7 @@ export function PrintSheet({ rows }: { rows: { pseudo: string; password: string 
             Mot de passe temporaire : <strong style={{ fontFamily: "var(--font-mono)", fontSize: 20, letterSpacing: ".1em" }}>{r.password}</strong>
           </p>
           <ol style={{ margin: 0, paddingLeft: 20, fontSize: 14 }}>
-            <li>Ouvrez l&apos;application Race jeunes (adresse communiquée par le club).</li>
+            <li>Ouvrez l&apos;application {brand.appName} (adresse communiquée par le club).</li>
             <li>Connectez-vous avec ce pseudo et ce mot de passe.</li>
             <li>Choisissez immédiatement votre mot de passe personnel.</li>
           </ol>

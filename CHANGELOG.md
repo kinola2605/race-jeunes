@@ -2,9 +2,18 @@
 
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), versions [SemVer](https://semver.org/lang/fr/).
 
+## [1.1.0] — 2026-11-08
+
+### Marque blanche
+- Plus aucune référence à un club particulier : nom de l'app, nom et sigle du club, logos (thèmes sombre et clair)
+  se configurent par variables d'environnement (`APP_NAME`, `CLUB_NAME`, `CLUB_SHORT_NAME`, `BRAND_LOGO`,
+  `BRAND_LOGO_LIGHT`), lues à l'exécution, sans rebuild.
+- Manifeste PWA généré dynamiquement à partir de cette configuration.
+- Valeurs neutres par défaut (« Race jeunes », logo du projet).
+
 ## [1.0.0] — 2026-11-07
 
-Première version de la Race jeunes d'un club de tennis.
+Première version de la Race jeunes.
 
 ### Accès et comptes
 - Connexion par **pseudo + mot de passe**, seule page publique ; **aucune inscription libre** (tests E2E dédiés).
@@ -37,7 +46,7 @@ Première version de la Race jeunes d'un club de tennis.
 - Moteur de points en **bibliothèque pure**, couverture **100 %**, tests sur deux barèmes différents.
 - Next.js 15, PostgreSQL 16, Prisma 6, argon2id, sessions serveur révocables, CSP `default-src 'self'`.
 - **Zéro donnée personnelle**, aucune ressource externe (Poppins et icônes auto-hébergées).
-- PWA installable, thèmes sombre et clair, identité visuelle du club (direction B des maquettes), contrastes WCAG AA.
+- PWA installable, thèmes sombre et clair, identité visuelle « Court » (direction B des maquettes), contrastes WCAG AA.
 - `docker compose up` avec données de démonstration (deux saisons, deux barèmes, 20 pseudos).
 - CI GitHub Actions : lint, typage, tests unitaires, E2E Playwright, démarrage Docker.
 - Logo et bannière du projet.

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { requireUser } from "@/server/auth/session";
 import { AppNav } from "@/components/nav";
+import { BrandMark } from "@/components/brand";
 import { Icon } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
@@ -12,12 +13,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     <div className="app">
       <header className="topbar">
         <Link className="brand" href={home}>
-          <img className="logo logo-on-dark" src="/logo/logo.svg" alt="Mon club de tennis" />
-          <img className="logo logo-on-light" src="/logo/logo.svg" alt="Mon club de tennis" />
-          <span className="brand-txt">
-            <span className="caps">Race jeunes</span>
-            <span className="brand-name">Club</span>
-          </span>
+          <BrandMark />
         </Link>
         <Link className="user-chip" href="/compte" aria-label={`Mon compte : ${user.pseudo}`}>
           <Icon name="user" />

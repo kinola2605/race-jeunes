@@ -4,14 +4,14 @@
 
 <p align="center">
   <a href="https://github.com/kinola2605/race-jeunes/actions/workflows/ci.yml"><img src="https://github.com/kinola2605/race-jeunes/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="https://github.com/kinola2605/race-jeunes/releases/tag/v1.0.0"><img src="https://img.shields.io/badge/version-1.0.0-FF7F5C" alt="Version 1.0.0"></a>
+  <img src="https://img.shields.io/badge/version-1.1.0-FF7F5C" alt="Version 1.1.0">
   <img src="https://img.shields.io/badge/couverture_moteur-100%25-6FDC9C" alt="Couverture du moteur de points : 100 %">
-  <img src="https://img.shields.io/badge/donn%C3%A9es_personnelles-0-FDC2B2" alt="Zéro donnée personnelle">
+  <img src="https://img.shields.io/badge/marque-blanche-FDC2B2" alt="Marque blanche">
 </p>
 
 # Race jeunes
 
-Application web (PWA mobile-first) de suivi de la **Race jeunes** du club : chaque joueur engagé cumule des
+Application web (PWA mobile-first) de suivi d'une **Race jeunes** de club de tennis, en **marque blanche** : chaque joueur engagé cumule des
 points selon ses victoires et défaites, d'après un **barème propre à chaque saison**, paramétrable sans
 toucher au code.
 
@@ -90,21 +90,24 @@ docker compose exec -T db pg_restore -U race -d race --clean < sauvegarde-AAAA-M
 Conservez plusieurs générations hors du serveur. Les migrations sont versionnées dans `prisma/migrations`
 et appliquées automatiquement au démarrage (`prisma migrate deploy`).
 
-## Conservation
+## Marque blanche
 
-Par conception, **aucune donnée personnelle n'est collectée** (constitution, principe III) :
+Aucun nom de club n'est codé en dur. L'identité se règle par variables d'environnement, lues au démarrage
+(aucun rebuild nécessaire) :
 
-- un joueur est identifié par un pseudo attribué par le club ; la correspondance pseudo ↔ personne réelle est
-  tenue **hors de l'application** par le club ;
-- tous les champs libres affichent « Ne saisissez aucune donnée personnelle (nom réel, etc.) » ;
-- pas de catégorie d'âge ni de sexe : des étiquettes libres (« Groupe A ») permettent les regroupements ;
-- seul cookie : la session (`HttpOnly`) et la préférence de thème (fonctionnel) ; aucun analytics, aucun
-  appel à un service tiers (CSP `default-src 'self'`) ;
-- les compteurs anti-abus ne stockent qu'une empreinte SHA-256 du pseudo et de l'adresse IP, purgée après 24 h.
+| Variable | Rôle | Défaut |
+|---|---|---|
+| `APP_NAME` | nom de l'application | `Race jeunes` |
+| `CLUB_NAME` | nom complet du club (connexion, fiches imprimables, manifeste) | aucun |
+| `CLUB_SHORT_NAME` | sigle affiché sous le nom de l'app dans l'en-tête | aucun |
+| `BRAND_LOGO` | logo pour le thème sombre, chemin servi par l'app (ex. `/logo/club-clair.svg`) | `/icon.svg` |
+| `BRAND_LOGO_LIGHT` | logo pour le thème clair et l'impression | `BRAND_LOGO` |
 
-**Conservation** : saisons archivées et matchs conservés sans limite (données pseudonymes, historique du
-club) ; journal d'audit 5 ans ; sessions 30 jours maximum. Un compte n'est jamais supprimé s'il a un
-historique : il est désactivé.
+Les logos se déposent dans `public/logo/` (la CSP n'autorise aucune origine tierce). Avec Docker, montez
+ce dossier en volume (`./logo:/app/public/logo:ro`).
+
+**Conservation** : saisons archivées et matchs conservés sans limite (historique du club) ; journal d'audit
+5 ans ; sessions 30 jours maximum. Un compte n'est jamais supprimé s'il a un historique : il est désactivé.
 
 ## Développement
 
@@ -143,10 +146,9 @@ specs/, .specify/   spécification (Spec Kit) : constitution, spec, plan, tâche
 
 Le logo du projet ([`docs/assets/logo.svg`](docs/assets/logo.svg)) est une création originale aux couleurs de
 la charte (bleu nuit, saumon, corail) : une balle, un podium et une trajectoire montante. Il sert d'icône à la
-PWA. Il est distinct du logo d'un club, utilisé dans l'interface sous réserve de l'accord du club.
+PWA et de logo par défaut ; chaque club peut le remplacer par le sien (voir « Marque blanche »).
 
 ## Licence
 
-Tous droits réservés, en attendant la décision du club (voir [LICENSE](LICENSE)). Le logo du club est la
-propriété du club ; son usage dans l'application est soumis à son accord. Police Poppins : SIL Open Font
-License 1.1 (`public/fonts/OFL.txt`).
+Tous droits réservés (voir [LICENSE](LICENSE)). Police Poppins : SIL Open Font License 1.1
+(`public/fonts/OFL.txt`).

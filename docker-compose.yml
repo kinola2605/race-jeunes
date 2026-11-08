@@ -28,6 +28,11 @@ services:
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
       SEED_DEMO: ${SEED_DEMO:-true}
       COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      APP_NAME: ${APP_NAME:-Race jeunes}
+      CLUB_NAME: ${CLUB_NAME:-}
+      CLUB_SHORT_NAME: ${CLUB_SHORT_NAME:-}
+      BRAND_LOGO: ${BRAND_LOGO:-}
+      BRAND_LOGO_LIGHT: ${BRAND_LOGO_LIGHT:-}
     ports:
       - "${APP_PORT:-3000}:3000"
 

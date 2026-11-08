@@ -3,15 +3,21 @@ import { cookies } from "next/headers";
 import "@/styles/tokens.css";
 import "@/styles/app.css";
 import { ServiceWorker } from "@/components/sw";
+import { BrandProvider } from "@/components/brand";
+import { getBrand } from "@/brand";
 
-export const metadata: Metadata = {
-  title: { default: "Race jeunes", template: "%s · Race jeunes" },
-  description: "Suivi de la Race jeunes d'un club de tennis",
-  manifest: "/manifest.webmanifest",
-  robots: { index: false, follow: false },
-  icons: { icon: "/icon.svg", apple: "/icon.svg" },
-  appleWebApp: { capable: true, title: "Race jeunes", statusBarStyle: "black-translucent" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { appName, clubName, clubShortName } = getBrand();
+  const full = clubShortName ? `${appName} ${clubShortName}` : appName;
+  return {
+    title: { default: clubShortName ? `${appName} · ${clubShortName}` : appName, template: `%s · ${full}` },
+    description: clubName ? `Suivi de la ${appName} — ${clubName}` : `Suivi de la ${appName}`,
+    manifest: "/manifest.webmanifest",
+    robots: { index: false, follow: false },
+    icons: { icon: "/icon.svg", apple: "/icon.svg" },
+    appleWebApp: { capable: true, title: full, statusBarStyle: "black-translucent" },
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -28,7 +34,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <a className="skip" href="#main">
           Aller au contenu
         </a>
-        {children}
+        <BrandProvider value={getBrand()}>{children}</BrandProvider>
         <ServiceWorker />
       </body>
     </html>

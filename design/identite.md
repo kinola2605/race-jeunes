@@ -1,10 +1,8 @@
 # Identité visuelle — Race jeunes
 
-> Phase 0 · relevé effectué le **7 novembre 2026** sur
-> <le site d'un club de référence> (site Webflow).
-> Les valeurs marquées **relevé** proviennent de la feuille de style officielle
-> (`club.webflow.shared.be91bfc4e.css`), des styles calculés dans le navigateur ou des
-> fichiers SVG du site. Les valeurs marquées **créé** sont des ajouts pour l'application (accessibilité,
+> Phase 0 · relevé effectué le **7 novembre 2026** sur le site web d'un club de référence.
+> Les valeurs marquées **relevé** proviennent de sa feuille de style, des styles calculés dans le
+> navigateur ou de ses fichiers SVG. Les valeurs marquées **créé** sont des ajouts pour l'application (accessibilité,
 > états sémantiques, thème clair) : ce ne sont **pas** des couleurs officielles du club.
 > Source machine : [`tokens.json`](tokens.json).
 
@@ -36,14 +34,14 @@ La direction A reste visible dans les maquettes pour mémoire (« A · non reten
 | Typographie | Poppins (à confirmer) | **Poppins confirmée** (112 déclarations ; Montserrat et Merriweather chargées mais quasi inutilisées) | CSS + chargement WebFont du site |
 | Trait sous les titres | « court trait blanc épais » | **40 × 5 px, `#F6F6F6`** | `.div-block-42` calculé |
 | Arrondis | ~16 px | **20 px** photos ; **15 px** boutons | `.padel-img1`, `.button-inline-blue` |
-| Logo | médaillon blanc / bleu | **confirmé** : `logo.svg` (blanc, détails `#15293E` et `#C4E5F4`) et `logo.svg` (`#0E263C`) | SVG du site, copiés sans modification dans `assets/logo/` |
+| Logo | neutre | **marque blanche** : logo du projet par défaut ([`docs/assets/logo.svg`](../docs/assets/logo.svg)), remplaçable par celui du club via `BRAND_LOGO` / `BRAND_LOGO_LIGHT` | `design/assets/logo/` |
 
 > ⚠️ **Le site du club charge ses polices depuis Google Fonts.** L'application ne le fera pas :
 > Poppins (licence SIL OFL 1.1, voir [`assets/fonts/OFL.txt`](assets/fonts/OFL.txt)) est
 > auto-hébergée en WOFF2, sous-ensemble latin (accents français inclus), graisses 400/500/600/700.
 
-> ⚠️ **Logo** : copié tel quel depuis le site pour les maquettes uniquement. Son usage dans
-> l'application reste **soumis à l'accord du club** (question à trancher en clarification).
+> ℹ️ **Logo** : l'application est en marque blanche ; aucun logo de club n'est versionné.
+> Chaque club dépose le sien dans `public/logo/` et le déclare par variable d'environnement.
 
 ## 2. Palette
 

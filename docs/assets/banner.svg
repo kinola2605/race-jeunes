@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 360" role="img" aria-labelledby="t d">
   <title id="t">Race jeunes</title>
-  <desc id="d">Le classement de la Race jeunes d'un club de tennis</desc>
+  <desc id="d">Le classement de la Race jeunes, en marque blanche pour tout club de tennis</desc>
   <defs>
     <clipPath id="ball"><circle cx="300" cy="196" r="104"/></clipPath>
     <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
