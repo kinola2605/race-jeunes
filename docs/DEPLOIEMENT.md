@@ -11,7 +11,7 @@ Votre poste ──TLS, direct──▶ Neon : migrations, premier admin, sauvega
 
 | Environnement Vercel | Branche Git | Branche Neon | Données |
 |---|---|---|---|
-| Production | `main` | `main` | réelles |
+| Production | `main` | `production` (branche par défaut, parfois nommée `main`) | réelles |
 | Preview | toute autre branche / PR | `preview` | test (démo autorisée) |
 | Développement | — | Postgres local (`npm run local-db`) | démo |
 
@@ -29,7 +29,7 @@ Votre poste ──TLS, direct──▶ Neon : migrations, premier admin, sauvega
    - Postgres version : la plus récente proposée
    - Cloud provider **AWS**, région **Europe Central 1 (Frankfurt)** — `aws-eu-central-1`
    - Database name : `neondb` (par défaut)
-3. Une branche **`main`** est créée : ce sera la **production**.
+3. La branche par défaut (**`production`**, ou `main` sur les anciens projets) sera la **production**.
 4. **Branches → Create branch** : nom `preview`, parent `main`, *Current point in time*. Elle servira à
    tous les déploiements de preview.
 
@@ -61,6 +61,21 @@ DATABASE_URL_UNPOOLED="<URL directe main, rôle neondb_owner>"
 > N'y mettez **pas** `ADMIN_PASSWORD` : le mot de passe du premier admin est saisi de façon masquée.
 
 ## 3. Créer le schéma et le rôle applicatif (pour chaque branche)
+
+> **Variante sans URL propriétaire sur le poste** :
+> le schéma, l'historique `_prisma_migrations` et le rôle `race_app` (sans mot de passe) ont été créés
+> par le SQL Editor / l'API Neon. Il ne reste alors qu'à donner un mot de passe à `race_app` et à
+> générer `SESSION_SECRET`, **sur votre poste**, sans que les secrets s'affichent :
+>
+> ```bash
+> node scripts/secrets-neon.mjs --production <hôte-pooler-production> --preview <hôte-pooler-preview>
+> ```
+>
+> Les hôtes « pooler » (non secrets) se lisent dans Neon → Connect (pooling activé), partie après `@`.
+> Le script écrit `.env.secrets.local` (instructions `ALTER ROLE` à exécuter dans le SQL Editor de chaque
+> branche, valeurs `DATABASE_URL` et `SESSION_SECRET` à coller dans Vercel) ainsi que
+> `.env.neon.production` / `.env.neon.preview` (pour `bootstrap-admin`). Tous sont ignorés par git.
+> Supprimez `.env.secrets.local` une fois les valeurs saisies. Passez ensuite directement au §4.
 
 Prérequis : Node 22 et `npm ci` lancé dans le dépôt.
 
@@ -180,7 +195,8 @@ Les migrations ne sont **jamais** lancées automatiquement (ni au build ni au d�
 La fenêtre de restauration de l'offre Free étant courte, faites des **exports réguliers** : au minimum
 **chaque semaine** et **avant chaque migration**.
 
-Prérequis : outils clients PostgreSQL (`pg_dump`, `pg_restore`) d'une version **≥ à celle du serveur Neon**.
+Prérequis : outils clients PostgreSQL (`pg_dump`, `pg_restore`) d'une version **≥ à celle du serveur Neon**
+(à la création du projet de référence, Neon proposait Postgres **18**).
 
 Export (PowerShell) — l'URL est lue depuis votre fichier local, jamais tapée en clair :
 
