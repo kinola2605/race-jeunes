@@ -20,7 +20,7 @@ test.describe("accès fermé", () => {
   test("anonyme : un POST direct vers une route de création ne crée rien", async ({ request }) => {
     for (const path of ["/admin/joueurs/nouveau", "/api/auth/signup", "/inscription"]) {
       const res = await request.post(path, { form: { pseudo: "Intrus", ranking: "40" }, maxRedirects: 0 });
-      expect([303, 307, 308, 404, 405]).toContain(res.status());
+      expect([303, 307, 308, 403, 404, 405]).toContain(res.status());
     }
   });
 

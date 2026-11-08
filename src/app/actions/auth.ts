@@ -8,9 +8,11 @@ import { attempt, str } from "./util";
 
 export type FormState = { error?: string; ok?: string } | undefined;
 
+/** Origine réseau du client. Sur Vercel, `x-vercel-forwarded-for` est posé par la plateforme (non falsifiable). */
 async function clientIp(): Promise<string> {
   const h = await headers();
-  return h.get("x-forwarded-for")?.split(",")[0]?.trim() || h.get("x-real-ip") || "local";
+  const first = (v: string | null) => v?.split(",")[0]?.trim();
+  return first(h.get("x-vercel-forwarded-for")) || first(h.get("x-forwarded-for")) || h.get("x-real-ip") || "local";
 }
 
 /** FR-001, FR-003, FR-004 */

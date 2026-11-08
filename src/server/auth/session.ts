@@ -1,10 +1,11 @@
 import "server-only";
-import { createHash, randomBytes } from "node:crypto";
+import { randomBytes } from "node:crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 import type { Role } from "@prisma/client";
 import { db } from "@/server/db";
+import { keyedDigest } from "@/server/auth/secret";
 
 export const SESSION_COOKIE = "race_session";
 const SESSION_DAYS = 30;
@@ -17,8 +18,9 @@ export interface SessionUser {
   ranking: string | null;
 }
 
+/** Empreinte HMAC du jeton (seule valeur stockée en base). */
 function digest(token: string): string {
-  return createHash("sha256").update(token).digest("hex");
+  return keyedDigest("session", token);
 }
 
 function secureCookie(): boolean {

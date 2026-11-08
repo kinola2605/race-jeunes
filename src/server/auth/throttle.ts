@@ -1,6 +1,6 @@
 import "server-only";
-import { createHash } from "node:crypto";
 import { db } from "@/server/db";
+import { keyedDigest } from "@/server/auth/secret";
 
 /** 5 échecs par pseudo ; 20 par origine réseau (un wifi de club partage souvent une même adresse). */
 export const MAX_FAILURES = { pseudo: 5, ip: 20 } as const;
@@ -8,9 +8,12 @@ const WINDOW_MS = 15 * 60 * 1000;
 const LOCK_MS = 15 * 60 * 1000;
 const PURGE_MS = 24 * 3600 * 1000;
 
-/** Empreinte de la clé : ni pseudo ni adresse IP en clair en base (constitution III). */
+/**
+ * Empreinte de la clé : ni pseudo ni adresse IP en clair en base (constitution III).
+ * HMAC avec SESSION_SECRET : une adresse IP ne peut pas être retrouvée par énumération.
+ */
 export function throttleKey(kind: "pseudo" | "ip", value: string): string {
-  return kind + ":" + createHash("sha256").update(value.toLowerCase()).digest("hex");
+  return kind + ":" + keyedDigest("throttle-" + kind, value.toLowerCase());
 }
 
 export async function isLocked(keys: string[]): Promise<boolean> {
