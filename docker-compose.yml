@@ -24,6 +24,8 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL: postgresql://race:${POSTGRES_PASSWORD:-race}@db:5432/race
+      DATABASE_URL_UNPOOLED: postgresql://race:${POSTGRES_PASSWORD:-race}@db:5432/race
+      SESSION_SECRET: ${SESSION_SECRET:-}
       ADMIN_PSEUDO: ${ADMIN_PSEUDO:-}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
       SEED_DEMO: ${SEED_DEMO:-true}

@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
+import { randomBytes } from "node:crypto";
 
 /**
  * Tests E2E. Prérequis : base migrée et données de démonstration (npm run db:seed), application construite.
@@ -22,6 +23,7 @@ export default defineConfig({
     url: "http://localhost:3000/connexion",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
-    env: { COOKIE_SECURE: "false" },
+    // Secret éphémère propre au run de tests (aucun secret versionné).
+    env: { COOKIE_SECURE: "false", SESSION_SECRET: process.env.SESSION_SECRET ?? randomBytes(32).toString("hex") },
   },
 });
