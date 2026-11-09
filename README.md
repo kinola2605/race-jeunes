@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/kinola2605/race-jeunes/actions/workflows/ci.yml"><img src="https://github.com/kinola2605/race-jeunes/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <img src="https://img.shields.io/badge/version-1.1.0-E28C57" alt="Version 1.1.0">
+  <img src="https://img.shields.io/badge/version-1.2.1-E28C57" alt="Version 1.2.1">
   <img src="https://img.shields.io/badge/couverture_moteur-100%25-6FDC9C" alt="Couverture du moteur de points : 100 %">
   <img src="https://img.shields.io/badge/marque-blanche-EBB08C" alt="Marque blanche">
 </p>
