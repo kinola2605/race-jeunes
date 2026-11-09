@@ -4,42 +4,42 @@
   <defs>
     <clipPath id="ball"><circle cx="300" cy="196" r="104"/></clipPath>
     <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
-      <path d="M80 0 H0 V80" fill="none" stroke="#FDC2B2" stroke-width="1" opacity=".10"/>
+      <path d="M80 0 H0 V80" fill="none" stroke="#EBB08C" stroke-width="1" opacity=".10"/>
     </pattern>
   </defs>
-  <rect width="1280" height="360" fill="#14293E"/>
+  <rect width="1280" height="360" fill="#1F2B42"/>
   <rect width="1280" height="360" fill="url(#grid)"/>
-  <rect x="0" y="352" width="1280" height="8" fill="#FF7F5C"/>
+  <rect x="0" y="352" width="1280" height="8" fill="#E28C57"/>
   <g transform="translate(64 52) scale(.5)">
-    <rect width="512" height="512" rx="112" fill="#0F1F30"/>
-    <g fill="none" stroke="#FDC2B2" stroke-width="6" stroke-linecap="round" opacity=".35">
+    <rect width="512" height="512" rx="112" fill="#161F31"/>
+    <g fill="none" stroke="#EBB08C" stroke-width="6" stroke-linecap="round" opacity=".35">
       <path d="M96 440 L176 300 H336 L416 440"/><path d="M136 370 H376"/><path d="M256 300 V370"/>
     </g>
-    <g fill="#FDC2B2">
+    <g fill="#EBB08C">
       <rect x="92" y="356" width="72" height="84" rx="14"/>
       <rect x="186" y="304" width="72" height="136" rx="14"/>
       <rect x="280" y="336" width="72" height="104" rx="14"/>
     </g>
-    <circle cx="300" cy="196" r="104" fill="#FF7F5C"/>
-    <g clip-path="url(#ball)" fill="none" stroke="#14293E" stroke-width="12" stroke-linecap="round">
+    <circle cx="300" cy="196" r="104" fill="#E28C57"/>
+    <g clip-path="url(#ball)" fill="none" stroke="#1F2B42" stroke-width="12" stroke-linecap="round">
       <path d="M206 128 C 262 160, 262 232, 206 264"/><path d="M394 128 C 338 160, 338 232, 394 264"/>
     </g>
     <path d="M84 300 C 140 250, 176 236, 214 214" fill="none" stroke="#F6F6F6" stroke-width="12" stroke-linecap="round" stroke-dasharray="2 26"/>
     <path d="M398 404 l44 -44 m0 0 h-34 m34 0 v34" fill="none" stroke="#F6F6F6" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
   <g font-family="Poppins, 'Segoe UI', Helvetica, Arial, sans-serif">
-    <text x="372" y="118" fill="#FF7F5C" font-size="22" font-weight="600" letter-spacing="3">CLASSEMENT JEUNES · CLUB DE TENNIS</text>
+    <text x="372" y="118" fill="#E28C57" font-size="22" font-weight="600" letter-spacing="3">CLASSEMENT JEUNES · CLUB DE TENNIS</text>
     <text x="368" y="196" fill="#F6F6F6" font-size="84" font-weight="700">Race jeunes</text>
     <text x="372" y="244" fill="#D6D6D6" font-size="26">Victoires, perfs et classement de la saison, au bord du court.</text>
     <g font-size="18" font-weight="600">
-      <rect x="372" y="276" width="96" height="36" rx="18" fill="none" stroke="#FDC2B2"/>
-      <text x="420" y="300" fill="#FDC2B2" text-anchor="middle">PWA</text>
-      <rect x="480" y="276" width="262" height="36" rx="18" fill="none" stroke="#FDC2B2"/>
-      <text x="611" y="300" fill="#FDC2B2" text-anchor="middle">Zéro donnée personnelle</text>
-      <rect x="754" y="276" width="222" height="36" rx="18" fill="none" stroke="#FDC2B2"/>
-      <text x="865" y="300" fill="#FDC2B2" text-anchor="middle">Barème par saison</text>
-      <rect x="988" y="276" width="158" height="36" rx="18" fill="none" stroke="#FDC2B2"/>
-      <text x="1067" y="300" fill="#FDC2B2" text-anchor="middle">Accès fermé</text>
+      <rect x="372" y="276" width="96" height="36" rx="18" fill="none" stroke="#EBB08C"/>
+      <text x="420" y="300" fill="#EBB08C" text-anchor="middle">PWA</text>
+      <rect x="480" y="276" width="262" height="36" rx="18" fill="none" stroke="#EBB08C"/>
+      <text x="611" y="300" fill="#EBB08C" text-anchor="middle">Zéro donnée personnelle</text>
+      <rect x="754" y="276" width="222" height="36" rx="18" fill="none" stroke="#EBB08C"/>
+      <text x="865" y="300" fill="#EBB08C" text-anchor="middle">Barème par saison</text>
+      <rect x="988" y="276" width="158" height="36" rx="18" fill="none" stroke="#EBB08C"/>
+      <text x="1067" y="300" fill="#EBB08C" text-anchor="middle">Accès fermé</text>
     </g>
   </g>
 </svg>
