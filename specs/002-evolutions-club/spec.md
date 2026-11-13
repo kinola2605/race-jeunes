@@ -105,7 +105,7 @@ Une fiche par demande. Recopier le modèle autant que nécessaire (EV-06, EV-07�
 
 ### EV-09 · Bonus gain tournoi
 
-- **Spec** : `specs/006-bonus-tournoi/spec.md`
+- **Spec** : `specs/livrees/006-bonus-tournoi/spec.md` (livrée en v1.5.0)
 - **Besoin** : bonus gain tournoi à prévoir. Plusieurs victoires dans un même tournoi = des points gagnés.
 
 ### EV-10 · Photos de profil
