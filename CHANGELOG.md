@@ -2,6 +2,21 @@
 
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), versions [SemVer](https://semver.org/lang/fr/).
 
+## [Non publié]
+
+### Apparence du club (specs 003 et 004)
+- Nouvelle page admin **Apparence** (`/admin/apparence`, accessible depuis « Mon compte ») :
+  - **logo** du club déposé par l'admin (PNG, JPEG, WebP ou SVG, 512 Ko au plus, type contrôlé d'après le
+    contenu), utilisé dans les deux thèmes, sur la connexion, la fiche imprimable et comme icône de l'appli ;
+    retour au logo par défaut en un clic ;
+  - **4 couleurs** (accent et action, thèmes sombre et clair), avec aperçu en direct et **refus** de toute
+    couleur dont le contraste WCAG 2.1 est insuffisant ; retour aux couleurs par défaut en un clic.
+- Priorité du logo : logo déposé, puis `BRAND_LOGO` / `BRAND_LOGO_LIGHT`, puis logo du projet.
+- Logo servi par l'appli (`/club-logo`), public, sous une CSP qui interdit tout script.
+- Changements tracés au journal d'audit (nouveau type « Apparence »).
+- **Migration** `20261113120000_club_appearance` (nouvelle table `ClubAppearance`) à appliquer avant le
+  déploiement (`npm run db:migrate:remote`).
+
 ## [1.2.0] — 2026-11-08
 
 ### Mise en production Vercel + Neon

@@ -158,17 +158,17 @@ model Season {
 
 /// Barème d'une saison, versionné. `rules` respecte le schéma RuleSet de src/scoring/rules.ts.
 model ScoringRuleSet {
-  id          String        @id @default(cuid())
-  seasonId    String
-  version     Int
-  status      RuleSetStatus @default(DRAFT)
-  rules       Json
+  id           String        @id @default(cuid())
+  seasonId     String
+  version      Int
+  status       RuleSetStatus @default(DRAFT)
+  rules        Json
   /// barème source en cas de duplication (traçabilité)
   copiedFromId String?
-  createdAt   DateTime      @default(now())
-  publishedAt DateTime?
-  season      Season        @relation(fields: [seasonId], references: [id], onDelete: Cascade)
-  entries     PointsEntry[]
+  createdAt    DateTime      @default(now())
+  publishedAt  DateTime?
+  season       Season        @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  entries      PointsEntry[]
 
   @@unique([seasonId, version])
 }
@@ -266,4 +266,21 @@ model AuditLog {
 
   @@index([at])
   @@index([type])
+}
+
+/// Identité visuelle du club, configurée par l'admin (specs 003 et 004). Ligne unique (id = "club").
+/// Une valeur nulle = valeur par défaut (variables d'environnement, puis design/tokens.json).
+model ClubAppearance {
+  id          String   @id @default("club")
+  /// logo déposé (PNG, JPEG, WebP ou SVG, 512 Ko au plus), type contrôlé d'après le contenu
+  logo        Bytes?
+  logoType    String?
+  /// incrémenté à chaque changement de logo (invalide les caches via ?v=)
+  logoVersion Int      @default(0)
+  /// couleurs #RRGGBB, contrôlées (contraste WCAG) avant enregistrement
+  accentDark  String?
+  actionDark  String?
+  accentLight String?
+  actionLight String?
+  updatedAt   DateTime @updatedAt
 }

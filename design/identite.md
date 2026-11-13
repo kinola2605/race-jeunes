@@ -34,7 +34,7 @@ La direction A reste visible dans les maquettes pour mémoire (« A · non reten
 | Typographie | Poppins (à confirmer) | **Poppins confirmée** (112 déclarations ; Montserrat et Merriweather chargées mais quasi inutilisées) | CSS + chargement WebFont du site |
 | Trait sous les titres | « court trait blanc épais » | **40 × 5 px, `#F6F6F6`** | `.div-block-42` calculé |
 | Arrondis | ~16 px | **20 px** photos ; **15 px** boutons | `.padel-img1`, `.button-inline-blue` |
-| Logo | neutre | **marque blanche** : logo du projet par défaut ([`docs/assets/logo.svg`](../docs/assets/logo.svg)), remplaçable par celui du club via `BRAND_LOGO` / `BRAND_LOGO_LIGHT` | `design/assets/logo/` |
+| Logo | neutre | **marque blanche** : logo du projet par défaut ([`docs/assets/logo.svg`](../docs/assets/logo.svg)), remplaçable par celui du club depuis la page admin « Apparence » (spec 003) ou via `BRAND_LOGO` / `BRAND_LOGO_LIGHT` | `design/assets/logo/` |
 
 > ⚠️ **Le site du club charge ses polices depuis Google Fonts.** L'application ne le fera pas :
 > Poppins (licence SIL OFL 1.1, voir [`assets/fonts/OFL.txt`](assets/fonts/OFL.txt)) est

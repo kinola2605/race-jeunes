@@ -42,6 +42,18 @@ export default async function ComptePage() {
             </form>
           </div>
         </section>
+        {user.role === "ADMIN" ? (
+          <section className="case" aria-labelledby="t-app">
+            <h2 className="case-title" id="t-app">
+              Apparence du club
+            </h2>
+            <p className="small muted">Logo et couleurs de l&apos;application, pour tous les utilisateurs.</p>
+            <Link className="btn btn-secondary" href="/admin/apparence">
+              <Icon name="edit" />
+              Personnaliser le logo et les couleurs
+            </Link>
+          </section>
+        ) : null}
         <section className="case" aria-labelledby="t-conf">
           <h2 className="case-title" id="t-conf">
             <Icon name="shield" /> Confidentialité

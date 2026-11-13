@@ -113,6 +113,11 @@ Aucun nom de club n'est codé en dur. L'identité se règle par variables d'envi
 Les logos se déposent dans `public/logo/` (la CSP n'autorise aucune origine tierce). Avec Docker, montez
 ce dossier en volume (`./logo:/app/public/logo:ro`).
 
+**Depuis l'interface** : la page admin **Apparence** (`/admin/apparence`, via « Mon compte ») permet de
+déposer le logo du club (prioritaire sur `BRAND_LOGO`, utilisé aussi comme icône de l'appli) et de régler
+4 couleurs (accent et action, thèmes sombre et clair). Une couleur au contraste insuffisant est refusée.
+Ces réglages sont stockés en base (table `ClubAppearance`) et s'appliquent sans redéploiement.
+
 **Conservation** : saisons archivées et matchs conservés sans limite (historique du club) ; journal d'audit
 5 ans ; sessions 30 jours maximum. Un compte n'est jamais supprimé s'il a un historique : il est désactivé.
 

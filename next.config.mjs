@@ -39,6 +39,12 @@ const config = {
         ],
       },
       {
+        // Logo déposé par l'admin (spec 003) : image inerte, aucun script même si c'est un SVG ouvert directement.
+        // Déclaré après la règle générale, dont il remplace la CSP.
+        source: "/club-logo",
+        headers: [{ key: "Content-Security-Policy", value: "default-src 'none'; style-src 'unsafe-inline'; sandbox" }],
+      },
+      {
         // Réponses d'API jamais mises en cache (navigateur, service worker, CDN).
         source: "/api/:path*",
         headers: [{ key: "Cache-Control", value: "no-store" }],

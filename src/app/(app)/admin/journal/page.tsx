@@ -5,7 +5,7 @@ import { Icon, PageHead, formatDateTime } from "@/components/ui";
 
 export const metadata: Metadata = { title: "Journal d'audit" };
 
-const TYPES = ["Compte", "Saison", "Barème", "Engagement", "Match", "Import", "Sécurité", "Export"];
+const TYPES = ["Compte", "Saison", "Barème", "Engagement", "Match", "Import", "Sécurité", "Export", "Apparence"];
 
 function detailText(details: unknown): string {
   if (!details || typeof details !== "object") return "";
