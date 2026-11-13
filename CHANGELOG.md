@@ -15,6 +15,10 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 - Case de confirmation : « J'ai remis, imprimé ou envoyé le mot de passe ».
 - Aucune migration.
 
+### Correctif
+- `bootstrap-admin` avec `--env-file` : le mot de passe est toujours saisi au clavier ; l'`ADMIN_PASSWORD`
+  du `.env` local n'est plus utilisé pour la base distante (ex-PR #4).
+
 ## [1.7.0] — 2026-11-13
 
 ### Espace RGPD (spec 008)
