@@ -3,6 +3,8 @@ import {
   PRESET_2025,
   PRESET_2026,
   aggregate,
+  tournamentBonusFor,
+  tournamentKey,
   computeMatchPoints,
   emptyRuleSet,
   rankStandings,
@@ -135,16 +137,65 @@ describe("aggregate", () => {
   it("cumule points, victoires, défaites et perfs ; ignore les non-engagés", () => {
     const rows = aggregate(PRESET_2025, ["a", "b", "c"], entries);
     expect(rows).toEqual([
-      { playerId: "a", matchPoints: 22, bonus: 0, points: 22, matches: 2, wins: 1, losses: 1, perfs: 1 },
-      { playerId: "b", matchPoints: 10, bonus: 0, points: 10, matches: 1, wins: 1, losses: 0, perfs: 0 },
-      { playerId: "c", matchPoints: 0, bonus: 0, points: 0, matches: 0, wins: 0, losses: 0, perfs: 0 },
+      { playerId: "a", assiduityBonus: 0, tournamentBonus: 0, tournaments: [], matchPoints: 22, bonus: 0, points: 22, matches: 2, wins: 1, losses: 1, perfs: 1 },
+      { playerId: "b", assiduityBonus: 0, tournamentBonus: 0, tournaments: [], matchPoints: 10, bonus: 0, points: 10, matches: 1, wins: 1, losses: 0, perfs: 0 },
+      { playerId: "c", assiduityBonus: 0, tournamentBonus: 0, tournaments: [], matchPoints: 0, bonus: 0, points: 0, matches: 0, wins: 0, losses: 0, perfs: 0 },
     ]);
   });
 
   it("ajoute le bonus d'assiduité (+5 tous les 5 matchs, barème 2026)", () => {
     const many = Array.from({ length: 11 }, () => ({ playerId: "a", points: 1, isPerf: false, result: "WIN" as const }));
     const [row] = aggregate(PRESET_2026, ["a"], many);
-    expect(row).toMatchObject({ matchPoints: 11, bonus: 10, points: 21 });
+    expect(row).toMatchObject({ matchPoints: 11, bonus: 10, assiduityBonus: 10, tournamentBonus: 0, points: 21 });
+  });
+});
+
+describe("bonus tournoi (spec 006)", () => {
+  const rules = { ...PRESET_2025, tournament: { fromWins: 2, points: 10 } };
+  const win = (tournament: string | null, extra: Partial<{ walkover: boolean; playerId: string }> = {}) => ({
+    playerId: "a",
+    points: 1,
+    isPerf: false,
+    result: "WIN" as const,
+    tournament,
+    ...extra,
+  });
+
+  it("FR-602 : (victoires − N + 1) × P à partir de N victoires", () => {
+    expect(tournamentBonusFor(rules, 1)).toBe(0);
+    expect(tournamentBonusFor(rules, 2)).toBe(10);
+    expect(tournamentBonusFor(rules, 4)).toBe(30);
+    expect(tournamentBonusFor(PRESET_2025, 5)).toBe(0);
+  });
+
+  it("FR-601 : casse, accents et espaces ignorés ; FR-604 : ajouté aux points", () => {
+    const [row] = aggregate(rules, ["a"], [win("TMC Pâques"), win("tmc  paques "), win("TMC PAQUES"), win("Open d'hiver")]);
+    expect(row).toMatchObject({ matchPoints: 4, tournamentBonus: 20, bonus: 20, points: 24 });
+    expect(row?.tournaments).toEqual([{ name: "TMC Pâques", wins: 3, points: 20 }]);
+  });
+
+  it("FR-603 : forfaits, défaites et matchs hors tournoi ne comptent pas", () => {
+    const [row] = aggregate(rules, ["a"], [
+      win("TMC"),
+      win("TMC", { walkover: true }),
+      { ...win("TMC"), result: "LOSS" as const },
+      win(null),
+      win("   "),
+    ]);
+    expect(row?.tournamentBonus).toBe(0);
+  });
+
+  it("cumule avec le bonus d'assiduité et sépare les joueurs", () => {
+    const both = { ...rules, assiduity: { every: 2, points: 5 } };
+    const rows = aggregate(both, ["a", "b"], [win("T"), win("T"), win("T", { playerId: "b" })]);
+    expect(rows[0]).toMatchObject({ assiduityBonus: 5, tournamentBonus: 10, bonus: 15, points: 17 });
+    expect(rows[1]).toMatchObject({ bonus: 0, points: 1 });
+  });
+
+  it("tournamentKey", () => {
+    expect(tournamentKey("  Été  Club ")).toBe("ete club");
+    expect(tournamentKey("")).toBeNull();
+    expect(tournamentKey(null)).toBeNull();
   });
 });
 
@@ -156,6 +207,9 @@ describe("rankStandings (spec FR-120, US6.1)", () => {
     wins,
     matchPoints: points,
     bonus: 0,
+    assiduityBonus: 0,
+    tournamentBonus: 0,
+    tournaments: [],
     matches: wins,
     losses: 0,
   });

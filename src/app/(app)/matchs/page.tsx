@@ -83,7 +83,8 @@ export default async function MesMatchsPage({ searchParams }: { searchParams: Se
                     </div>
                     <div className="item-meta">
                       {formatDate(m.playedOn)} · {m.kind === "WALKOVER" ? "forfait" : v.score}
-                      {m.kind === "RETIREMENT" ? " (abandon)" : ""} · <MatchStatusBadge status={m.status} />
+                      {m.kind === "RETIREMENT" ? " (abandon)" : ""}
+                      {m.tournament ? ` · ${m.tournament}` : ""} · <MatchStatusBadge status={m.status} />
                     </div>
                   </div>
                   <div className="item-end strong" style={v.entry?.isPerf ? { color: "var(--accent-2)" } : undefined}>

@@ -9,6 +9,8 @@ export interface MatchFormSeason {
   id: string;
   title: string;
   rules: RuleSet | null;
+  /** noms de tournoi déjà utilisés dans la saison (FR-600) */
+  tournaments: string[];
   players: { id: string; pseudo: string; ranking: string }[];
 }
 
@@ -24,6 +26,7 @@ export function MatchForm({ seasons, meId, admin, today }: { seasons: MatchFormS
   const [result, setResult] = useState<"WIN" | "LOSS">("WIN");
   const [kind, setKind] = useState<"NORMAL" | "WALKOVER" | "RETIREMENT">("NORMAL");
   const [thirdSet, setThirdSet] = useState(false);
+  const [inTournament, setInTournament] = useState(false);
 
   const players = season?.players ?? [];
   const me = players.find((p) => p.id === playerAId);
@@ -166,6 +169,42 @@ export function MatchForm({ seasons, meId, admin, today }: { seasons: MatchFormS
           <option value="RETIREMENT">Abandon en cours de match</option>
           <option value="WALKOVER">Forfait (non joué)</option>
         </select>
+      </div>
+
+      <div className="field">
+        <label className="check">
+          <input type="checkbox" name="inTournament" checked={inTournament} onChange={(e) => setInTournament(e.target.checked)} /> Match joué en tournoi
+        </label>
+        {inTournament ? (
+          <>
+            <label htmlFor="tournament" className="mt-2">
+              Nom du tournoi
+            </label>
+            <input
+              className="input"
+              id="tournament"
+              name="tournament"
+              list="tournaments"
+              placeholder="ex. TMC de Pâques 2027"
+              minLength={2}
+              maxLength={80}
+              required
+              autoComplete="off"
+              aria-describedby="tournament-hint tournament-pii"
+            />
+            <datalist id="tournaments">
+              {season.tournaments.map((t) => (
+                <option key={t} value={t} />
+              ))}
+            </datalist>
+            <p className="hint" id="tournament-hint">
+              {season.rules?.tournament
+                ? `Bonus : à partir de ${season.rules.tournament.fromWins} victoires dans le même tournoi, +${season.rules.tournament.points} pts par victoire.`
+                : "Reprenez le nom déjà utilisé par les autres joueurs du tournoi."}
+            </p>
+            <PiiNotice id="tournament-pii" />
+          </>
+        ) : null}
       </div>
 
       {kind !== "WALKOVER" ? (

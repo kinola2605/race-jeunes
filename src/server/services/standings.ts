@@ -23,9 +23,16 @@ export async function seasonStandings(seasonId: string, rulesOverride?: RuleSet,
     (
       await db.pointsEntry.findMany({
         where: { match: { seasonId, status: "VALIDATED" } },
-        select: { userId: true, points: true, isPerf: true, won: true },
+        select: { userId: true, points: true, isPerf: true, won: true, match: { select: { kind: true, tournament: true } } },
       })
-    ).map((e) => ({ playerId: e.userId, points: e.points, isPerf: e.isPerf, result: e.won ? ("WIN" as const) : ("LOSS" as const) }));
+    ).map((e) => ({
+      playerId: e.userId,
+      points: e.points,
+      isPerf: e.isPerf,
+      result: e.won ? ("WIN" as const) : ("LOSS" as const),
+      walkover: e.match.kind === "WALKOVER",
+      tournament: e.match.tournament,
+    }));
 
   const byId = new Map(enrollments.map((e) => [e.userId, e]));
   const rows = aggregate(

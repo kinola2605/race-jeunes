@@ -19,8 +19,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ kind
     if (!season) return new NextResponse("Saison introuvable", { status: 404 });
     if (kind === "classement") {
       const st = await seasonStandings(season.id);
-      rows = [["rang", "pseudo", "classement_depart", "etiquettes", "matchs", "victoires", "defaites", "perfs", "bonus", "points"]];
-      for (const r of st) rows.push([r.rank, r.pseudo, r.startingRanking, r.tags.join(" / "), r.matches, r.wins, r.losses, r.perfs, r.bonus, r.points]);
+      rows = [["rang", "pseudo", "classement_depart", "etiquettes", "matchs", "victoires", "defaites", "perfs", "bonus_assiduite", "bonus_tournoi", "bonus", "points"]];
+      for (const r of st) rows.push([r.rank, r.pseudo, r.startingRanking, r.tags.join(" / "), r.matches, r.wins, r.losses, r.perfs, r.assiduityBonus, r.tournamentBonus, r.bonus, r.points]);
     } else {
       const matches = await db.match.findMany({
         where: { seasonId: season.id },

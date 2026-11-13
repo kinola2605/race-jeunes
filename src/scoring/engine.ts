@@ -87,12 +87,27 @@ export interface ScoredEntry {
   points: number;
   isPerf: boolean;
   result: MatchResult;
+  /** forfait : la victoire ne compte pas pour le bonus tournoi (FR-603) */
+  walkover?: boolean;
+  /** nom du tournoi tel que saisi, null hors tournoi (FR-600) */
+  tournament?: string | null;
+}
+
+export interface TournamentBonus {
+  /** nom affiché (première graphie rencontrée) */
+  name: string;
+  wins: number;
+  points: number;
 }
 
 export interface Standing {
   playerId: string;
   matchPoints: number;
+  /** assiduité + tournois */
   bonus: number;
+  assiduityBonus: number;
+  tournamentBonus: number;
+  tournaments: TournamentBonus[];
   points: number;
   matches: number;
   wins: number;
@@ -100,11 +115,43 @@ export interface Standing {
   perfs: number;
 }
 
-/** Agrège les points des matchs validés par joueur et ajoute le bonus d'assiduité. */
+/** Clé de regroupement d'un tournoi : casse, accents et espaces ignorés (FR-601). */
+export function tournamentKey(name: string | null | undefined): string | null {
+  const key = (name ?? "")
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
+  return key === "" ? null : key;
+}
+
+/** Bonus d'un tournoi selon le nombre de victoires (FR-602). */
+export function tournamentBonusFor(rules: RuleSet, wins: number): number {
+  const t = rules.tournament;
+  if (!t || wins < t.fromWins) return 0;
+  return (wins - t.fromWins + 1) * t.points;
+}
+
+/** Agrège les points des matchs validés par joueur et ajoute les bonus d'assiduité et de tournoi. */
 export function aggregate(rules: RuleSet, playerIds: readonly string[], entries: readonly ScoredEntry[]): Standing[] {
   const byPlayer = new Map<string, Standing>();
+  const tournamentWins = new Map<string, Map<string, { name: string; wins: number }>>();
   for (const id of playerIds) {
-    byPlayer.set(id, { playerId: id, matchPoints: 0, bonus: 0, points: 0, matches: 0, wins: 0, losses: 0, perfs: 0 });
+    byPlayer.set(id, {
+      playerId: id,
+      matchPoints: 0,
+      bonus: 0,
+      assiduityBonus: 0,
+      tournamentBonus: 0,
+      tournaments: [],
+      points: 0,
+      matches: 0,
+      wins: 0,
+      losses: 0,
+      perfs: 0,
+    });
+    tournamentWins.set(id, new Map());
   }
   for (const entry of entries) {
     const row = byPlayer.get(entry.playerId);
@@ -114,9 +161,22 @@ export function aggregate(rules: RuleSet, playerIds: readonly string[], entries:
     if (entry.result === "WIN") row.wins += 1;
     else row.losses += 1;
     if (entry.isPerf) row.perfs += 1;
+    const key = tournamentKey(entry.tournament);
+    if (key && entry.result === "WIN" && !entry.walkover) {
+      const byKey = tournamentWins.get(entry.playerId)!;
+      const t = byKey.get(key) ?? { name: entry.tournament!.trim().replace(/\s+/g, " "), wins: 0 };
+      t.wins += 1;
+      byKey.set(key, t);
+    }
   }
   for (const row of byPlayer.values()) {
-    row.bonus = rules.assiduity ? Math.floor(row.matches / rules.assiduity.every) * rules.assiduity.points : 0;
+    row.assiduityBonus = rules.assiduity ? Math.floor(row.matches / rules.assiduity.every) * rules.assiduity.points : 0;
+    row.tournaments = [...tournamentWins.get(row.playerId)!.values()]
+      .map((t) => ({ ...t, points: tournamentBonusFor(rules, t.wins) }))
+      .filter((t) => t.points > 0)
+      .sort((a, b) => b.points - a.points || a.name.localeCompare(b.name, "fr"));
+    row.tournamentBonus = row.tournaments.reduce((sum, t) => sum + t.points, 0);
+    row.bonus = row.assiduityBonus + row.tournamentBonus;
     row.points = row.matchPoints + row.bonus;
   }
   return [...byPlayer.values()];

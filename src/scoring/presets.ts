@@ -5,6 +5,7 @@ export const PRESET_2026: RuleSet = ruleSetFromTables([2, 2, 4, 6, 10, 20, 30, 4
   unrankedAs: "40",
   capPerMatch: 60,
   assiduity: { every: 5, points: 5 },
+  tournament: { fromWins: 2, points: 10 },
 });
 
 /** Barème de démonstration « Race jeunes 2025-2026 » (fictif, volontairement différent). */

@@ -10,6 +10,7 @@ import {
   rungOf,
   seriesOf,
   validateRuleSet,
+  type RuleSet,
   winnerOf,
 } from "./index";
 
@@ -133,5 +134,20 @@ describe("parseScore (FR-108)", () => {
 
   it("inverse un score", () => {
     expect(invertScore("6/4 3/6 10-8")).toBe("4/6 6/3 8-10");
+  });
+});
+
+describe("bonus tournoi dans le barème (spec 006)", () => {
+  it("un barème antérieur sans la règle est lu comme désactivé", () => {
+    const legacy: Partial<RuleSet> = emptyRuleSet();
+    delete legacy.tournament;
+    const r = validateRuleSet(legacy);
+    expect(r.ok && r.rules.tournament).toBeNull();
+  });
+
+  it("accepte N entre 2 et 20, refuse en dehors", () => {
+    expect(validateRuleSet({ ...emptyRuleSet(), tournament: { fromWins: 2, points: 10 } }).ok).toBe(true);
+    expect(validateRuleSet({ ...emptyRuleSet(), tournament: { fromWins: 1, points: 10 } }).ok).toBe(false);
+    expect(validateRuleSet({ ...emptyRuleSet(), tournament: { fromWins: 21, points: 10 } }).ok).toBe(false);
   });
 });

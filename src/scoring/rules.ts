@@ -31,6 +31,14 @@ export const ruleSetSchema = z.object({
       points,
     })
     .nullable(),
+  /** Bonus tournoi (spec 006) : P points par victoire à partir de la N-ième dans un même tournoi. */
+  tournament: z
+    .object({
+      fromWins: z.number().int("Valeur entière attendue").min(2, "Au moins 2 victoires").max(20, "20 victoires au plus"),
+      points,
+    })
+    .nullable()
+    .default(null),
 });
 
 export type RuleSet = z.infer<typeof ruleSetSchema>;
@@ -50,6 +58,7 @@ export function emptyRuleSet(): RuleSet {
     walkoverWin: 0,
     capPerMatch: null,
     assiduity: null,
+    tournament: null,
   };
 }
 

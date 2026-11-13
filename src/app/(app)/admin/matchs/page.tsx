@@ -60,7 +60,8 @@ export default async function MatchsAdminPage({ searchParams }: { searchParams: 
                       <div className="item-title">{label(m)}</div>
                       <div className="item-meta">
                         {m.season.title} · {formatDate(m.playedOn)} · {m.kind === "WALKOVER" ? "forfait" : m.score}
-                        {m.kind === "RETIREMENT" ? " (abandon)" : ""} · vainqueur <strong>{m.winner === "A" ? m.playerA.pseudo : (m.playerB?.pseudo ?? "adversaire extérieur")}</strong>
+                        {m.kind === "RETIREMENT" ? " (abandon)" : ""}
+                        {m.tournament ? <> · tournoi <strong>{m.tournament}</strong></> : null} · vainqueur <strong>{m.winner === "A" ? m.playerA.pseudo : (m.playerB?.pseudo ?? "adversaire extérieur")}</strong>
                       </div>
                       {m.externalLabel ? <div className="item-meta">Classement extérieur : {m.externalRanking}</div> : null}
                       {duplicates.has(m.id) ? (
@@ -104,7 +105,8 @@ export default async function MatchsAdminPage({ searchParams }: { searchParams: 
                     {label(m)} <MatchStatusBadge status={m.status} />
                   </div>
                   <div className="item-meta">
-                    {formatDate(m.playedOn)} · {m.score ?? "forfait"} · {m.entries.map((e) => `${e.userId === m.playerAId ? m.playerA.pseudo : m.playerB?.pseudo} +${e.points}`).join(" · ")}
+                    {formatDate(m.playedOn)} · {m.score ?? "forfait"}
+                    {m.tournament ? ` · ${m.tournament}` : ""} · {m.entries.map((e) => `${e.userId === m.playerAId ? m.playerA.pseudo : m.playerB?.pseudo} +${e.points}`).join(" · ")}
                     {m.refusalReason ? ` · motif : ${m.refusalReason}` : ""}
                   </div>
                 </div>

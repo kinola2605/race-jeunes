@@ -105,7 +105,13 @@ export default async function ClassementPage({ searchParams }: { searchParams: S
                   <span className="rank-pos">{r.rank}</span>
                   <div className="item-main">
                     <div className="item-title">
-                      {r.pseudo}
+                      {admin ? (
+                        <Link className="link" href={q({ detail: r.playerId }) + "#detail"} aria-label={`Détail — ${r.pseudo}`}>
+                          {r.pseudo}
+                        </Link>
+                      ) : (
+                        r.pseudo
+                      )}
                       {me ? <span className="badge badge-me">Vous</span> : null}
                     </div>
                     <div className="item-meta">
@@ -158,7 +164,7 @@ export default async function ClassementPage({ searchParams }: { searchParams: S
                       <td className="num strong">{r.points}</td>
                       {admin ? (
                         <td>
-                          <Link className="link" href={q({ detail: r.playerId }) + "#detail"}>
+                          <Link className="link" href={q({ detail: r.playerId }) + "#detail"} aria-label={`Détail — ${r.pseudo}`}>
                             Détail
                           </Link>
                         </td>
@@ -188,12 +194,20 @@ export default async function ClassementPage({ searchParams }: { searchParams: S
                     <span className="num">{d.points}</span>
                   </div>
                 ))}
-                {detailRow.bonus > 0 ? (
+                {detailRow.assiduityBonus > 0 ? (
                   <div className="calc-row">
                     <span>Bonus d&apos;assiduité ({detailRow.matches} matchs validés)</span>
-                    <span className="num">{detailRow.bonus}</span>
+                    <span className="num">{detailRow.assiduityBonus}</span>
                   </div>
                 ) : null}
+                {detailRow.tournaments.map((t) => (
+                  <div className="calc-row" key={t.name}>
+                    <span>
+                      Bonus tournoi — {t.name} ({t.wins} victoires)
+                    </span>
+                    <span className="num">{t.points}</span>
+                  </div>
+                ))}
                 <div className="calc-row calc-total">
                   <span>Total</span>
                   <span className="num">{detailRow.points} pts</span>
