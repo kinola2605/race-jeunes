@@ -4,7 +4,7 @@
 (`specs/002-evolutions-club/spec.md`)
 
 > Ce document décrit le **quoi** et le **pourquoi**, sans choix technique. La constitution reste la règle
-> (`.specify/memory/constitution.md`) ; les exigences existantes sont dans `specs/001-race-jeunes/spec.md`.
+> (`.specify/memory/constitution.md`) ; les exigences existantes sont dans `specs/livrees/001-race-jeunes/spec.md`.
 
 ## 1. Besoin
 

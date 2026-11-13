@@ -8,7 +8,7 @@ toute tâche et toute PR doivent s'y conformer. En cas de conflit, la constituti
 ## Principes
 
 ### I. La spécification est la source de vérité (Spec-Driven Development)
-- Chaque fonctionnalité naît d'une exigence numérotée (`FR-xxx`) de `specs/001-race-jeunes/spec.md`,
+- Chaque fonctionnalité naît d'une exigence numérotée (`FR-xxx`) de `specs/livrees/001-race-jeunes/spec.md`,
   reliée à un écran des maquettes validées (`design/maquettes/`).
 - Le code, la spec, le plan, les tâches et les maquettes sont tenus synchronisés : une PR qui change un
   comportement met à jour la spec dans la même PR.

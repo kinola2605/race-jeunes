@@ -1,6 +1,6 @@
 # Plan technique — Race jeunes
 
-**Spec** [spec.md](spec.md) · **Constitution** [constitution.md](../../.specify/memory/constitution.md) · **Date** 2026-11-07
+**Spec** [spec.md](spec.md) · **Constitution** [constitution.md](../../../.specify/memory/constitution.md) · **Date** 2026-11-07
 
 ## 1. Résumé
 
@@ -110,7 +110,7 @@ les pages et actions n'appellent que `server/services` après `requireUser()/req
 Deux cibles, même code :
 
 **A. Production du club : Vercel (Hobby) + Neon (Free)** — procédure complète dans
-[`docs/DEPLOIEMENT.md`](../../docs/DEPLOIEMENT.md).
+[`docs/DEPLOIEMENT.md`](../../../docs/DEPLOIEMENT.md).
 
 - Fonctions en région `fra1` (`vercel.json`), base Neon `aws-eu-central-1` : données hébergées en UE.
 - `DATABASE_URL` = URL **poolée** (pgbouncer), rôle `race_app` sans DDL ; `src/server/db-url.ts` impose

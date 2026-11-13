@@ -23,8 +23,8 @@ toucher au code.
   d'audit.
 
 Documents de référence : [constitution](.specify/memory/constitution.md) ·
-[spécification](specs/001-race-jeunes/spec.md) · [plan](specs/001-race-jeunes/plan.md) ·
-[tâches](specs/001-race-jeunes/tasks.md) · [charte et contrastes](design/identite.md) ·
+[spécification](specs/livrees/001-race-jeunes/spec.md) · [plan](specs/livrees/001-race-jeunes/plan.md) ·
+[tâches](specs/livrees/001-race-jeunes/tasks.md) · [charte et contrastes](design/identite.md) ·
 [maquettes](design/maquettes/index.html).
 
 ## Démarrer en 5 minutes (Docker)
@@ -151,7 +151,7 @@ src/app/            pages Next.js (App Router) et server actions ; /connexion es
 src/styles/         tokens générés + composants de la direction B des maquettes
 prisma/             schéma, migrations, données de démonstration
 design/             charte, tokens, maquettes validées
-specs/, .specify/   spécification (Spec Kit) : constitution, spec, plan, tâches
+specs/, .specify/   spécification (Spec Kit) : constitution, specs en cours ; specs/livrees/ = livrées et déployées
 ```
 
 ## Logo

@@ -4,6 +4,8 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
+## [1.3.0] — 2026-11-13
+
 ### Apparence du club (specs 003 et 004)
 - Nouvelle page admin **Apparence** (`/admin/apparence`, accessible depuis « Mon compte ») :
   - **logo** du club déposé par l'admin (PNG, JPEG, WebP ou SVG, 512 Ko au plus, type contrôlé d'après le
@@ -14,7 +16,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 - Priorité du logo : logo déposé, puis `BRAND_LOGO` / `BRAND_LOGO_LIGHT`, puis logo du projet.
 - Logo servi par l'appli (`/club-logo`), public, sous une CSP qui interdit tout script.
 - Changements tracés au journal d'audit (nouveau type « Apparence »).
-- **Migration** `20261113120000_club_appearance` (nouvelle table `ClubAppearance`) à appliquer avant le
+- **Migration** `20261113120000_club_appearance` (nouvelle table `ClubAppearance`), appliquée en production avant le
   déploiement (`npm run db:migrate:remote`).
 
 ## [1.2.1] — 2026-11-09
@@ -90,4 +92,9 @@ Première version de la Race jeunes.
 - CI GitHub Actions : lint, typage, tests unitaires, E2E Playwright, démarrage Docker.
 - Logo et bannière du projet.
 
+[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.3.0
+[1.2.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.2.1
+[1.2.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.2.0
+[1.1.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.1.0
 [1.0.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.0.0

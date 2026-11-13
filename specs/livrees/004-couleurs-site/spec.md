@@ -1,10 +1,10 @@
 # Spécification fonctionnelle — Couleurs du site
 
-**Branche** `003-004-identite-club` · **Créée** 2026-11-13 · **Statut** Implémentée · **Origine** EV-07
+**Branche** `003-004-identite-club` · **Créée** 2026-11-13 · **Statut** Déployée (v1.3.0, 2026-11-13) · **Origine** EV-07
 (`specs/002-evolutions-club/spec.md`)
 
 > Ce document décrit le **quoi** et le **pourquoi**, sans choix technique. La constitution reste la règle
-> (`.specify/memory/constitution.md`) ; les exigences existantes sont dans `specs/001-race-jeunes/spec.md`.
+> (`.specify/memory/constitution.md`) ; les exigences existantes sont dans `specs/livrees/001-race-jeunes/spec.md`.
 
 ## 1. Besoin
 

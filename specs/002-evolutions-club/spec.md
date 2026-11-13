@@ -7,7 +7,7 @@ v1.2.0 en service.
 > Ce document sert **pendant** le rendez-vous (questions, fiches à remplir) puis **après** (base du
 > découpage en fonctionnalités `003-…`, `004-…`). Il ne contient aucun choix technique.
 > Tout point non tranché est marqué `[NEEDS CLARIFICATION]`. Les exigences de la v1 sont dans
-> `specs/001-race-jeunes/spec.md` (références `FR-xxx`) ; la constitution reste la règle
+> `specs/livrees/001-race-jeunes/spec.md` (références `FR-xxx`) ; la constitution reste la règle
 > (`.specify/memory/constitution.md`).
 
 ## 1. Objectifs du rendez-vous
@@ -89,12 +89,12 @@ Une fiche par demande. Recopier le modèle autant que nécessaire (EV-06, EV-07�
 
 ### EV-06 · Logo
 
-- **Spec** : `specs/003-logo/spec.md`
+- **Spec** : `specs/livrees/003-logo/spec.md`
 - **Besoin** : pouvoir configurer un logo côté admin pour remplacer le logo par défaut.
 
 ### EV-07 · Couleurs du site
 
-- **Spec** : `specs/004-couleurs-site/spec.md`
+- **Spec** : `specs/livrees/004-couleurs-site/spec.md`
 - **Besoin** : possibilité de configurer les deux couleurs principales (thème noir et thème clair) depuis l'interface admin.
 
 ### EV-08 · Objectif du nombre de matchs à jouer par saison et par tranche d'âge
@@ -173,7 +173,7 @@ compatible plutôt qu'un refus sec.
 ## 8. Suites du rendez-vous
 
 1. Compléter ce document à chaud (même en vrac) et lever les `[NEEDS CLARIFICATION]`.
-2. Reporter les décisions §3 modifiées dans `specs/001-race-jeunes/spec.md` (§8 Clarifications) si elles
+2. Reporter les décisions §3 modifiées dans `specs/livrees/001-race-jeunes/spec.md` (§8 Clarifications) si elles
    changent un comportement existant.
 3. **Découper** les évolutions retenues en fonctionnalités indépendantes (`specs/003-…`, `004-…`), chacune
    avec sa spec, son plan et ses tâches, dans l'ordre du §6.
