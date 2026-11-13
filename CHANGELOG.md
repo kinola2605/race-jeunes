@@ -4,6 +4,12 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
+## [1.4.1] — 2026-11-13
+
+### Objectif de matchs
+- Court « L'échange » plus compact sur téléphone (hauteur réduite d'environ 40 %, balle plus petite,
+  largeur limitée sur grand écran).
+
 ## [1.4.0] — 2026-11-13
 
 ### Objectif de matchs par joueur et par saison (spec 005)
@@ -104,7 +110,8 @@ Première version de la Race jeunes.
 - CI GitHub Actions : lint, typage, tests unitaires, E2E Playwright, démarrage Docker.
 - Logo et bannière du projet.
 
-[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.4.0...HEAD
+[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.4.1...HEAD
+[1.4.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.4.1
 [1.4.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.4.0
 [1.3.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.3.0
 [1.2.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.2.1
