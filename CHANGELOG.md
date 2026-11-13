@@ -4,6 +4,23 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
+## [1.5.0] — 2026-11-13
+
+### Bonus tournoi (spec 006)
+- En déclarant ou en saisissant un match, case **« Match joué en tournoi »** et **nom du tournoi** (2 à 80
+  caractères) ; les noms déjà utilisés dans la saison sont proposés. Casse, accents et espaces sont ignorés
+  pour regrouper les matchs d'un même tournoi.
+- Nouvelle règle de barème **Bonus tournoi** (onglet « Paramètres », désactivée par défaut) : *P* points par
+  victoire à partir de la *N*-ième dans un même tournoi (ex. *N* = 2, *P* = 10 : 2 victoires → 10, 3 → 20).
+  Victoires par forfait exclues, hors plafond par match ; visible dans l'impact avant publication.
+- Classement : la colonne « Bonus » additionne assiduité et tournois ; le détail du calcul liste chaque
+  tournoi ; l'export ajoute `bonus_assiduite` et `bonus_tournoi`. Le nom du tournoi apparaît dans « Mes
+  matchs » et dans la file de validation.
+- Classement sur téléphone : l'admin ouvre le détail d'un joueur en touchant son pseudo.
+- Barème de démonstration 2026 : bonus tournoi activé (2 victoires, 10 pts).
+- **Migration** `20261113200000_match_tournament` (colonne `Match.tournament`), appliquée en production avant
+  le déploiement.
+
 ## [1.4.1] — 2026-11-13
 
 ### Objectif de matchs
@@ -110,7 +127,8 @@ Première version de la Race jeunes.
 - CI GitHub Actions : lint, typage, tests unitaires, E2E Playwright, démarrage Docker.
 - Logo et bannière du projet.
 
-[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.4.1...HEAD
+[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.5.0
 [1.4.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.4.1
 [1.4.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.4.0
 [1.3.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.3.0

@@ -31,6 +31,12 @@ function int(v: string): number {
   return Number.isFinite(n) ? n : 0;
 }
 
+/** « 2 victoires → 10 pts, 3 → 20, 4 → 30 » (FR-602). */
+function tournamentExample(t: NonNullable<RuleSet["tournament"]>): string {
+  const n = t.fromWins;
+  return `${n} victoires → ${t.points} pts, ${n + 1} → ${2 * t.points}, ${n + 2} → ${3 * t.points}`;
+}
+
 export function RuleEditor({ seasonId, writable, initial, published, draft, staleEntries, history }: Props) {
   const [tab, setTab] = useState<Tab>("table");
   const [rules, setRules] = useState<RuleSet>(initial);
@@ -276,6 +282,36 @@ export function RuleEditor({ seasonId, writable, initial, published, draft, stal
                 </div>
               ) : null}
             </div>
+            <div className="case">
+              <h2 className="case-title">Bonus tournoi</h2>
+              <label className="check">
+                <input
+                  type="checkbox"
+                  checked={rules.tournament !== null}
+                  disabled={ro}
+                  onChange={(e) => setRules((r) => ({ ...r, tournament: e.target.checked ? { fromWins: 2, points: 10 } : null }))}
+                />{" "}
+                Activer
+              </label>
+              {rules.tournament ? (
+                <>
+                  <div className="row" style={{ alignItems: "flex-start" }}>
+                    <div className="field grow">
+                      <label htmlFor="tb-n">À partir de … victoires</label>
+                      <input className="input" id="tb-n" inputMode="numeric" value={rules.tournament.fromWins} readOnly={ro} onChange={(e) => setRules((r) => ({ ...r, tournament: { points: r.tournament?.points ?? 10, fromWins: int(e.target.value) } }))} />
+                    </div>
+                    <div className="field grow">
+                      <label htmlFor="tb-p">Points par victoire</label>
+                      <input className="input" id="tb-p" inputMode="numeric" value={rules.tournament.points} readOnly={ro} onChange={(e) => setRules((r) => ({ ...r, tournament: { fromWins: r.tournament?.fromWins ?? 2, points: int(e.target.value) } }))} />
+                    </div>
+                  </div>
+                  <p className="hint">
+                    Dans un même tournoi, chaque victoire à partir de la {rules.tournament.fromWins}
+                    <sup>e</sup> rapporte {rules.tournament.points} pts en plus : {tournamentExample(rules.tournament)}. Forfaits exclus, hors plafond.
+                  </p>
+                </>
+              ) : null}
+            </div>
           </div>
         </section>
       ) : null}
@@ -353,6 +389,11 @@ export function RuleEditor({ seasonId, writable, initial, published, draft, stal
                     <span className="num">{sim.points} pts</span>
                   </div>
                 </div>
+              ) : null}
+              {rules.tournament ? (
+                <p className="small muted mt-2 mb-0">
+                  + bonus tournoi, en fin de saison : {tournamentExample(rules.tournament)} dans un même tournoi.
+                </p>
               ) : null}
             </div>
           </div>

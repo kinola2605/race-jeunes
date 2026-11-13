@@ -171,7 +171,14 @@ export async function previewImpact(seasonId: string, rules: RuleSet): Promise<I
     const computed = computeEntries(rules, m);
     if (computed.some((c) => m.entries.find((e) => e.userId === c.userId)?.points !== c.points)) changedMatches++;
     newEntries.push(
-      ...computed.map((c) => ({ playerId: c.userId, points: c.points, isPerf: c.isPerf, result: c.won ? ("WIN" as const) : ("LOSS" as const) })),
+      ...computed.map((c) => ({
+        playerId: c.userId,
+        points: c.points,
+        isPerf: c.isPerf,
+        result: c.won ? ("WIN" as const) : ("LOSS" as const),
+        walkover: m.kind === "WALKOVER",
+        tournament: m.tournament,
+      })),
     );
   }
   const before = await seasonStandings(seasonId);

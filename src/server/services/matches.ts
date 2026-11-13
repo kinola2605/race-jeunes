@@ -1,6 +1,6 @@
 import "server-only";
 import type { MatchKind, Prisma } from "@prisma/client";
-import { isRanking, parseScore } from "@/scoring";
+import { isRanking, parseScore, tournamentKey } from "@/scoring";
 import { UserError, assertAdmin, audit, db, type Actor, type Tx } from "./common";
 import { computeEntries, latestPublished, referenceRanking } from "./scoring";
 import { assertWritable } from "./seasons";
@@ -17,6 +17,8 @@ export interface DeclareMatchInput {
   result: "WIN" | "LOSS";
   kind: MatchKind;
   score?: string;
+  /** nom du tournoi, vide = hors tournoi (spec 006) */
+  tournament?: string;
   validateNow?: boolean;
 }
 
@@ -36,6 +38,9 @@ export async function declareMatch(actor: Actor, input: DeclareMatchInput): Prom
     if (!parsed.ok) throw new UserError(parsed.error);
     score = parsed.normalized;
   }
+
+  const tournament = (input.tournament ?? "").trim().replace(/\s+/g, " ") || null;
+  if (tournament !== null && (tournament.length < 2 || tournament.length > 80)) throw new UserError("Nom du tournoi : 2 à 80 caractères.");
 
   let playerBId: string | null = null;
   let externalLabel: string | null = null;
@@ -72,12 +77,13 @@ export async function declareMatch(actor: Actor, input: DeclareMatchInput): Prom
         winner: input.result === "WIN" ? "A" : "B",
         score,
         kind: input.kind,
+        tournament,
         createdById: actor.id,
       },
       include: { playerA: true, playerB: true },
     });
     const label = `${match.playerA.pseudo} vs ${match.playerB?.pseudo ?? "Ext. " + externalLabel}`;
-    if (isAdmin) await audit(tx, actor, "Match", "Match saisi", label, { season: season.slug, score });
+    if (isAdmin) await audit(tx, actor, "Match", "Match saisi", label, { season: season.slug, score, tournament });
     if (isAdmin && input.validateNow) await validateInTx(tx, actor, match.id);
     return match.id;
   });
@@ -197,6 +203,21 @@ export function findDuplicates(matches: MatchWithRelations[], all: MatchWithRela
     if (k && (m.status === "PENDING" || m.status === "VALIDATED")) counts.set(k, (counts.get(k) ?? 0) + 1);
   }
   return new Set(matches.filter((m) => (counts.get(key(m) ?? "") ?? 0) > 1).map((m) => m.id));
+}
+
+/** Noms de tournoi déjà utilisés dans une saison, une graphie par tournoi (FR-600). */
+export async function seasonTournaments(seasonId: string): Promise<string[]> {
+  const rows = await db.match.findMany({
+    where: { seasonId, tournament: { not: null }, status: { in: ["PENDING", "VALIDATED"] } },
+    select: { tournament: true },
+    orderBy: { createdAt: "asc" },
+  });
+  const byKey = new Map<string, string>();
+  for (const r of rows) {
+    const key = tournamentKey(r.tournament);
+    if (key && !byKey.has(key)) byKey.set(key, r.tournament!);
+  }
+  return [...byKey.values()].sort((a, b) => a.localeCompare(b, "fr"));
 }
 
 /** Sides from the point of view of a player. */

@@ -201,6 +201,8 @@ model Match {
   /// score du point de vue du côté A, normalisé (« 6/4 3/6 10-8 »)
   score           String?
   kind            MatchKind   @default(NORMAL)
+  /// nom du tournoi (2 à 80 caractères), null hors tournoi — regroupé sans casse ni accents (spec 006)
+  tournament      String?
   status          MatchStatus @default(PENDING)
   refusalReason   String?
   createdById     String

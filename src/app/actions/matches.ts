@@ -26,6 +26,7 @@ export async function declareMatchAction(fd: FormData): Promise<void> {
       result: str(fd, "result") === "LOSS" ? "LOSS" : "WIN",
       kind: (["NORMAL", "WALKOVER", "RETIREMENT"].includes(str(fd, "kind")) ? str(fd, "kind") : "NORMAL") as MatchKind,
       score: sets.join(" "),
+      tournament: str(fd, "inTournament") === "on" ? str(fd, "tournament") : "",
       validateNow: isAdmin && str(fd, "validateNow") === "on",
     });
     revalidatePath("/", "layout");
