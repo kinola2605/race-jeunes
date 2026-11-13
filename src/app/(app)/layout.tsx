@@ -2,7 +2,7 @@ import Link from "next/link";
 import { requireUser } from "@/server/auth/session";
 import { AppNav } from "@/components/nav";
 import { BrandMark } from "@/components/brand";
-import { Icon } from "@/components/ui";
+import { Avatar } from "@/components/avatar";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +16,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           <BrandMark />
         </Link>
         <Link className="user-chip" href="/compte" aria-label={`Mon compte : ${user.pseudo}`}>
-          <Icon name="user" />
+          <Avatar pseudo={user.pseudo} avatar={user.avatar} />
           <span>{user.pseudo}</span>
           {user.role === "ADMIN" ? <span className="role-tag">Admin</span> : null}
         </Link>

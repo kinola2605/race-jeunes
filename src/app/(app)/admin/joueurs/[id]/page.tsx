@@ -11,6 +11,7 @@ import { GOAL_MAX } from "@/goals/goals";
 import { ConfirmButton, SubmitButton } from "@/components/forms";
 import { Flash, Icon, PageHead, PiiNotice, SeasonStatusBadge, formatDateTime } from "@/components/ui";
 import { ResetPassword } from "./reset-password";
+import { Avatar } from "@/components/avatar";
 
 export const metadata: Metadata = { title: "Joueur" };
 
@@ -41,7 +42,12 @@ export default async function JoueurPage({ params, searchParams }: { params: Pro
             / {user.pseudo}
           </>
         }
-        title={user.pseudo}
+        title={
+          <span className="with-avatar">
+            <Avatar pseudo={user.pseudo} avatar={user.avatar} size="md" />
+            {user.pseudo}
+          </span>
+        }
         lead={
           user.status === "DISABLED"
             ? "Compte désactivé : connexion impossible, historique conservé."

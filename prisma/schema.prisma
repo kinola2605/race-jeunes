@@ -76,6 +76,8 @@ model User {
   mustChangePassword Boolean       @default(true)
   /// classement FFT actuel (null pour un admin non joueur)
   ranking            String?
+  /// spec 007 : avatar choisi dans la galerie (« icône:couleur »), jamais une photo ; null = avatar par défaut
+  avatar             String?
   passwordChangedAt  DateTime?
   createdAt          DateTime      @default(now())
   updatedAt          DateTime      @updatedAt

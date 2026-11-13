@@ -179,6 +179,25 @@ Formule de luminance relative WCAG 2.1. Seuils : 4,5:1 pour le texte, 3:1 pour l
 6. **Gris du site `#A0A0A0`** : passe de justesse sur carte (4,80:1) ; remplacé par `#B4BCC6` (≥ 6,5:1 partout) pour les métadonnées.
 7. **Corps 14 px du site** → 16 px dans l'application (lecture en extérieur, petits écrans).
 
+### 3.2 Avatars de profil (spec 007)
+
+Fonds identiques dans les deux thèmes (tokens `color.avatar.*`), pictogramme ou initiale en couleur `-ink`.
+L'avatar est **décoratif** (le pseudo est toujours écrit à côté) : seul le contraste du pictogramme sur son
+fond est exigé ; un filet `line-soft` d'1 px détoure le disque.
+
+| Couleur | Fond | Pictogramme | Ratio | Seuil | Verdict |
+|---|---|---|---|---|---|
+| Terre battue | `#E28C57` | `#1F2B42` | 5.48:1 | 4.5:1 | ✅ AA |
+| Sable | `#EBB08C` | `#1F2B42` | 7.50:1 | 4.5:1 | ✅ AAA |
+| Brique | `#9C4F22` | `#FFFFFF` | 5.91:1 | 4.5:1 | ✅ AA |
+| Jaune balle | `#FFD166` | `#1F2B42` | 9.82:1 | 4.5:1 | ✅ AAA |
+| Gazon | `#2E7D4F` | `#FFFFFF` | 5.05:1 | 4.5:1 | ✅ AA |
+| Ciel | `#7CC4FF` | `#1F2B42` | 7.55:1 | 4.5:1 | ✅ AAA |
+| Court dur | `#4E39EA` | `#FFFFFF` | 6.78:1 | 4.5:1 | ✅ AA |
+| Bleu marine | `#1F2B42` | `#F6F6F6` | 13.11:1 | 4.5:1 | ✅ AAA |
+
+Ces ratios sont vérifiés par un test unitaire (`src/avatar/avatar.test.ts`).
+
 ## 4. États sémantiques — jamais la couleur seule
 
 | État | Icône | Libellé | Couleur |

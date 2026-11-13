@@ -8,6 +8,7 @@ import { matchesOfPlayer, viewOf } from "@/server/services/matches";
 import { playerGoal } from "@/server/services/goals";
 import { TIER_LABEL, goalMessage, goalTier } from "@/goals/goals";
 import { GoalCourt } from "@/components/goal-court";
+import { Avatar } from "@/components/avatar";
 import { Alert, EmptyState, Icon, PageHead, PerfBadge, ResultBox, formatDate } from "@/components/ui";
 
 export const metadata: Metadata = { title: "Accueil" };
@@ -20,7 +21,12 @@ export default async function AccueilPage() {
   if (!season) {
     return (
       <>
-        <PageHead eyebrow="Race jeunes" title={`Bonjour ${user.pseudo}`} />
+        <PageHead eyebrow="Race jeunes" title={
+            <span className="with-avatar">
+              <Avatar pseudo={user.pseudo} avatar={user.avatar} size="md" />
+              {`Bonjour ${user.pseudo}`}
+            </span>
+          } />
         <EmptyState icon="calendar" title="Vous n'êtes engagé·e dans aucune saison">
           <p>Le club vous engagera dans la prochaine Race.</p>
         </EmptyState>
@@ -37,7 +43,12 @@ export default async function AccueilPage() {
 
   return (
     <>
-      <PageHead eyebrow={`${season.title} · ${statusLabel}`} title={`Bonjour ${user.pseudo}`} />
+      <PageHead eyebrow={`${season.title} · ${statusLabel}`} title={
+            <span className="with-avatar">
+              <Avatar pseudo={user.pseudo} avatar={user.avatar} size="md" />
+              {`Bonjour ${user.pseudo}`}
+            </span>
+          } />
       {me ? (
         <section className="hero" aria-label="Ma position">
           <div className="row-between" style={{ alignItems: "flex-end" }}>

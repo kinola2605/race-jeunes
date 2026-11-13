@@ -5,6 +5,8 @@ import { latestPublished } from "./scoring";
 
 export interface StandingRow extends RankedStanding {
   pseudo: string;
+  /** spec 007 */
+  avatar: string | null;
   startingRanking: string;
   currentRanking: string | null;
   tags: string[];
@@ -45,6 +47,7 @@ export async function seasonStandings(seasonId: string, rulesOverride?: RuleSet,
     return {
       ...r,
       pseudo: e.user.pseudo,
+      avatar: e.user.avatar,
       startingRanking: e.startingRanking,
       currentRanking: e.user.ranking,
       tags: e.user.tags.map((t) => t.tag.name),
