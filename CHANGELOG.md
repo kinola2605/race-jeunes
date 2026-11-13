@@ -4,6 +4,19 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
+## [1.6.0] — 2026-11-13
+
+### Avatars de profil (spec 007)
+- Les « photos de profil » demandées sont remplacées par des **avatars** (constitution III : aucune photo) :
+  dans « Mon compte », chacun compose le sien avec **10 pictogrammes** (balle, raquette, trophée…) et
+  **8 couleurs**, avec aperçu immédiat ; aucun dépôt de fichier.
+- Sans choix : **initiale du pseudo** sur une couleur stable. Retour possible à cet avatar par défaut.
+- Avatar affiché à côté du pseudo : en-tête, « Mon compte », accueil, classement, liste et fiche des joueurs.
+- Changements tracés au journal d'audit (type « Compte »). Couleurs ajoutées aux tokens (`color.avatar`),
+  contrastes dans `design/identite.md` §3.2.
+- **Migration** `20261114090000_user_avatar` (colonne `User.avatar`), appliquée en production avant le
+  déploiement.
+
 ## [1.5.0] — 2026-11-13
 
 ### Bonus tournoi (spec 006)
@@ -127,7 +140,8 @@ Première version de la Race jeunes.
 - CI GitHub Actions : lint, typage, tests unitaires, E2E Playwright, démarrage Docker.
 - Logo et bannière du projet.
 
-[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.5.0...HEAD
+[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.6.0
 [1.5.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.5.0
 [1.4.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.4.1
 [1.4.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.4.0
