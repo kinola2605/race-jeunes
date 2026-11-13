@@ -52,8 +52,8 @@ export const THEME_BASE = {
   light: { bg: theme("light", "bg"), text: theme("light", "text"), lineSoft: theme("light", "line-soft") },
 };
 
-/** Textes possibles posés sur une couleur pleine : bleu nuit de marque ou blanc. */
-const ON_COLORS = [resolve("{color.brand.midnight}"), "#FFFFFF"];
+/** Textes possibles posés sur une couleur pleine : fond du thème sombre (bleu marine) ou blanc. */
+const ON_COLORS = [theme("dark", "bg"), "#FFFFFF"];
 
 /** Minimum exigé contre les surfaces : 4,5:1 quand la couleur sert de texte, 3:1 pour un composant. */
 const MIN_ON_SURFACE: Record<ColorKey, number> = {

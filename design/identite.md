@@ -10,14 +10,33 @@
 
 Choix du club parmi les deux directions maquettées. Règles propres à B, qui s'ajoutent aux sections suivantes :
 
-- **Navigation** : barre d'onglets fixe en bas sur mobile (5 entrées max, icône + libellé, onglet actif = libellé gras + icône corail + trait corail 3 px en haut, donc jamais la couleur seule) ; barre latérale de 248 px à partir de 1024 px.
-- **Cartes** : surface `surface-raised`, rayon 20 px, pas de filet (en thème clair : filet allégé 1 px pour délimiter la carte). Les filets saumon de la grille du site ne servent plus qu'à l'en-tête et aux tableaux.
-- **Bloc « score »** (rang et points) : aplat saumon, texte bleu nuit, chiffres 64 px en graisse 700, lignes de court en décor à 12 % d'opacité.
-- **Action primaire** : corail `#FF7F5C` + texte bleu nuit (sombre), `#B8432C` + texte blanc (clair), 52 px de haut, graisse 700.
-- **Titres** : alignés à gauche, graisse 700, sur-titre en capitales corail ; intertitres de section en capitales 12 px avec un filet allégé à droite.
+- **Navigation** : barre d'onglets fixe en bas sur mobile (5 entrées max, icône + libellé, onglet actif = libellé gras + icône terre battue + trait terre battue 3 px en haut, donc jamais la couleur seule) ; barre latérale de 248 px à partir de 1024 px.
+- **Cartes** : surface `surface-raised`, rayon 20 px, pas de filet (en thème clair : filet allégé 1 px pour délimiter la carte). Les filets terre battue de la grille du site ne servent plus qu'à l'en-tête et aux tableaux.
+- **Bloc « score »** (rang et points) : aplat terre battue claire, texte bleu marine, chiffres 64 px en graisse 700, lignes de court en décor à 12 % d'opacité.
+- **Action primaire** : terre battue vive `#E28C57` + texte bleu marine (sombre), `#9C4F22` + texte blanc (clair), 52 px de haut, graisse 700.
+- **Titres** : alignés à gauche, graisse 700, sur-titre en capitales terre battue ; intertitres de section en capitales 12 px avec un filet allégé à droite.
 - **Actions collantes** (saisie de match, engagements) : posées au-dessus de la barre d'onglets.
 
 La direction A reste visible dans les maquettes pour mémoire (« A · non retenue »), mais elle ne sera pas implémentée.
+
+## 0 bis. Palette refaite : bleu marine + terre battue (9 novembre 2026)
+
+Les couleurs de l'application reposent désormais sur **deux couleurs principales**, relevées sur le visuel
+du club (« Les 3 règles après avoir joué sur terre battue ») :
+
+| Couleur | Hex | Usage |
+|---|---|---|
+| **Bleu marine** | **`#1F2B42`** | Fond (sombre), texte et action primaire (clair), texte sur les aplats terre battue |
+| **Terre battue** | **`#BA6735`** | Filets de grille (sombre), décor des pictogrammes |
+
+Déclinaisons dérivées de ces deux teintes (mêmes tons, luminosité ajustée pour WCAG AA) :
+`#161F31` marine profond (creux), `#29374F` marine carte, `#3B4A66` filet allégé, `#59667E` acier (haut du dégradé) ;
+`#EBB08C` terre battue claire (accent primaire, aplats), `#E28C57` terre battue vive (perfs, action primaire),
+`#9C4F22` terre battue foncée (texte en thème clair). Elles remplacent respectivement le bleu nuit, le saumon et le corail
+des sections suivantes, dont les valeurs et les contrastes ont été recalculés.
+
+> ⚠️ La terre battue `#BA6735` elle-même fait 3,43:1 sur le bleu marine et 4,13:1 sous du blanc : elle est
+> réservée aux filets et aux éléments graphiques, jamais au texte courant.
 
 ## 1. Ce que le relevé a corrigé par rapport aux estimations
 
@@ -49,22 +68,22 @@ La direction A reste visible dans les maquettes pour mémoire (« A · non reten
 
 | Token | Hex | Rôle dans l'application |
 |---|---|---|
-| `brand.midnight` | `#14293E` | Fond principal (sombre) · texte et aplats forts (clair) |
-| `brand.midnight-deep` | `#0F1F30` | Zones en creux : champs de saisie, pied de page |
-| `brand.salmon` | `#FDC2B2` | Accent primaire (sombre) : boutons primaires, bandeau de navigation, filets, onglet actif · aplat de mise en avant (clair) |
+| `brand.midnight` | `#1F2B42` | Fond principal (sombre) · texte et aplats forts (clair) |
+| `brand.midnight-deep` | `#161F31` | Zones en creux : champs de saisie, pied de page |
+| `brand.salmon` | `#EBB08C` | Accent primaire (sombre) : boutons primaires, bandeau de navigation, filets, onglet actif · aplat de mise en avant (clair) |
 | `brand.white-smoke` | `#F6F6F6` | Texte principal (sombre) · fond (clair) |
 | `brand.light-grey` | `#D6D6D6` | Texte secondaire (sombre) |
-| `brand.coral` | `#FF7F5C` | Accent secondaire : **perfs**, chiffres clés (sombre uniquement) |
+| `brand.coral` | `#E28C57` | Accent secondaire : **perfs**, chiffres clés (sombre uniquement) |
 | `brand.violet` | `#4E39EA` | Liens et focus en thème clair ; décoratif (graphiques) |
-| `brand.steel` | `#426486` | Décoratif uniquement |
-| `brand.logo-ink` | `#0E263C` | Réservé au logo |
+| `brand.steel` | `#59667E` | Décoratif uniquement |
+| `brand.logo-ink` | `#172134` | Réservé au logo |
 
 ### 2.2 Variantes accessibles (créé)
 
 | Token | Hex | Pourquoi |
 |---|---|---|
-| `accessible.violet-on-dark` | `#9A9CF5` | Le violet de marque fait 2,19:1 sur bleu nuit |
-| `accessible.coral-on-light` | `#B8432C` | Le corail de marque fait 2,49:1 sur blanc |
+| `accessible.violet-on-dark` | `#9A9CF5` | Le violet de marque fait 2,19:1 sur bleu marine |
+| `accessible.coral-on-light` | `#9C4F22` | Le terre battue vive de marque fait 2,49:1 sur blanc |
 | `accessible.steel-on-dark` | `#8AA3BE` | Bordures de champs visibles (≥ 3:1) sur fond sombre |
 | `accessible.steel-on-light` | `#5F7186` | Métadonnées et bordures de champs en thème clair |
 
@@ -72,18 +91,18 @@ La direction A reste visible dans les maquettes pour mémoire (« A · non reten
 
 | Rôle | Sombre (défaut) | Clair (option plein soleil) |
 |---|---|---|
-| Fond `bg` | `#14293E` | `#F6F6F6` |
-| Surface en creux | `#0F1F30` | `#FFFFFF` |
-| Surface carte (direction B) | `#1B3550` *(créé)* | `#FFFFFF` |
-| Texte principal | `#F6F6F6` | `#14293E` |
-| Texte secondaire | `#D6D6D6` | `#2B4058` *(créé)* |
+| Fond `bg` | `#1F2B42` | `#F6F6F6` |
+| Surface en creux | `#161F31` | `#FFFFFF` |
+| Surface carte (direction B) | `#29374F` *(créé)* | `#FFFFFF` |
+| Texte principal | `#F6F6F6` | `#1F2B42` |
+| Texte secondaire | `#D6D6D6` | `#2E3B55` *(créé)* |
 | Métadonnées | `#B4BCC6` *(créé)* | `#5F7186` |
-| Filet de grille | `#FDC2B2` 1 px | `#14293E` 1 px |
-| Filet allégé (décoratif) | `#3E5671` | `#C9D2DC` |
+| Filet de grille | `#EBB08C` 1 px | `#1F2B42` 1 px |
+| Filet allégé (décoratif) | `#3B4A66` | `#C9D2DC` |
 | Bordure de champ | `#8AA3BE` | `#5F7186` |
-| Accent primaire / texte dessus | `#FDC2B2` / `#14293E` | `#14293E` / `#FFFFFF` |
-| Accent secondaire (perf) / texte dessus | `#FF7F5C` / `#14293E` | `#B8432C` / `#FFFFFF` |
-| Aplat de mise en avant | `#FDC2B2` + texte `#14293E` | `#FDC2B2` + texte `#14293E` |
+| Accent primaire / texte dessus | `#EBB08C` / `#1F2B42` | `#1F2B42` / `#FFFFFF` |
+| Accent secondaire (perf) / texte dessus | `#E28C57` / `#1F2B42` | `#9C4F22` / `#FFFFFF` |
+| Aplat de mise en avant | `#EBB08C` + texte `#1F2B42` | `#EBB08C` + texte `#1F2B42` |
 | Focus | anneau blanc 2 px | anneau violet `#4E39EA` 2 px |
 | Succès · Erreur · Alerte · Info | `#6FDC9C` · `#FF8A80` · `#FFD166` · `#7CC4FF` | `#1E7B46` · `#B3261E` · `#8A5A00` · `#1D5FA8` |
 
@@ -96,54 +115,54 @@ Formule de luminance relative WCAG 2.1. Seuils : 4,5:1 pour le texte, 3:1 pour l
 
 | Thème | Usage | Texte / élément | Fond | Ratio | Seuil | Verdict |
 |---|---|---|---|---|---|---|
-| Sombre | Texte principal | `#F6F6F6` | `#14293E` | 13.72:1 | 4.5:1 | ✅ AAA |
-| Sombre | Texte principal sur creux | `#F6F6F6` | `#0F1F30` | 15.43:1 | 4.5:1 | ✅ AAA |
-| Sombre | Texte principal sur carte | `#F6F6F6` | `#1B3550` | 11.62:1 | 4.5:1 | ✅ AAA |
-| Sombre | Texte secondaire | `#D6D6D6` | `#14293E` | 10.20:1 | 4.5:1 | ✅ AAA |
-| Sombre | Texte secondaire sur carte | `#D6D6D6` | `#1B3550` | 8.64:1 | 4.5:1 | ✅ AAA |
-| Sombre | Métadonnées | `#B4BCC6` | `#14293E` | 7.73:1 | 4.5:1 | ✅ AAA |
-| Sombre | Métadonnées sur carte | `#B4BCC6` | `#1B3550` | 6.55:1 | 4.5:1 | ✅ AA |
-| Sombre | Métadonnées sur creux | `#B4BCC6` | `#0F1F30` | 8.70:1 | 4.5:1 | ✅ AAA |
-| Sombre | Gris du site `#A0A0A0` (non retenu en texte courant) | `#A0A0A0` | `#1B3550` | 4.80:1 | 4.5:1 | ✅ AA (juste) |
-| Sombre | Saumon (titre, lien, filet) | `#FDC2B2` | `#14293E` | 9.56:1 | 4.5:1 | ✅ AAA |
-| Sombre | Bleu nuit sur saumon (bouton primaire, bandeau) | `#14293E` | `#FDC2B2` | 9.56:1 | 4.5:1 | ✅ AAA |
-| Sombre | Corail (perf, chiffre clé) | `#FF7F5C` | `#14293E` | 5.96:1 | 4.5:1 | ✅ AA |
-| Sombre | Corail sur carte | `#FF7F5C` | `#1B3550` | 5.05:1 | 4.5:1 | ✅ AA |
-| Sombre | Bleu nuit sur corail (badge perf) | `#14293E` | `#FF7F5C` | 5.96:1 | 4.5:1 | ✅ AA |
-| Sombre | Blanc sur corail | `#FFFFFF` | `#FF7F5C` | 2.49:1 | 4.5:1 | ❌ refusé |
-| Sombre | Violet de marque en texte | `#4E39EA` | `#14293E` | 2.19:1 | 4.5:1 | ❌ refusé |
-| Sombre | Violet accessible | `#9A9CF5` | `#14293E` | 5.96:1 | 4.5:1 | ✅ AA |
-| Sombre | Violet accessible sur carte | `#9A9CF5` | `#1B3550` | 5.05:1 | 4.5:1 | ✅ AA |
-| Sombre | Bleu acier de marque en bordure | `#426486` | `#14293E` | 2.40:1 | 3.0:1 | ❌ refusé |
-| Sombre | Bordure de champ (sur creux) | `#8AA3BE` | `#0F1F30` | 6.40:1 | 3.0:1 | ✅ AA |
-| Sombre | Bordure de champ (sur fond) | `#8AA3BE` | `#14293E` | 5.69:1 | 3.0:1 | ✅ AA |
-| Sombre | Filet saumon (grille) | `#FDC2B2` | `#14293E` | 9.56:1 | 3.0:1 | ✅ AA |
-| Sombre | Anneau de focus blanc | `#FFFFFF` | `#14293E` | 14.83:1 | 3.0:1 | ✅ AA |
-| Sombre | Succès (Validé, Victoire) | `#6FDC9C` | `#14293E` | 8.75:1 | 4.5:1 | ✅ AAA |
-| Sombre | Succès sur carte | `#6FDC9C` | `#1B3550` | 7.41:1 | 4.5:1 | ✅ AAA |
-| Sombre | Erreur (Refusé, Défaite) | `#FF8A80` | `#14293E` | 6.49:1 | 4.5:1 | ✅ AA |
-| Sombre | Erreur sur carte | `#FF8A80` | `#1B3550` | 5.50:1 | 4.5:1 | ✅ AA |
-| Sombre | Alerte (En attente) | `#FFD166` | `#14293E` | 10.28:1 | 4.5:1 | ✅ AAA |
-| Sombre | Alerte sur carte | `#FFD166` | `#1B3550` | 8.71:1 | 4.5:1 | ✅ AAA |
-| Sombre | Info | `#7CC4FF` | `#14293E` | 7.90:1 | 4.5:1 | ✅ AAA |
-| Sombre | Info sur carte | `#7CC4FF` | `#1B3550` | 6.70:1 | 4.5:1 | ✅ AA |
-| Clair | Texte principal | `#14293E` | `#F6F6F6` | 13.72:1 | 4.5:1 | ✅ AAA |
-| Clair | Texte principal sur surface | `#14293E` | `#FFFFFF` | 14.83:1 | 4.5:1 | ✅ AAA |
-| Clair | Texte secondaire | `#2B4058` | `#F6F6F6` | 9.83:1 | 4.5:1 | ✅ AAA |
+| Sombre | Texte principal | `#F6F6F6` | `#1F2B42` | 13.11:1 | 4.5:1 | ✅ AAA |
+| Sombre | Texte principal sur creux | `#F6F6F6` | `#161F31` | 15.25:1 | 4.5:1 | ✅ AAA |
+| Sombre | Texte principal sur carte | `#F6F6F6` | `#29374F` | 11.08:1 | 4.5:1 | ✅ AAA |
+| Sombre | Texte secondaire | `#D6D6D6` | `#1F2B42` | 9.75:1 | 4.5:1 | ✅ AAA |
+| Sombre | Texte secondaire sur carte | `#D6D6D6` | `#29374F` | 8.24:1 | 4.5:1 | ✅ AAA |
+| Sombre | Métadonnées | `#B4BCC6` | `#1F2B42` | 7.39:1 | 4.5:1 | ✅ AAA |
+| Sombre | Métadonnées sur carte | `#B4BCC6` | `#29374F` | 6.24:1 | 4.5:1 | ✅ AA |
+| Sombre | Métadonnées sur creux | `#B4BCC6` | `#161F31` | 8.59:1 | 4.5:1 | ✅ AAA |
+| Sombre | Gris du site `#A0A0A0` (non retenu en texte courant) | `#A0A0A0` | `#29374F` | 4.58:1 | 4.5:1 | ✅ AA (juste) |
+| Sombre | Terre battue claire (titre, lien, filet) | `#EBB08C` | `#1F2B42` | 7.50:1 | 4.5:1 | ✅ AAA |
+| Sombre | Bleu marine sur terre battue claire (bouton primaire, bandeau) | `#1F2B42` | `#EBB08C` | 7.50:1 | 4.5:1 | ✅ AAA |
+| Sombre | Terre battue vive (perf, chiffre clé) | `#E28C57` | `#1F2B42` | 5.48:1 | 4.5:1 | ✅ AA |
+| Sombre | Terre battue vive sur carte | `#E28C57` | `#29374F` | 4.63:1 | 4.5:1 | ❌ refusé |
+| Sombre | Bleu marine sur terre battue vive (badge perf) | `#1F2B42` | `#E28C57` | 5.48:1 | 4.5:1 | ✅ AA |
+| Sombre | Blanc sur terre battue vive | `#FFFFFF` | `#E28C57` | 2.59:1 | 4.5:1 | ❌ refusé |
+| Sombre | Violet de marque en texte | `#4E39EA` | `#1F2B42` | 2.09:1 | 4.5:1 | ❌ refusé |
+| Sombre | Violet accessible | `#9A9CF5` | `#1F2B42` | 5.70:1 | 4.5:1 | ✅ AA |
+| Sombre | Violet accessible sur carte | `#9A9CF5` | `#29374F` | 4.82:1 | 4.5:1 | ✅ AA |
+| Sombre | Bleu acier de marque en bordure | `#59667E` | `#1F2B42` | 2.45:1 | 3.0:1 | ❌ refusé |
+| Sombre | Bordure de champ (sur creux) | `#8AA3BE` | `#161F31` | 6.33:1 | 3.0:1 | ✅ AA |
+| Sombre | Bordure de champ (sur fond) | `#8AA3BE` | `#1F2B42` | 5.44:1 | 3.0:1 | ✅ AA |
+| Sombre | Filet terre battue claire (grille) | `#EBB08C` | `#1F2B42` | 7.50:1 | 3.0:1 | ✅ AA |
+| Sombre | Anneau de focus blanc | `#FFFFFF` | `#1F2B42` | 14.17:1 | 3.0:1 | ✅ AA |
+| Sombre | Succès (Validé, Victoire) | `#6FDC9C` | `#1F2B42` | 8.36:1 | 4.5:1 | ✅ AAA |
+| Sombre | Succès sur carte | `#6FDC9C` | `#29374F` | 7.07:1 | 4.5:1 | ✅ AAA |
+| Sombre | Erreur (Refusé, Défaite) | `#FF8A80` | `#1F2B42` | 6.21:1 | 4.5:1 | ✅ AA |
+| Sombre | Erreur sur carte | `#FF8A80` | `#29374F` | 5.25:1 | 4.5:1 | ✅ AA |
+| Sombre | Alerte (En attente) | `#FFD166` | `#1F2B42` | 9.82:1 | 4.5:1 | ✅ AAA |
+| Sombre | Alerte sur carte | `#FFD166` | `#29374F` | 8.30:1 | 4.5:1 | ✅ AAA |
+| Sombre | Info | `#7CC4FF` | `#1F2B42` | 7.55:1 | 4.5:1 | ✅ AAA |
+| Sombre | Info sur carte | `#7CC4FF` | `#29374F` | 6.38:1 | 4.5:1 | ✅ AA |
+| Clair | Texte principal | `#1F2B42` | `#F6F6F6` | 13.11:1 | 4.5:1 | ✅ AAA |
+| Clair | Texte principal sur surface | `#1F2B42` | `#FFFFFF` | 14.17:1 | 4.5:1 | ✅ AAA |
+| Clair | Texte secondaire | `#2E3B55` | `#F6F6F6` | 10.37:1 | 4.5:1 | ✅ AAA |
 | Clair | Métadonnées | `#5F7186` | `#F6F6F6` | 4.63:1 | 4.5:1 | ✅ AA |
 | Clair | Métadonnées sur surface | `#5F7186` | `#FFFFFF` | 5.01:1 | 4.5:1 | ✅ AA |
-| Clair | Blanc sur bleu nuit (bouton primaire) | `#FFFFFF` | `#14293E` | 14.83:1 | 4.5:1 | ✅ AAA |
-| Clair | Bleu nuit sur saumon (bandeau, sélection) | `#14293E` | `#FDC2B2` | 9.56:1 | 4.5:1 | ✅ AAA |
-| Clair | Aplat saumon vs fond (limite de composant) | `#FDC2B2` | `#F6F6F6` | 1.44:1 | 3.0:1 | ❌ refusé comme seul indicateur |
-| Clair | Saumon en texte | `#FDC2B2` | `#FFFFFF` | 1.55:1 | 4.5:1 | ❌ refusé |
-| Clair | Corail de marque en texte | `#FF7F5C` | `#FFFFFF` | 2.49:1 | 4.5:1 | ❌ refusé |
-| Clair | Corail accessible (perf) | `#B8432C` | `#FFFFFF` | 5.42:1 | 4.5:1 | ✅ AA |
-| Clair | Corail accessible sur fond | `#B8432C` | `#F6F6F6` | 5.01:1 | 4.5:1 | ✅ AA |
-| Clair | Blanc sur corail accessible (badge perf) | `#FFFFFF` | `#B8432C` | 5.42:1 | 4.5:1 | ✅ AA |
+| Clair | Blanc sur bleu marine (bouton primaire) | `#FFFFFF` | `#1F2B42` | 14.17:1 | 4.5:1 | ✅ AAA |
+| Clair | Bleu marine sur terre battue claire (bandeau, sélection) | `#1F2B42` | `#EBB08C` | 7.50:1 | 4.5:1 | ✅ AAA |
+| Clair | Aplat terre battue claire vs fond (limite de composant) | `#EBB08C` | `#F6F6F6` | 1.75:1 | 3.0:1 | ❌ refusé comme seul indicateur |
+| Clair | Terre battue claire en texte | `#EBB08C` | `#FFFFFF` | 1.89:1 | 4.5:1 | ❌ refusé |
+| Clair | Terre battue vive en texte | `#E28C57` | `#FFFFFF` | 2.59:1 | 4.5:1 | ❌ refusé |
+| Clair | Terre battue foncée (perf) | `#9C4F22` | `#FFFFFF` | 5.91:1 | 4.5:1 | ✅ AA |
+| Clair | Terre battue foncée sur fond | `#9C4F22` | `#F6F6F6` | 5.47:1 | 4.5:1 | ✅ AA |
+| Clair | Blanc sur terre battue vive accessible (badge perf) | `#FFFFFF` | `#9C4F22` | 5.91:1 | 4.5:1 | ✅ AA |
 | Clair | Violet de marque (liens, focus) | `#4E39EA` | `#FFFFFF` | 6.78:1 | 4.5:1 | ✅ AA |
 | Clair | Violet de marque sur fond | `#4E39EA` | `#F6F6F6` | 6.27:1 | 4.5:1 | ✅ AA |
 | Clair | Bordure de champ | `#5F7186` | `#FFFFFF` | 5.01:1 | 3.0:1 | ✅ AA |
-| Clair | Filet bleu nuit (grille) | `#14293E` | `#F6F6F6` | 13.72:1 | 3.0:1 | ✅ AA |
+| Clair | Filet bleu marine (grille) | `#1F2B42` | `#F6F6F6` | 13.11:1 | 3.0:1 | ✅ AA |
 | Clair | Succès | `#1E7B46` | `#FFFFFF` | 5.28:1 | 4.5:1 | ✅ AA |
 | Clair | Succès sur fond | `#1E7B46` | `#F6F6F6` | 4.89:1 | 4.5:1 | ✅ AA |
 | Clair | Erreur | `#B3261E` | `#F6F6F6` | 6.05:1 | 4.5:1 | ✅ AA |
@@ -152,11 +171,11 @@ Formule de luminance relative WCAG 2.1. Seuils : 4,5:1 pour le texte, 3:1 pour l
 
 ### 3.1 Combinaisons refusées et remplacements
 
-1. **Blanc sur corail (2,49:1)** → texte bleu nuit sur corail (5,96:1) en sombre ; corail foncé `#B8432C` + texte blanc en clair.
-2. **Violet `#4E39EA` sur bleu nuit (2,19:1)** → `#9A9CF5` en texte ; le violet de marque reste réservé au thème clair (6,78:1) et aux graphiques.
-3. **Bleu acier `#426486` sur bleu nuit (2,40:1)** → décoratif uniquement ; bordures de champs en `#8AA3BE`.
-4. **Saumon ou corail en texte sur fond clair (1,55:1 et 2,49:1)** → jamais. En clair, le saumon n'est utilisé qu'en **aplat** avec texte bleu nuit (9,56:1).
-5. **Aplat saumon vs fond clair (1,44:1)** : un aplat saumon n'est jamais le seul indicateur d'état (onglet actif, ligne sélectionnée). Il est toujours doublé d'un **trait bleu nuit de 2 px**, d'une graisse ou d'une icône.
+1. **Blanc sur terre battue vive (2,49:1)** → texte bleu marine sur terre battue vive (5,96:1) en sombre ; terre battue vive foncé `#9C4F22` + texte blanc en clair.
+2. **Violet `#4E39EA` sur bleu marine (2,19:1)** → `#9A9CF5` en texte ; le violet de marque reste réservé au thème clair (6,78:1) et aux graphiques.
+3. **Bleu acier `#59667E` sur bleu marine (2,40:1)** → décoratif uniquement ; bordures de champs en `#8AA3BE`.
+4. **Terre battue claire ou terre battue vive en texte sur fond clair (1,55:1 et 2,49:1)** → jamais. En clair, le terre battue claire n'est utilisé qu'en **aplat** avec texte bleu marine (9,56:1).
+5. **Aplat terre battue claire vs fond clair (1,44:1)** : un aplat terre battue claire n'est jamais le seul indicateur d'état (onglet actif, ligne sélectionnée). Il est toujours doublé d'un **trait bleu marine de 2 px**, d'une graisse ou d'une icône.
 6. **Gris du site `#A0A0A0`** : passe de justesse sur carte (4,80:1) ; remplacé par `#B4BCC6` (≥ 6,5:1 partout) pour les métadonnées.
 7. **Corps 14 px du site** → 16 px dans l'application (lecture en extérieur, petits écrans).
 
@@ -170,7 +189,7 @@ Formule de luminance relative WCAG 2.1. Seuils : 4,5:1 pour le texte, 3:1 pour l
 | Match annulé | cercle barré | « Annulé » (texte barré) | métadonnée |
 | Victoire | triangle haut | « V » + « Victoire » (lecteur d'écran) | succès |
 | Défaite | triangle bas | « D » + « Défaite » | erreur |
-| Perf | flèche montante | « Perf » | accent secondaire (corail) |
+| Perf | flèche montante | « Perf » | accent secondaire (terre battue vive) |
 | Forfait | drapeau | « WO » + « Forfait » | métadonnée |
 | Compte désactivé | cadenas | « Désactivé » | métadonnée |
 | Mot de passe temporaire | clé | « Mdp temporaire » | alerte |
@@ -195,7 +214,7 @@ Formule de luminance relative WCAG 2.1. Seuils : 4,5:1 pour le texte, 3:1 pour l
 
 ## 6. Grille, filets, formes
 
-- **Grille de cases** (direction A) : cases séparées par un filet de 1 px saumon (sombre) ou bleu nuit (clair) — technique « fond = couleur du filet, gap 1 px ».
+- **Grille de cases** (direction A) : cases séparées par un filet de 1 px terre battue claire (sombre) ou bleu marine (clair) — technique « fond = couleur du filet, gap 1 px ».
 - **Arbitrage mobile** : sous 768 px, les cases s'empilent en pleine largeur avec **filets horizontaux uniquement** (pas de bordures verticales ni de cadre extérieur), pour récupérer environ 2 × 16 px de largeur utile. Les listes denses (classement, journal) utilisent le filet allégé décoratif entre lignes.
 - **Titres de page** : centrés + trait 40 × 5 px (direction A) ; alignés à gauche avec sur-titre en capitales (direction B).
 - **Aucune ombre portée.** Seule exception : l'anneau de focus.

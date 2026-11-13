@@ -17,6 +17,14 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 - **Migration** `20261113120000_club_appearance` (nouvelle table `ClubAppearance`) à appliquer avant le
   déploiement (`npm run db:migrate:remote`).
 
+## [1.2.1] — 2026-11-09
+
+### Couleurs
+- Nouvelle palette sur deux couleurs principales : **bleu marine `#1F2B42`** et **terre battue `#BA6735`**.
+  Accents dérivés et accessibles (WCAG AA) : terre battue claire `#EBB08C`, vive `#E28C57`, foncée `#9C4F22`.
+- Icône de l'application, logo, bannière, couleur de thème et maquettes mis à jour ; contrastes recalculés
+  dans `design/identite.md`.
+
 ## [1.2.0] — 2026-11-08
 
 ### Mise en production Vercel + Neon

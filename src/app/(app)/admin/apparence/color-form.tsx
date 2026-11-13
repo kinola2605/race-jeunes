@@ -103,7 +103,7 @@ export function ColorForm({ current }: { current: ColorSet }) {
                 ) : c!.ok ? (
                   <>
                     <Icon name="check" /> Lisible : {ratio(c!.surfaceRatio)}:1 sur le fond (min.{" "}
-                    {ratio(c!.surfaceMin)}:1), texte {c!.textOn === "#FFFFFF" ? "blanc" : "bleu nuit"} à{" "}
+                    {ratio(c!.surfaceMin)}:1), texte {c!.textOn === "#FFFFFF" ? "blanc" : "bleu marine"} à{" "}
                     {ratio(c!.textRatio)}:1.
                   </>
                 ) : (

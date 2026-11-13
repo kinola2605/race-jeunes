@@ -3,22 +3,22 @@
   <defs>
     <clipPath id="ball"><circle cx="300" cy="196" r="104"/></clipPath>
   </defs>
-  <rect width="512" height="512" rx="112" fill="#14293E"/>
+  <rect width="512" height="512" rx="112" fill="#1F2B42"/>
   <!-- lignes de court en perspective -->
-  <g fill="none" stroke="#FDC2B2" stroke-width="6" stroke-linecap="round" opacity=".35">
+  <g fill="none" stroke="#EBB08C" stroke-width="6" stroke-linecap="round" opacity=".35">
     <path d="M96 440 L176 300 H336 L416 440"/>
     <path d="M136 370 H376"/>
     <path d="M256 300 V370"/>
   </g>
   <!-- podium / progression de la Race -->
-  <g fill="#FDC2B2">
+  <g fill="#EBB08C">
     <rect x="92"  y="356" width="72" height="84" rx="14"/>
     <rect x="186" y="304" width="72" height="136" rx="14"/>
     <rect x="280" y="336" width="72" height="104" rx="14"/>
   </g>
   <!-- balle -->
-  <circle cx="300" cy="196" r="104" fill="#FF7F5C"/>
-  <g clip-path="url(#ball)" fill="none" stroke="#14293E" stroke-width="12" stroke-linecap="round">
+  <circle cx="300" cy="196" r="104" fill="#E28C57"/>
+  <g clip-path="url(#ball)" fill="none" stroke="#1F2B42" stroke-width="12" stroke-linecap="round">
     <path d="M206 128 C 262 160, 262 232, 206 264"/>
     <path d="M394 128 C 338 160, 338 232, 394 264"/>
   </g>

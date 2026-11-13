@@ -7,14 +7,14 @@ const none = { accentDark: null, actionDark: null, accentLight: null, actionLigh
 describe("couleurs du club (spec 004)", () => {
   it("reprend les valeurs par défaut de design/tokens.json", () => {
     expect(DEFAULT_COLORS).toEqual({
-      accentDark: "#FDC2B2",
-      actionDark: "#FF7F5C",
-      accentLight: "#14293E",
-      actionLight: "#B8432C",
+      accentDark: "#EBB08C",
+      actionDark: "#E28C57",
+      accentLight: "#1F2B42",
+      actionLight: "#9C4F22",
     });
   });
 
-  it("calcule les ratios comme design/identite.md §3", () => {
+  it("calcule les ratios WCAG 2.1", () => {
     expect(contrast("#F6F6F6", "#14293E")).toBeCloseTo(13.72, 1);
     expect(contrast("#FF7F5C", "#1B3550")).toBeCloseTo(5.05, 1);
     expect(contrast("#FFFFFF", "#FF7F5C")).toBeCloseTo(2.49, 1);
@@ -22,8 +22,8 @@ describe("couleurs du club (spec 004)", () => {
 
   it("accepte toutes les couleurs par défaut, avec le texte d'origine", () => {
     for (const k of COLOR_KEYS) expect(checkColor(k, DEFAULT_COLORS[k]).ok).toBe(true);
-    expect(onColor("#FDC2B2")).toBe("#14293E");
-    expect(onColor("#B8432C")).toBe("#FFFFFF");
+    expect(onColor("#EBB08C")).toBe("#1F2B42");
+    expect(onColor("#9C4F22")).toBe("#FFFFFF");
   });
 
   it("refuse une couleur illisible avec le ratio mesuré", () => {
@@ -45,7 +45,7 @@ describe("couleurs du club (spec 004)", () => {
     expect(themeCss(none)).toBe("");
     const css = themeCss({ ...none, accentLight: "#1E6FD9" });
     expect(css).toContain('[data-theme="light"]{--accent:#1E6FD9;--on-accent:#FFFFFF');
-    expect(css).toContain(":root{--accent:#FDC2B2");
+    expect(css).toContain(":root{--accent:#EBB08C");
     expect(themeCss({ ...none, accentLight: "red;}body{x" })).toBe("");
   });
 });

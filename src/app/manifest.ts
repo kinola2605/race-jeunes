@@ -13,8 +13,8 @@ export default async function manifest(): Promise<MetadataRoute.Manifest> {
     start_url: "/",
     scope: "/",
     display: "standalone",
-    background_color: "#14293E",
-    theme_color: "#14293E",
+    background_color: "#1F2B42",
+    theme_color: "#1F2B42",
     // Logo déposé par l'admin s'il existe (spec 003, FR-301), sinon le logo du projet.
     icons: [
       { src: icon.src, sizes: "any", type: icon.type, purpose: "any" },
