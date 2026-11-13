@@ -1,9 +1,27 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { credentialsMailto } from "@/handover/mailto";
 import { CopyButton, PrintButton } from "./forms";
-import { Alert } from "./ui";
+import { Alert, Icon } from "./ui";
 import { useBrand } from "./brand";
+
+/**
+ * Spec 009 — « Envoyer par e-mail » : ouvre la messagerie de l'admin avec un message pré-rempli.
+ * Aucune adresse n'est demandée ni transmise à l'application (constitution III).
+ */
+export function MailButton({ pseudo, password }: { pseudo: string; password: string }) {
+  const brand = useBrand();
+  const [appUrl, setAppUrl] = useState("");
+  useEffect(() => setAppUrl(window.location.origin), []);
+  const href = credentialsMailto({ appName: brand.appName, clubName: brand.clubName, pseudo, password, appUrl });
+  return (
+    <a className="btn btn-secondary" href={href} aria-describedby="mail-hint">
+      <Icon name="mail" />
+      Envoyer par e-mail
+    </a>
+  );
+}
 
 /** E08c — remise unique du mot de passe temporaire (FR-021). Rien n'est conservé après avoir quitté l'écran. */
 export function Handover({ pseudo, password, context, doneHref, againHref }: { pseudo: string; password: string; context: "creation" | "reset"; doneHref: string; againHref?: string }) {
@@ -28,7 +46,11 @@ export function Handover({ pseudo, password, context, doneHref, againHref }: { p
           <div className="row mt-4" style={{ justifyContent: "center" }}>
             <CopyButton text={password} />
             <PrintButton />
+            <MailButton pseudo={pseudo} password={password} />
           </div>
+          <p className="hint mt-2" id="mail-hint">
+            « Envoyer par e-mail » ouvre votre messagerie avec un message prêt à envoyer : saisissez-y l&apos;adresse du joueur ou de ses parents. L&apos;application ne connaît ni ne conserve aucune adresse e-mail.
+          </p>
         </div>
         <div className="mt-6">
           <Alert kind="warn" title="Affiché une seule fois">
@@ -36,7 +58,7 @@ export function Handover({ pseudo, password, context, doneHref, againHref }: { p
           </Alert>
         </div>
         <label className="check mt-4">
-          <input type="checkbox" checked={ack} onChange={(e) => setAck(e.target.checked)} /> J&apos;ai remis ou imprimé le mot de passe
+          <input type="checkbox" checked={ack} onChange={(e) => setAck(e.target.checked)} /> J&apos;ai remis, imprimé ou envoyé le mot de passe
         </label>
         <div className="actions">
           {ack ? (

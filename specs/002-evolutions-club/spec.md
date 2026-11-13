@@ -121,7 +121,7 @@ Une fiche par demande. Recopier le modèle autant que nécessaire (EV-06, EV-07�
 
 ### EV-12 · Envoi du mot de passe par e-mail
 
-- **Spec** : `specs/009-envoi-mot-de-passe-email/spec.md`
+- **Spec** : `specs/livrees/009-envoi-mot-de-passe-email/spec.md` — livrée en v1.8.0 (lien `mailto:`, aucune adresse dans l'app)
 - **Besoin** : pouvoir envoyer le mot de passe par e-mail à la création du joueur.
 
 ### EV-13 · _à compléter_
