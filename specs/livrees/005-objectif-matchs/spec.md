@@ -1,7 +1,7 @@
 # Spécification fonctionnelle — Objectif du nombre de matchs par saison
 
 **Branche** `005-objectif-matchs` · **Créée** 2026-11-13 · **Révisée** 2026-11-13 (v3 : objectif simple par
-joueur et par saison, affichage « L'échange ») · **Statut** Implémentée · **Origine** EV-08 (`specs/002-evolutions-club/spec.md`)
+joueur et par saison, affichage « L'échange ») · **Statut** Déployée (v1.4.0, 2026-11-13) · **Origine** EV-08 (`specs/002-evolutions-club/spec.md`)
 
 > Ce document décrit le **quoi** et le **pourquoi**, sans choix technique. La constitution reste la règle
 > (`.specify/memory/constitution.md`) ; les exigences existantes sont dans `specs/livrees/001-race-jeunes/spec.md`.
