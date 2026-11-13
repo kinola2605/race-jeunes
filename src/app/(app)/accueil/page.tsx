@@ -5,6 +5,7 @@ import { requireUser } from "@/server/auth/session";
 import { defaultSeasonFor } from "@/server/services/player";
 import { seasonStandings } from "@/server/services/standings";
 import { matchesOfPlayer, viewOf } from "@/server/services/matches";
+import { playerGoal } from "@/server/services/goals";
 import { Alert, EmptyState, Icon, PageHead, PerfBadge, ResultBox, formatDate } from "@/components/ui";
 
 export const metadata: Metadata = { title: "Accueil" };
@@ -24,7 +25,7 @@ export default async function AccueilPage() {
       </>
     );
   }
-  const [standings, matches] = await Promise.all([seasonStandings(season.id), matchesOfPlayer(season.id, user.id)]);
+  const [standings, matches, goal] = await Promise.all([seasonStandings(season.id), matchesOfPlayer(season.id, user.id), playerGoal(season.id, user.id)]);
   const me = standings.find((s) => s.playerId === user.id);
   const above = me ? standings.filter((s) => s.rank < me.rank).at(-1) : undefined;
   const pending = matches.filter((m) => m.status === "PENDING");
@@ -78,6 +79,48 @@ export default async function AccueilPage() {
             <div className="case">
               <span className="stat-label">Classement de départ</span>
               <span className="stat-value">{me.startingRanking}</span>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {goal ? (
+        <section className="section" aria-labelledby="t-objectif">
+          <h2 className="section-title" id="t-objectif">
+            Mon objectif de matchs
+          </h2>
+          <div className="cases">
+            <div className="case">
+              <div className="row-between" style={{ alignItems: "flex-end" }}>
+                <span className="stat-value">
+                  {goal.played}
+                  <small className="subtle"> / {goal.target} matchs</small>
+                </span>
+                <span className="small strong" style={{ color: goal.reached ? "var(--success)" : undefined }}>
+                  {goal.reached ? (
+                    <>
+                      <Icon name="check" /> Objectif atteint
+                    </>
+                  ) : (
+                    `encore ${goal.remaining}`
+                  )}
+                </span>
+              </div>
+              <div
+                className="meter mt-4"
+                role="progressbar"
+                aria-label="Progression vers l'objectif de matchs"
+                aria-valuemin={0}
+                aria-valuemax={goal.target}
+                aria-valuenow={Math.min(goal.played, goal.target)}
+                aria-valuetext={`${goal.played} matchs sur ${goal.target}`}
+              >
+                <span style={{ width: `${goal.percent}%` }} />
+              </div>
+              <p className="small subtle mb-0 mt-4">
+                Matchs validés de la saison, hors forfaits
+                {goal.pending > 0 ? ` · ${goal.pending} en attente de validation` : ""}.
+              </p>
             </div>
           </div>
         </section>

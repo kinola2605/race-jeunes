@@ -110,9 +110,10 @@ model LoginThrottle {
 }
 
 model Tag {
-  id    String    @id @default(cuid())
-  name  String    @unique
-  users UserTag[]
+  id         String      @id @default(cuid())
+  name       String      @unique
+  users      UserTag[]
+  matchGoals MatchGoal[]
 }
 
 model UserTag {
@@ -146,6 +147,8 @@ model Season {
   status      SeasonStatus      @default(DRAFT)
   rankingMode RankingMode       @default(FROZEN)
   visibility  RankingVisibility @default(ALL)
+  /// objectif de matchs par défaut pour les engagés (spec 005), null = aucun
+  matchGoal   Int?
   createdAt   DateTime          @default(now())
   openedAt    DateTime?
   closedAt    DateTime?
@@ -154,6 +157,7 @@ model Season {
   enrollments Enrollment[]
   matches     Match[]
   recalcRuns  RecalcRun[]
+  matchGoals  MatchGoal[]
 }
 
 /// Barème d'une saison, versionné. `rules` respecte le schéma RuleSet de src/scoring/rules.ts.
@@ -238,6 +242,19 @@ model PointsEntry {
 
   @@unique([matchId, userId])
   @@index([userId])
+}
+
+/// Objectif de matchs d'une saison pour une étiquette (spec 005). Aucun effet sur les points.
+model MatchGoal {
+  seasonId  String
+  tagId     String
+  /// nombre de matchs validés (hors forfaits) attendu, de 1 à 200
+  target    Int
+  updatedAt DateTime @updatedAt
+  season    Season   @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  tag       Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([seasonId, tagId])
 }
 
 /// Trace d'un recalcul explicite (FR-066).

@@ -80,6 +80,10 @@ export default async function SaisonPage({ params, searchParams }: { params: Pro
           <Icon name="users" />
           Engagements
         </Link>
+        <Link className="btn btn-secondary" href={`/admin/saisons/${season.slug}/objectifs`}>
+          <Icon name="flag" />
+          Objectifs
+        </Link>
         <Link className="btn btn-secondary" href={`/classement?saison=${season.slug}`}>
           <Icon name="trophy" />
           Classement

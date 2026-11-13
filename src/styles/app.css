@@ -221,6 +221,7 @@ legend { font-size: var(--fs-sm); font-weight: 500; margin-bottom: 6px; padding:
 .table th { text-align: left; text-transform: uppercase; letter-spacing: var(--ls-caps); font-size: var(--fs-xs); font-weight: 500; color: var(--text-subtle); padding: var(--s-3); border-bottom: var(--hairline) solid var(--line); white-space: nowrap; }
 .table td { padding: var(--s-3); border-bottom: var(--hairline) solid var(--line-soft); vertical-align: middle; }
 .table .num { text-align: right; }
+.table th.row-label { text-transform: none; letter-spacing: normal; font-size: var(--fs-sm); font-weight: 400; color: var(--text); white-space: normal; border-bottom-color: var(--line-soft); }
 .table tr.is-selected td { background: var(--highlight); color: var(--on-highlight); }
 .table tr.is-selected td:first-child { box-shadow: inset 4px 0 0 var(--on-highlight); }
 .table tr.is-off td { color: var(--text-subtle); }

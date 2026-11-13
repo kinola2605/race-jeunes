@@ -54,6 +54,10 @@ export default async function SaisonsAdminPage() {
                     <Icon name="users" />
                     Engagements
                   </Link>
+                  <Link className="btn btn-ghost btn-sm" href={`/admin/saisons/${s.slug}/objectifs`}>
+                    <Icon name="flag" />
+                    Objectifs
+                  </Link>
                 </div>
               </article>
             );
