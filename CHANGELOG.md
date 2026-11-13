@@ -4,6 +4,17 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
+## [1.8.0] — 2026-11-13
+
+### Envoi du mot de passe par e-mail (spec 009)
+- Écran de remise du mot de passe (création et réinitialisation) : nouveau bouton **« Envoyer par e-mail »**
+  qui ouvre la messagerie de l'admin avec un message prêt (adresse de l'app, pseudo, mot de passe temporaire,
+  consignes de première connexion).
+- Aucun destinataire pré-rempli : l'application ne demande ni ne conserve aucune adresse e-mail et n'appelle
+  aucun service d'envoi (constitution III). Un envoi direct par l'application nécessiterait un amendement.
+- Case de confirmation : « J'ai remis, imprimé ou envoyé le mot de passe ».
+- Aucune migration.
+
 ## [1.7.0] — 2026-11-13
 
 ### Espace RGPD (spec 008)
@@ -154,7 +165,8 @@ Première version de la Race jeunes.
 - CI GitHub Actions : lint, typage, tests unitaires, E2E Playwright, démarrage Docker.
 - Logo et bannière du projet.
 
-[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.7.0...HEAD
+[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.8.0...HEAD
+[1.8.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.8.0
 [1.7.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.7.0
 [1.6.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.6.0
 [1.5.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.5.0
