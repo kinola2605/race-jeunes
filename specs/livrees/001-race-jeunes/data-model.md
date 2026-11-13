@@ -1,6 +1,6 @@
 # Modèle de données — Race jeunes
 
-Source exécutable : [`prisma/schema.prisma`](../../prisma/schema.prisma). Aucun champ ne contient de donnée
+Source exécutable : [`prisma/schema.prisma`](../../../prisma/schema.prisma). Aucun champ ne contient de donnée
 personnelle (constitution III).
 
 ```mermaid

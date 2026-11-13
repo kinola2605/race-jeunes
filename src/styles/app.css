@@ -60,7 +60,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   border-bottom: var(--hairline) solid var(--line);
 }
 .brand { display: flex; align-items: center; gap: var(--s-3); text-decoration: none; min-width: 0; }
-.brand .logo { width: 44px; height: 44px; flex: none; }
+.brand .logo { width: 44px; height: 44px; flex: none; object-fit: contain; }
 .logo-on-light { display: none !important; }
 [data-theme="light"] .logo-on-dark { display: none !important; }
 [data-theme="light"] .logo-on-light { display: block !important; }
@@ -383,7 +383,7 @@ details.disclose[open] .chev { transform: rotate(90deg); }
   .topbar .brand { visibility: hidden; }
   .appnav { position: sticky; top: 0; grid-row: 1 / span 3; grid-column: 1; height: 100vh; border-top: 0; border-right: var(--hairline) solid var(--line-soft); padding: var(--s-5) var(--s-3); }
   .appnav .nav-brand { display: flex; align-items: center; gap: var(--s-3); padding: 0 var(--s-2) var(--s-6); text-decoration: none; }
-  .appnav .nav-brand .logo { width: 56px; height: 56px; }
+  .appnav .nav-brand .logo { width: 56px; height: 56px; object-fit: contain; }
   .appnav ul { grid-auto-flow: row; gap: 4px; }
   .appnav a { display: flex; justify-items: start; gap: var(--s-3); padding: 0 var(--s-3); min-height: 48px; align-items: center; border-radius: var(--r-button); font-size: var(--fs-sm); color: var(--text-muted); }
   .appnav a[aria-current="page"] { background: var(--surface-raised); }

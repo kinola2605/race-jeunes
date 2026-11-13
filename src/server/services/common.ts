@@ -11,7 +11,7 @@ export type Actor = Pick<SessionUser, "id" | "pseudo" | "role">;
 
 export const SYSTEM_ACTOR: Actor = { id: "system", pseudo: "système", role: "ADMIN" };
 
-export type AuditType = "Compte" | "Saison" | "Barème" | "Engagement" | "Match" | "Sécurité" | "Import" | "Export";
+export type AuditType = "Compte" | "Saison" | "Barème" | "Engagement" | "Match" | "Sécurité" | "Import" | "Export" | "Apparence";
 
 /** Ajoute une entrée au journal d'audit. Ne jamais y mettre de mot de passe (constitution III/VI). */
 export async function audit(

@@ -1,6 +1,6 @@
 # Spécification fonctionnelle — Race jeunes
 
-**Branche** `001-race-jeunes` · **Créée** 2026-11-07 · **Statut** v1 · **Entrées** : brief du club,
+**Branche** `001-race-jeunes` · **Créée** 2026-11-07 · **Statut** Déployée (v1.0.0, complétée jusqu'en v1.2.1) · **Entrées** : brief du club,
 maquettes validées (`design/maquettes/`, direction B), charte (`design/identite.md`).
 
 > Ce document décrit le **quoi** et le **pourquoi**, sans choix technique. Les écrans cités

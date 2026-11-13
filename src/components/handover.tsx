@@ -67,7 +67,7 @@ export function PrintSheet({ rows }: { rows: { pseudo: string; password: string 
     <section className="print-sheet" aria-hidden="true">
       {rows.map((r) => (
         <div key={r.pseudo} style={{ border: "2px solid #000", padding: 24, maxWidth: 520, margin: "0 auto 24px", breakInside: "avoid", fontFamily: "var(--font-sans)", color: "#000" }}>
-          <img src={brand.logoLight} alt="" width={64} height={64} />
+          <img src={brand.logoLight} alt="" width={64} height={64} style={{ objectFit: "contain" }} />
           <h2 style={{ fontSize: 20, margin: "12px 0 4px" }}>{brand.appName} — vos identifiants</h2>
           {brand.clubName ? <p style={{ margin: "0 0 16px" }}>{brand.clubName}</p> : <div style={{ height: 12 }} />}
           <p style={{ margin: 0 }}>

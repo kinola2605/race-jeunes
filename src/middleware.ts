@@ -6,7 +6,7 @@ import { isAllowedWrite } from "@/server/origin";
  * 2. Filtre rapide : sans cookie de session, toute page non publique renvoie vers /connexion.
  * La vraie vérification (session valide, rôle) est faite côté serveur dans chaque page et action.
  */
-const PUBLIC = ["/connexion", "/hors-ligne", "/manifest.webmanifest", "/sw.js", "/favicon.ico", "/icon.svg"];
+const PUBLIC = ["/connexion", "/hors-ligne", "/manifest.webmanifest", "/sw.js", "/favicon.ico", "/icon.svg", "/club-logo"];
 
 export function middleware(req: NextRequest) {
   const host = req.headers.get("x-forwarded-host") ?? req.headers.get("host");

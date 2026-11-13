@@ -12,13 +12,13 @@ export const dynamic = "force-dynamic";
 export default async function ConnexionPage() {
   const user = await getSessionUser();
   if (user) redirect(user.mustChangePassword ? "/mot-de-passe" : user.role === "ADMIN" ? "/admin" : "/accueil");
-  const brand = getBrand();
+  const brand = await getBrand();
   return (
     <div className="app">
       <main id="main" className="main main-narrow">
         <div className="center" style={{ margin: "var(--s-6) 0 var(--s-8)" }}>
-          <img className="logo-on-dark" src={brand.logoDark} alt="" width={120} height={120} style={{ margin: "0 auto" }} />
-          <img className="logo-on-light" src={brand.logoLight} alt="" width={120} height={120} style={{ margin: "0 auto" }} />
+          <img className="logo-on-dark" src={brand.logoDark} alt="" width={120} height={120} style={{ margin: "0 auto", objectFit: "contain" }} />
+          <img className="logo-on-light" src={brand.logoLight} alt="" width={120} height={120} style={{ margin: "0 auto", objectFit: "contain" }} />
           {brand.clubName ? <span className="eyebrow mt-4">{brand.clubName}</span> : null}
           <h1 className="page-title">{brand.appName}</h1>
         </div>

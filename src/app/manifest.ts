@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
-import { getBrand } from "@/brand";
+import { getBrand, getBrandIcon } from "@/brand";
 
 export const dynamic = "force-dynamic";
 
-export default function manifest(): MetadataRoute.Manifest {
-  const { appName, clubName, clubShortName } = getBrand();
+export default async function manifest(): Promise<MetadataRoute.Manifest> {
+  const [{ appName, clubName, clubShortName }, icon] = await Promise.all([getBrand(), getBrandIcon()]);
   return {
     name: clubName ? `${appName} · ${clubName}` : appName,
     short_name: clubShortName ? `${appName} ${clubShortName}` : appName,
@@ -15,9 +15,10 @@ export default function manifest(): MetadataRoute.Manifest {
     display: "standalone",
     background_color: "#1F2B42",
     theme_color: "#1F2B42",
+    // Logo déposé par l'admin s'il existe (spec 003, FR-301), sinon le logo du projet.
     icons: [
-      { src: "/icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
-      { src: "/icon.svg", sizes: "any", type: "image/svg+xml", purpose: "maskable" },
+      { src: icon.src, sizes: "any", type: icon.type, purpose: "any" },
+      { src: icon.src, sizes: "any", type: icon.type, purpose: "maskable" },
     ],
   };
 }
