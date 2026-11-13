@@ -16,6 +16,8 @@ export interface SessionUser {
   role: Role;
   mustChangePassword: boolean;
   ranking: string | null;
+  /** spec 007 : avatar choisi (« icône:couleur ») ou null */
+  avatar: string | null;
 }
 
 /** Empreinte HMAC du jeton (seule valeur stockée en base). */
@@ -70,7 +72,7 @@ export const getSessionUser = cache(async (): Promise<SessionUser | null> => {
     return null;
   }
   const { user } = session;
-  return { id: user.id, pseudo: user.pseudo, role: user.role, mustChangePassword: user.mustChangePassword, ranking: user.ranking };
+  return { id: user.id, pseudo: user.pseudo, role: user.role, mustChangePassword: user.mustChangePassword, ranking: user.ranking, avatar: user.avatar };
 });
 
 /** Exige une session ; un mot de passe temporaire renvoie vers le changement obligatoire (FR-005). */

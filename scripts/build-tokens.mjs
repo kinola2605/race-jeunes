@@ -23,6 +23,7 @@ const lines = [];
 lines.push("/* Fichier généré par scripts/build-tokens.mjs depuis design/tokens.json — ne pas modifier à la main. */");
 lines.push(":root {");
 lines.push(...vars(tokens.color.brand, "brand-"));
+lines.push(...vars(tokens.color.avatar, "avatar-"));
 lines.push(...vars(tokens.theme.dark, ""));
 lines.push("  --on-highlight: #1F2B42;");
 lines.push("  --highlight: #EBB08C;");

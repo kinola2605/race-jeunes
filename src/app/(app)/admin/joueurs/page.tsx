@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { accountCounts, listAccounts, listTags, type AccountFilter } from "@/server/services/accounts";
 import { Icon, PageHead } from "@/components/ui";
+import { Avatar } from "@/components/avatar";
 
 export const metadata: Metadata = { title: "Joueurs" };
 
@@ -81,6 +82,7 @@ export default async function JoueursPage({ searchParams }: { searchParams: Sear
             <Link className="item" href={`/admin/joueurs/${p.id}`}>
               <div className="item-main">
                 <div className="item-title">
+                  <Avatar pseudo={p.pseudo} avatar={p.avatar} />
                   {p.pseudo}
                   {p.status === "DISABLED" ? (
                     <span className="badge badge-off">
@@ -123,7 +125,12 @@ export default async function JoueursPage({ searchParams }: { searchParams: Sear
           <tbody>
             {players.map((p) => (
               <tr key={p.id} className={p.status === "DISABLED" ? "is-off" : undefined}>
-                <td className="strong">{p.pseudo}</td>
+                <td className="strong">
+                  <span className="with-avatar">
+                    <Avatar pseudo={p.pseudo} avatar={p.avatar} />
+                    {p.pseudo}
+                  </span>
+                </td>
                 <td>{p.ranking}</td>
                 <td>
                   {p.tags.length ? p.tags.map((t) => <span key={t.tagId} className="badge badge-tag" style={{ marginRight: 4 }}>{t.tag.name}</span>) : <span className="subtle">—</span>}

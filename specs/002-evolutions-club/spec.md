@@ -110,8 +110,9 @@ Une fiche par demande. Recopier le modèle autant que nécessaire (EV-06, EV-07�
 
 ### EV-10 · Photos de profil
 
-- **Spec** : `specs/007-photos-profil/spec.md`
+- **Spec** : `specs/livrees/007-photos-profil/spec.md` (livrée en v1.6.0)
 - **Besoin** : prévoir des photos de profil.
+- **Conflit §7** : oui (III, pas de photo) → alternative compatible retenue : avatars (pictogramme + couleur).
 
 ### EV-11 · Espace RGPD par joueur
 

@@ -8,6 +8,7 @@ import { latestPublished } from "@/server/services/scoring";
 import { db } from "@/server/db";
 import { seriesOf, isRanking } from "@/scoring";
 import { SeasonPicker } from "@/components/season-picker";
+import { Avatar } from "@/components/avatar";
 import { EmptyState, Icon, PageHead, formatDateTime } from "@/components/ui";
 
 export const metadata: Metadata = { title: "Classement" };
@@ -105,6 +106,7 @@ export default async function ClassementPage({ searchParams }: { searchParams: S
                   <span className="rank-pos">{r.rank}</span>
                   <div className="item-main">
                     <div className="item-title">
+                      <Avatar pseudo={r.pseudo} avatar={r.avatar} />
                       {admin ? (
                         <Link className="link" href={q({ detail: r.playerId }) + "#detail"} aria-label={`Détail — ${r.pseudo}`}>
                           {r.pseudo}
@@ -152,7 +154,11 @@ export default async function ClassementPage({ searchParams }: { searchParams: S
                     <tr key={r.playerId} className={me ? "is-selected" : undefined} aria-current={me ? "true" : undefined}>
                       <td className="num strong">{r.rank}</td>
                       <td className="strong">
-                        {r.pseudo} {me ? <span className="badge badge-me">Vous</span> : null}
+                        <span className="with-avatar">
+                          <Avatar pseudo={r.pseudo} avatar={r.avatar} />
+                          {r.pseudo}
+                        </span>{" "}
+                        {me ? <span className="badge badge-me">Vous</span> : null}
                       </td>
                       <td>{r.startingRanking}</td>
                       <td>{r.tags.map((t) => <span key={t} className="badge badge-tag" style={{ marginRight: 4 }}>{t}</span>)}</td>

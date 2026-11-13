@@ -427,3 +427,28 @@ details.disclose[open] .chev { transform: rotate(90deg); }
 summary.item { cursor: pointer; }
 form.seg { margin: 0; }
 .btn:focus-visible, .chip:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* Spec 007 — avatars de profil (galerie fermée, jamais de photo). Couleurs : tokens color.avatar. */
+.avatar { display: inline-flex; align-items: center; justify-content: center; flex: none; border-radius: 50%; width: 28px; height: 28px; box-shadow: 0 0 0 1px var(--line-soft); }
+.avatar svg { width: 62%; height: 62%; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.avatar-initial { font-weight: 600; font-size: 0.95em; line-height: 1; }
+.avatar-sm { width: 28px; height: 28px; font-size: var(--fs-sm); }
+.avatar-md { width: 44px; height: 44px; font-size: var(--fs-lg); }
+.avatar-lg { width: 72px; height: 72px; font-size: 1.75rem; }
+.av-terre { background: var(--avatar-terre); color: var(--avatar-terre-ink); }
+.av-sable { background: var(--avatar-sable); color: var(--avatar-sable-ink); }
+.av-brique { background: var(--avatar-brique); color: var(--avatar-brique-ink); }
+.av-soleil { background: var(--avatar-soleil); color: var(--avatar-soleil-ink); }
+.av-gazon { background: var(--avatar-gazon); color: var(--avatar-gazon-ink); }
+.av-ciel { background: var(--avatar-ciel); color: var(--avatar-ciel-ink); }
+.av-violet { background: var(--avatar-violet); color: var(--avatar-violet-ink); }
+.av-marine { background: var(--avatar-marine); color: var(--avatar-marine-ink); }
+.with-avatar { display: inline-flex; align-items: center; gap: var(--s-2); min-width: 0; }
+.page-head .with-avatar { gap: var(--s-3); }
+.avatar-picker { display: grid; gap: var(--s-4); }
+.avatar-preview { display: flex; align-items: center; gap: var(--s-4); }
+.avatar-set { border: 0; padding: 0; margin: 0; min-width: 0; }
+.avatar-grid { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-2); }
+.avatar-opt { display: inline-flex; padding: 3px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
+.avatar-opt:has(input:checked) { border-color: var(--text); }
+.avatar-opt:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
