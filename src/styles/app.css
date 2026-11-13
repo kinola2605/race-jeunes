@@ -452,3 +452,6 @@ form.seg { margin: 0; }
 .avatar-opt { display: inline-flex; padding: 3px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
 .avatar-opt:has(input:checked) { border-color: var(--text); }
 .avatar-opt:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* Spec 008 — carte « Mes données » */
+.data-list > li { padding: var(--s-2) 0; min-height: 0; }

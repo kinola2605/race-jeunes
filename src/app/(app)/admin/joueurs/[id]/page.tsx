@@ -120,6 +120,10 @@ export default async function JoueurPage({ params, searchParams }: { params: Pro
                   </>
                 )}
               </form>
+              <a className="btn btn-ghost mt-4" href={`/api/mes-donnees?joueur=${encodeURIComponent(user.id)}`} download>
+                <Icon name="download" />
+                Télécharger ses données (RGPD)
+              </a>
             </div>
           </div>
           <div className="cases">

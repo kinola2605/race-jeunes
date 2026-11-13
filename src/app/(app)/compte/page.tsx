@@ -6,6 +6,7 @@ import { logoutAction, setThemeAction } from "@/app/actions/auth";
 import { Flash, Icon, PageHead } from "@/components/ui";
 import { Avatar } from "@/components/avatar";
 import { AvatarPicker } from "./avatar-picker";
+import { personalDataSummary } from "@/server/services/personal-data";
 
 export const metadata: Metadata = { title: "Mon compte" };
 
@@ -13,6 +14,7 @@ export default async function ComptePage({ searchParams }: { searchParams: Promi
   const sp = await searchParams;
   const user = await requireUser();
   const theme = (await cookies()).get("theme")?.value === "light" ? "light" : "dark";
+  const data = await personalDataSummary(user.id, user.pseudo);
   return (
     <>
       <PageHead
@@ -85,6 +87,28 @@ export default async function ComptePage({ searchParams }: { searchParams: Promi
             par un pseudo attribué par le club.
           </p>
           <p className="small muted mb-0">Aucun cookie de suivi, aucun outil de statistiques, aucune ressource chargée depuis un service externe.</p>
+        </section>
+        <section className="case" aria-labelledby="t-data">
+          <h2 className="case-title" id="t-data">
+            <Icon name="download" /> Mes données
+          </h2>
+          <p className="small muted">Voici ce que l&apos;application enregistre sur votre compte. Vous pouvez tout récupérer dans un fichier (format JSON).</p>
+          <ul className="list data-list" aria-label="Données enregistrées">
+            {data.map((c) => (
+              <li key={c.label} className="row-between">
+                <span>{c.label}</span>
+                <strong className="mono">{c.count}</strong>
+              </li>
+            ))}
+          </ul>
+          <a className="btn btn-secondary mt-4" href="/api/mes-donnees" download>
+            <Icon name="download" />
+            Télécharger mes données
+          </a>
+          <p className="small muted mt-4 mb-0">
+            Le fichier ne contient ni mot de passe, ni donnée d&apos;un autre joueur. Pour faire corriger ou effacer vos données (pseudo, classement,
+            compte), adressez-vous au responsable de la Race du club.
+          </p>
         </section>
       </div>
     </>

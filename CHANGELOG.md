@@ -4,6 +4,20 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
+## [1.7.0] — 2026-11-13
+
+### Espace RGPD (spec 008)
+- « Mon compte » : nouvelle carte **« Mes données »** listant ce que l'application enregistre sur le compte
+  (compte, étiquettes, historique du classement, saisons, matchs, points, actions au journal, sessions), avec
+  le nombre d'éléments de chaque catégorie.
+- Bouton **« Télécharger mes données »** : fichier JSON (droit d'accès et portabilité) avec le compte, les
+  saisons, tous les matchs du joueur présentés de son point de vue, ses points et leur détail, son journal et
+  ses sessions. Jamais de mot de passe, de jeton de session ni de donnée d'un autre joueur.
+- Fiche joueur (admin) : **« Télécharger ses données (RGPD) »**, y compris pour un compte désactivé.
+- Chacun ne télécharge que ses données (contrôle serveur) ; chaque téléchargement est tracé au journal
+  (type « Export »). Rectification et effacement : sur demande au club.
+- Aucune migration.
+
 ## [1.6.0] — 2026-11-13
 
 ### Avatars de profil (spec 007)
@@ -140,7 +154,8 @@ Première version de la Race jeunes.
 - CI GitHub Actions : lint, typage, tests unitaires, E2E Playwright, démarrage Docker.
 - Logo et bannière du projet.
 
-[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.6.0...HEAD
+[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.7.0...HEAD
+[1.7.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.7.0
 [1.6.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.6.0
 [1.5.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.5.0
 [1.4.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.4.1

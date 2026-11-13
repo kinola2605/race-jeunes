@@ -19,11 +19,11 @@ sur l'ensemble des deux répertoires : la prochaine spec prend le numéro suivan
 | [005-objectif-matchs](livrees/005-objectif-matchs/spec.md) | 1.4.0 → 1.4.1 | Objectif de matchs par joueur et par saison |
 | [006-bonus-tournoi](livrees/006-bonus-tournoi/spec.md) | 1.5.0 | Bonus pour plusieurs victoires dans un même tournoi |
 | [007-photos-profil](livrees/007-photos-profil/spec.md) | 1.6.0 | Avatars de profil (galerie, sans photo) |
+| [008-espace-rgpd](livrees/008-espace-rgpd/spec.md) | 1.7.0 | Espace RGPD : consulter et télécharger ses données |
 
 ## En cours
 
 | Spec | Statut |
 |---|---|
 | [002-evolutions-club](002-evolutions-club/spec.md) | Brouillon — préparation du rendez-vous club |
-| [008-espace-rgpd](008-espace-rgpd/spec.md) | Brouillon |
 | [009-envoi-mot-de-passe-email](009-envoi-mot-de-passe-email/spec.md) | Brouillon |

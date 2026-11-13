@@ -116,7 +116,7 @@ Une fiche par demande. Recopier le modèle autant que nécessaire (EV-06, EV-07�
 
 ### EV-11 · Espace RGPD par joueur
 
-- **Spec** : `specs/008-espace-rgpd/spec.md`
+- **Spec** : `specs/livrees/008-espace-rgpd/spec.md` (livrée en v1.7.0)
 - **Besoin** : espace RGPD par joueur pour récupérer ses données.
 
 ### EV-12 · Envoi du mot de passe par e-mail

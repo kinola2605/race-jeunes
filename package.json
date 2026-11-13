@@ -1,6 +1,6 @@
 {
   "name": "race-jeunes",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "private": true,
   "description": "Suivi de la Race jeunes d'un club de tennis — PWA en marque blanche, sans donnée personnelle",
   "scripts": {
