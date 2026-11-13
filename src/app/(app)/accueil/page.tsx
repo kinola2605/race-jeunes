@@ -104,7 +104,7 @@ export default async function AccueilPage() {
                 </span>
               </div>
               <GoalCourt played={goal.played} pending={goal.pending} target={goal.target} />
-              <p className="strong mb-0 mt-4">{goalMessage(goal)}</p>
+              <p className="strong mb-0 mt-2">{goalMessage(goal)}</p>
               <p className="small subtle mb-0 mt-2">
                 Matchs validés de la saison, hors forfaits
                 {goal.pending > 0 ? ` · ${goal.pending} en attente de validation (balle en pointillés)` : ""}.
