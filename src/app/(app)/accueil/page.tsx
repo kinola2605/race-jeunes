@@ -5,6 +5,9 @@ import { requireUser } from "@/server/auth/session";
 import { defaultSeasonFor } from "@/server/services/player";
 import { seasonStandings } from "@/server/services/standings";
 import { matchesOfPlayer, viewOf } from "@/server/services/matches";
+import { playerGoal } from "@/server/services/goals";
+import { TIER_LABEL, goalMessage, goalTier } from "@/goals/goals";
+import { GoalCourt } from "@/components/goal-court";
 import { Alert, EmptyState, Icon, PageHead, PerfBadge, ResultBox, formatDate } from "@/components/ui";
 
 export const metadata: Metadata = { title: "Accueil" };
@@ -24,7 +27,7 @@ export default async function AccueilPage() {
       </>
     );
   }
-  const [standings, matches] = await Promise.all([seasonStandings(season.id), matchesOfPlayer(season.id, user.id)]);
+  const [standings, matches, goal] = await Promise.all([seasonStandings(season.id), matchesOfPlayer(season.id, user.id), playerGoal(season.id, user.id)]);
   const me = standings.find((s) => s.playerId === user.id);
   const above = me ? standings.filter((s) => s.rank < me.rank).at(-1) : undefined;
   const pending = matches.filter((m) => m.status === "PENDING");
@@ -78,6 +81,34 @@ export default async function AccueilPage() {
             <div className="case">
               <span className="stat-label">Classement de départ</span>
               <span className="stat-value">{me.startingRanking}</span>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {goal ? (
+        <section className="section" aria-labelledby="t-objectif">
+          <h2 className="section-title" id="t-objectif">
+            Mon objectif de matchs
+          </h2>
+          <div className="cases">
+            <div className="case">
+              <div className="row-between" style={{ alignItems: "flex-end" }}>
+                <span className="stat-value">
+                  {goal.played}
+                  <small className="subtle"> / {goal.target} matchs</small>
+                </span>
+                <span className={`goal-tier${goal.reached ? " is-done" : ""}`}>
+                  <Icon name={goal.reached ? "trophy" : "flag"} />
+                  {TIER_LABEL[goalTier(goal)]}
+                </span>
+              </div>
+              <GoalCourt played={goal.played} pending={goal.pending} target={goal.target} />
+              <p className="strong mb-0 mt-4">{goalMessage(goal)}</p>
+              <p className="small subtle mb-0 mt-2">
+                Matchs validés de la saison, hors forfaits
+                {goal.pending > 0 ? ` · ${goal.pending} en attente de validation (balle en pointillés)` : ""}.
+              </p>
             </div>
           </div>
         </section>

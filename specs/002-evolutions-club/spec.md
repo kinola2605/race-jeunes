@@ -99,7 +99,7 @@ Une fiche par demande. Recopier le modèle autant que nécessaire (EV-06, EV-07�
 
 ### EV-08 · Objectif du nombre de matchs à jouer par saison et par tranche d'âge
 
-- **Spec** : `specs/005-objectif-matchs/spec.md`
+- **Spec** : `specs/livrees/005-objectif-matchs/spec.md`
 - **Besoin** : objectif du nombre de matchs à jouer par saison et par tranche d'âge — juste un tableau
   côté admin à remplir et un indicateur de suivi pour le joueur.
 

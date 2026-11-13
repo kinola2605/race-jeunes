@@ -178,6 +178,8 @@ model Enrollment {
   seasonId        String
   userId          String
   startingRanking String
+  /// objectif de matchs validés (hors forfaits) dans la saison, 1 à 200, null = aucun (spec 005)
+  matchGoal       Int?
   createdAt       DateTime @default(now())
   season          Season   @relation(fields: [seasonId], references: [id], onDelete: Cascade)
   user            User     @relation(fields: [userId], references: [id])

@@ -4,6 +4,18 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
+## [1.4.0] — 2026-11-13
+
+### Objectif de matchs par joueur et par saison (spec 005)
+- Sur la fiche d'un joueur, carte « Saisons » : l'admin fixe son **objectif de matchs** pour chaque saison
+  (1 à 200, vide = aucun) et voit sa progression ; lecture seule une fois la saison clôturée.
+- Sur l'accueil du joueur : **« n / objectif matchs »** et **« L'échange »** : la balle traverse un court en
+  terre battue à mesure qu'il joue (service, filet, service adverse, point), avec palier, message
+  d'encouragement et matchs en attente en pointillés. Comptent les matchs validés hors forfaits ; aucun effet sur les points.
+- Modifications tracées au journal d'audit (type « Engagement »).
+- **Migration** `20261113180000_enrollment_match_goal` (colonne `Enrollment.matchGoal`), appliquée en production
+  avant le déploiement.
+
 ## [1.3.0] — 2026-11-13
 
 ### Apparence du club (specs 003 et 004)
@@ -92,7 +104,8 @@ Première version de la Race jeunes.
 - CI GitHub Actions : lint, typage, tests unitaires, E2E Playwright, démarrage Docker.
 - Logo et bannière du projet.
 
-[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.3.0...HEAD
+[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.4.0
 [1.3.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.3.0
 [1.2.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.2.1
 [1.2.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.2.0
