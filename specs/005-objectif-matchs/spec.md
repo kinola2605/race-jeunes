@@ -1,91 +1,93 @@
-# Spécification fonctionnelle — Objectif du nombre de matchs par saison et par tranche d'âge
+# Spécification fonctionnelle — Objectif du nombre de matchs par saison
 
-**Branche** `005-objectif-matchs` · **Créée** 2026-11-13 · **Statut** Implémentée · **Origine** EV-08
-(`specs/002-evolutions-club/spec.md`)
+**Branche** `005-objectif-matchs` · **Créée** 2026-11-13 · **Révisée** 2026-11-13 (v2 : objectif par joueur)
+· **Statut** Maquette à valider · **Origine** EV-08 (`specs/002-evolutions-club/spec.md`)
 
 > Ce document décrit le **quoi** et le **pourquoi**, sans choix technique. La constitution reste la règle
 > (`.specify/memory/constitution.md`) ; les exigences existantes sont dans `specs/livrees/001-race-jeunes/spec.md`.
+> Maquette : `design/maquettes/15-objectif-matchs.html`.
 
 ## 1. Besoin
 
-Objectif du nombre de matchs à jouer par saison et par tranche d'âge — juste un tableau côté admin
-à remplir et un indicateur de suivi pour le joueur.
+Fixer à chaque joueur un objectif de nombre de matchs à jouer **dans une saison**, et lui montrer de façon
+**ludique**, sur son accueil, où il en est.
+
+**Révision v2 (2026-11-13, demande du responsable)** : l'objectif n'est plus fixé par tranche d'âge dans un
+tableau, mais **saisi par l'admin sur la fiche de chaque joueur**, pour chaque saison où il est engagé.
+Cela supprime toute notion de tranche d'âge (et la question de conformité qu'elle posait, ex-C-501).
 
 L'objectif est un **repère d'assiduité** : il n'attribue aucun point et ne change pas le classement.
 
 ## 2. Personas concernés
 
-- **Admin** : fixe, pour chaque saison, le nombre de matchs attendu par tranche.
-- **Joueur** : voit où il en est par rapport à son objectif.
+- **Admin** : fixe l'objectif de chaque joueur, saison par saison.
+- **Joueur** : suit sa progression vers son objectif, sur son accueil.
 
 ## 3. User stories
 
-- **US-O1** — En tant qu'admin, je remplis un tableau « tranche → nombre de matchs » pour une saison, avec
-  un objectif par défaut pour les engagés hors tranche.
-- **US-O2** — En tant qu'admin, je vois dans ce tableau combien d'engagés sont concernés par chaque ligne et
-  combien ont déjà atteint leur objectif.
-- **US-O3** — En tant que joueur, je vois sur mon accueil le nombre de matchs joués par rapport à mon
-  objectif de la saison, et ce qu'il me reste à jouer.
+- **US-O1** — En tant qu'admin, sur la fiche d'un joueur, je fixe son objectif de matchs pour chacune des
+  saisons où il est engagé, et je vois où il en est.
+- **US-O2** — En tant que joueur, je vois sur mon accueil, de façon ludique, ma progression vers mon objectif
+  de la saison affichée, avec un message qui m'encourage.
+- **US-O3** — En tant que joueur, je vois quand j'ai atteint (ou dépassé) mon objectif.
 
 ## 4. Exigences fonctionnelles
 
 | ID | Exigence | Écran |
 |---|---|---|
-| FR-500 | Une **tranche** est une **étiquette** de joueur (règle existante FR-020/023, ex. « Mini-tennis », « Groupe 2 ») : l'application ne stocke ni âge ni date de naissance (constitution III). | Joueurs |
-| FR-501 | Pour chaque saison, la page « Objectifs » présente un tableau : une ligne **« Tous les engagés (par défaut) »** puis une ligne par étiquette existante, chacune avec un nombre de matchs à saisir (entier de 1 à 200) ; une case vide = pas d'objectif. Un seul enregistrement met à jour tout le tableau. | Objectifs |
-| FR-502 | L'objectif d'un engagé est celui de ses étiquettes ; s'il en a plusieurs avec un objectif, c'est le **plus élevé** ; s'il n'en a aucune, c'est l'objectif par défaut ; sinon il n'a pas d'objectif (aucun indicateur). | — |
-| FR-503 | Comptent pour l'objectif : les matchs **validés** de la saison où le joueur est l'un des deux côtés, **hors forfaits** (un forfait n'est pas joué) ; un abandon compte. Les matchs en attente sont signalés à part, sans être comptés. | Accueil |
-| FR-504 | Pour chaque ligne, le tableau indique « atteint / concernés » : combien d'engagés dont l'objectif retenu vient de cette ligne l'ont atteint, sur leur nombre. | Objectifs |
-| FR-505 | Sur son accueil, l'engagé qui a un objectif voit « *n* / *objectif* matchs », une jauge, le nombre restant ou « Objectif atteint », et le nombre de matchs en attente de validation. La jauge est doublée de texte (pas d'information par la couleur seule). | Accueil |
-| FR-506 | Les objectifs sont modifiables tant que la saison est en brouillon ou ouverte ; ensuite le tableau est en lecture seule. Ils n'ont aucun effet sur les points ni sur le classement (aucun recalcul). | Objectifs |
-| FR-507 | Chaque modification est tracée dans le journal d'audit (type « Saison ») avec les objectifs avant / après. Page et action réservées à l'admin, vérifiées côté serveur. | Journal |
-| FR-508 | Un joueur ne voit que **son** objectif et sa progression (règle FR-127 : il ne voit pas les matchs des autres). | Accueil |
+| FR-500 | L'objectif de matchs appartient à l'**engagement** d'un joueur dans une saison : un joueur engagé dans deux saisons a deux objectifs indépendants. Sans objectif, rien n'est affiché au joueur. | — |
+| FR-501 | Sur la fiche du joueur, la carte « Saisons » liste ses engagements ; pour chaque saison en brouillon ou ouverte, l'admin saisit l'objectif (entier de 1 à 200 ; vide = aucun) et l'enregistre. Pour une saison clôturée ou archivée, l'objectif et le résultat final sont affichés en lecture seule. | Fiche joueur |
+| FR-502 | Pour chaque saison, la fiche affiche aussi la progression : « *n* / *objectif* matchs », et « atteint » le cas échéant. | Fiche joueur |
+| FR-503 | Comptent pour l'objectif : les matchs **validés** de la saison où le joueur est l'un des deux côtés, **hors forfaits** (un forfait n'est pas joué) ; un abandon compte. Les matchs en attente sont signalés à part, sans être comptés. | Accueil, fiche |
+| FR-504 | Sur son accueil, l'engagé qui a un objectif pour la saison affichée voit un **indicateur ludique** de progression (variante retenue sur maquette, §8 C-506) : nombre de matchs joués / objectif, matchs en attente (affichés distinctement), **message d'encouragement** selon le palier atteint. | Accueil |
+| FR-505 | Paliers et messages : départ (0 match), en route (< 50 %), mi-parcours (≥ 50 %), dernière ligne droite (≥ 75 %), **objectif atteint** (100 %), objectif dépassé (« +*k* » au-delà). Le message cite le nombre de matchs restants tant que l'objectif n'est pas atteint. | Accueil |
+| FR-506 | L'indicateur reste lisible sans la couleur ni l'animation : le texte « *n* / *objectif* » et le message sont toujours affichés ; l'animation éventuelle est désactivée si l'utilisateur a demandé moins d'animations. | Accueil |
+| FR-507 | Chaque modification d'objectif est tracée dans le journal d'audit (type « Engagement ») avec l'ancienne et la nouvelle valeur. Saisie réservée à l'admin, vérifiée côté serveur. | Journal |
+| FR-508 | Un joueur ne voit que **son** objectif (règle FR-127). | Accueil |
+| FR-509 | L'objectif n'a aucun effet sur les points ni sur le classement (aucun recalcul). | — |
 
 ## 5. Critères d'acceptation (Given / When / Then)
 
-1. **Given** une saison ouverte et les étiquettes « Mini-tennis » et « Groupe 2 », **when** l'admin saisit
-   6 pour « Mini-tennis », 10 pour « Groupe 2 », 8 par défaut et enregistre, **then** les trois objectifs
-   sont enregistrés et le journal trace l'avant / après.
-2. **Given** un engagé étiqueté « Groupe 2 » avec 3 matchs validés (dont 1 forfait) et 1 en attente,
-   **when** il ouvre son accueil, **then** il voit « 2 / 10 matchs », « encore 8 » et « 1 en attente de
-   validation ».
-3. **Given** un engagé étiqueté à la fois « Mini-tennis » (6) et « Groupe 2 » (10), **then** son objectif
-   est 10.
-4. **Given** un engagé sans étiquette et un objectif par défaut de 8, **then** son objectif est 8 ; sans
-   objectif par défaut, aucun indicateur n'est affiché.
-5. **Given** un engagé à 10 matchs validés sur 10, **then** il voit « Objectif atteint » et la ligne de son
-   étiquette compte 1 objectif atteint.
-6. **Given** une saison clôturée, **when** l'admin ouvre « Objectifs », **then** le tableau est affiché en
-   lecture seule.
+1. **Given** AceDuMatin engagé dans la saison ouverte 2026-2027, **when** l'admin saisit 12 sur sa fiche
+   pour cette saison et enregistre, **then** l'objectif est enregistré, la fiche affiche « 0 / 12 » (ou la
+   progression actuelle) et le journal trace « — → 12 ».
+2. **Given** un objectif de 12 et 7 matchs validés (dont 1 forfait) et 1 en attente, **when** le joueur
+   ouvre son accueil, **then** il voit 6 / 12, le palier « mi-parcours », « encore 6 matchs » et 1 match en
+   attente distinct des matchs joués.
+3. **Given** 12 matchs comptés sur 12, **then** il voit « Objectif atteint » ; avec 14, « Objectif dépassé
+   (+2) ».
+4. **Given** un joueur sans objectif pour la saison affichée, **then** aucun indicateur n'apparaît.
+5. **Given** une saison clôturée, **when** l'admin ouvre la fiche, **then** l'objectif et le résultat final
+   sont affichés sans champ de saisie.
+6. **Given** la préférence « réduire les animations », **then** l'indicateur s'affiche directement dans son
+   état final.
 
 ## 6. Cas limites
 
 | Cas | Comportement |
 |---|---|
-| Valeur non entière, 0, négative ou > 200 | Refusée, rien n'est enregistré ; le message cite la ligne fautive. |
-| Étiquette supprimée ou renommée | L'objectif suit l'étiquette (renommage) ; il disparaît avec elle. |
-| Étiquette ajoutée / retirée à un joueur en cours de saison | L'objectif retenu est recalculé à l'affichage, sans trace particulière. |
-| Plus de matchs que l'objectif | « Objectif atteint » ; la jauge reste pleine (pas de dépassement affiché). |
-| Admin non engagé, joueur non engagé dans la saison | Pas d'indicateur. |
-| Aucune étiquette n'existe | Seule la ligne « par défaut » est proposée, avec un lien vers la gestion des joueurs. |
+| Valeur non entière, 0, négative ou > 200 | Refusée avec un message ; l'objectif précédent est conservé. |
+| Objectif abaissé sous le nombre de matchs déjà joués | Accepté : le joueur passe en « objectif dépassé ». |
+| Joueur retiré de la saison | Son objectif disparaît avec l'engagement. |
+| Objectif élevé (ex. 40) | L'indicateur reste lisible : la représentation s'adapte (pas un symbole par match au-delà d'un seuil). |
+| Admin, ou joueur non engagé dans la saison affichée | Pas d'indicateur. |
 
 ## 7. Principes de la constitution concernés
 
-- **III** — aucune donnée d'âge : la « tranche d'âge » demandée par le club est une **étiquette libre**
-  choisie par l'admin. L'avertissement « aucune donnée personnelle » est rappelé sur la page.
-- **II** — l'objectif n'est pas une règle de barème : il ne donne aucun point, aucun recalcul.
-- **VI** — page et action réservées à l'admin, vérifiées côté serveur ; action tracée.
-- **V** — jauge doublée de texte, champs étiquetés, utilisable à 375 px.
+- **III** — aucune donnée personnelle : l'objectif est un nombre rattaché à un pseudo et à une saison.
+- **II** — l'objectif n'est pas une règle de barème : aucun point, aucun recalcul.
+- **V** — indicateur doublé de texte, contraste AA, animation désactivable, utilisable à 375 px.
+- **VI** — saisie réservée à l'admin, vérifiée côté serveur ; action tracée.
 
 ## 8. Clarifications
 
-Choix par défaut adoptés sans rendez-vous (à confirmer avec le responsable Race) :
-
-- **C-501 · Tranche = étiquette.** La constitution interdit de stocker l'âge ; les tranches passent donc par
-  les étiquettes existantes, que l'admin met à jour en début de saison. Nommer une étiquette d'après une
-  catégorie d'âge (ex. « U12 ») révèle indirectement une tranche d'âge : **à valider** avec le club, à
-  défaut préférer des noms neutres (« Groupe 1 », « Mini-tennis »).
-- **C-502 · Plusieurs étiquettes avec objectif** → le plus élevé.
-- **C-503 · Forfaits exclus**, abandons inclus ; seuls les matchs validés comptent.
-- **C-504 · Objectif par défaut** pour les engagés sans étiquette ayant un objectif.
-- **C-505 · Pas de vue admin par joueur** au-delà des comptes par ligne (« juste un tableau »).
+- **C-501 · Tranche d'âge** — *abandonné en v2* : l'objectif est individuel.
+- **C-502 · Matchs comptés** : validés, hors forfaits ; abandons inclus ; matchs en attente affichés à part.
+- **C-503 · Saisie** : sur la fiche joueur uniquement (pas de saisie en lot pour l'instant). Une saisie en lot
+  depuis la page Engagements pourra être ajoutée si le club le demande.
+- **C-504 · Saison** : l'objectif est attaché à l'engagement (saison × joueur), modifiable tant que la
+  saison est en brouillon ou ouverte.
+- **C-505 · Dépassement** : affiché comme une réussite (« +*k* »), jamais comme une erreur.
+- **C-506 · Représentation ludique** : **à choisir sur la maquette** `design/maquettes/15-objectif-matchs.html`
+  — variante 1 « L'échange » (la balle traverse le court), variante 2 « Le tube de balles » (une balle par
+  match). `[NEEDS CLARIFICATION]`
