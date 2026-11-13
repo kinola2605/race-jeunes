@@ -7,8 +7,9 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 ### Objectif de matchs par joueur et par saison (spec 005)
 - Sur la fiche d'un joueur, carte « Saisons » : l'admin fixe son **objectif de matchs** pour chaque saison
   (1 à 200, vide = aucun) et voit sa progression ; lecture seule une fois la saison clôturée.
-- Sur l'accueil du joueur : **« n / objectif matchs »**, jauge, matchs restants ou « Objectif atteint », et
-  matchs en attente de validation. Comptent les matchs validés hors forfaits ; aucun effet sur les points.
+- Sur l'accueil du joueur : **« n / objectif matchs »** et **« L'échange »** : la balle traverse un court en
+  terre battue à mesure qu'il joue (service, filet, service adverse, point), avec palier, message
+  d'encouragement et matchs en attente en pointillés. Comptent les matchs validés hors forfaits ; aucun effet sur les points.
 - Modifications tracées au journal d'audit (type « Engagement »).
 - **Migration** `20261113180000_enrollment_match_goal` (colonne `Enrollment.matchGoal`) à appliquer avant le
   déploiement (`npm run db:migrate:remote`).

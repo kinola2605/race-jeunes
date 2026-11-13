@@ -6,6 +6,8 @@ import { defaultSeasonFor } from "@/server/services/player";
 import { seasonStandings } from "@/server/services/standings";
 import { matchesOfPlayer, viewOf } from "@/server/services/matches";
 import { playerGoal } from "@/server/services/goals";
+import { TIER_LABEL, goalMessage, goalTier } from "@/goals/goals";
+import { GoalCourt } from "@/components/goal-court";
 import { Alert, EmptyState, Icon, PageHead, PerfBadge, ResultBox, formatDate } from "@/components/ui";
 
 export const metadata: Metadata = { title: "Accueil" };
@@ -96,30 +98,16 @@ export default async function AccueilPage() {
                   {goal.played}
                   <small className="subtle"> / {goal.target} matchs</small>
                 </span>
-                <span className="small strong" style={{ color: goal.reached ? "var(--success)" : undefined }}>
-                  {goal.reached ? (
-                    <>
-                      <Icon name="check" /> Objectif atteint
-                    </>
-                  ) : (
-                    `encore ${goal.remaining}`
-                  )}
+                <span className={`goal-tier${goal.reached ? " is-done" : ""}`}>
+                  <Icon name={goal.reached ? "trophy" : "flag"} />
+                  {TIER_LABEL[goalTier(goal)]}
                 </span>
               </div>
-              <div
-                className="meter mt-4"
-                role="progressbar"
-                aria-label="Progression vers l'objectif de matchs"
-                aria-valuemin={0}
-                aria-valuemax={goal.target}
-                aria-valuenow={Math.min(goal.played, goal.target)}
-                aria-valuetext={`${goal.played} matchs sur ${goal.target}`}
-              >
-                <span style={{ width: `${goal.percent}%` }} />
-              </div>
-              <p className="small subtle mb-0 mt-4">
+              <GoalCourt played={goal.played} pending={goal.pending} target={goal.target} />
+              <p className="strong mb-0 mt-4">{goalMessage(goal)}</p>
+              <p className="small subtle mb-0 mt-2">
                 Matchs validés de la saison, hors forfaits
-                {goal.pending > 0 ? ` · ${goal.pending} en attente de validation` : ""}.
+                {goal.pending > 0 ? ` · ${goal.pending} en attente de validation (balle en pointillés)` : ""}.
               </p>
             </div>
           </div>
