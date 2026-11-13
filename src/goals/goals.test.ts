@@ -1,28 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { GOAL_MAX, countsTowardGoal, goalProgress, parseGoal, retainedGoal } from "./goals";
+import { GOAL_MAX, countsTowardGoal, goalProgress, parseGoal } from "./goals";
 
 describe("objectif de matchs (spec 005)", () => {
-  const goals = new Map([
-    ["mini", 6],
-    ["g2", 10],
-  ]);
-
-  it("retient l'objectif de l'étiquette (FR-502)", () => {
-    expect(retainedGoal(8, goals, ["g2"])).toEqual({ target: 10, tagId: "g2" });
-  });
-
-  it("retient le plus élevé quand plusieurs étiquettes ont un objectif (C-502)", () => {
-    expect(retainedGoal(null, goals, ["mini", "g2", "autre"])).toEqual({ target: 10, tagId: "g2" });
-    expect(retainedGoal(null, goals, ["g2", "mini"])).toEqual({ target: 10, tagId: "g2" });
-  });
-
-  it("retombe sur l'objectif par défaut, sinon aucun objectif", () => {
-    expect(retainedGoal(8, goals, [])).toEqual({ target: 8, tagId: null });
-    expect(retainedGoal(8, goals, ["autre"])).toEqual({ target: 8, tagId: null });
-    expect(retainedGoal(null, goals, ["autre"])).toBeNull();
-  });
-
-  it("ne compte que les matchs validés hors forfait (FR-503)", () => {
+  it("ne compte que les matchs validés hors forfait (FR-502)", () => {
     expect(countsTowardGoal({ status: "VALIDATED", kind: "NORMAL" })).toBe(true);
     expect(countsTowardGoal({ status: "VALIDATED", kind: "RETIREMENT" })).toBe(true);
     expect(countsTowardGoal({ status: "VALIDATED", kind: "WALKOVER" })).toBe(false);

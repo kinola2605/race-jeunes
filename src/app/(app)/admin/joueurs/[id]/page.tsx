@@ -5,8 +5,11 @@ import { LADDER } from "@/scoring";
 import { db } from "@/server/db";
 import { listTags } from "@/server/services/accounts";
 import { setStatusAction, updatePlayerAction } from "@/app/actions/admin";
+import { setMatchGoalAction } from "@/app/actions/goals";
+import { goalsOfPlayer } from "@/server/services/goals";
+import { GOAL_MAX } from "@/goals/goals";
 import { ConfirmButton, SubmitButton } from "@/components/forms";
-import { Flash, Icon, PageHead, PiiNotice, formatDateTime } from "@/components/ui";
+import { Flash, Icon, PageHead, PiiNotice, SeasonStatusBadge, formatDateTime } from "@/components/ui";
 import { ResetPassword } from "./reset-password";
 
 export const metadata: Metadata = { title: "Joueur" };
@@ -24,7 +27,7 @@ export default async function JoueurPage({ params, searchParams }: { params: Pro
     },
   });
   if (!user || user.role !== "PLAYER") notFound();
-  const tags = await listTags();
+  const [tags, goals] = await Promise.all([listTags(), goalsOfPlayer(user.id, user.enrollments)]);
   const mine = new Set(user.tags.map((t) => t.tag.name));
 
   return (
@@ -138,20 +141,68 @@ export default async function JoueurPage({ params, searchParams }: { params: Pro
               <h2 className="case-title">Saisons</h2>
               {user.enrollments.length === 0 ? <p className="small muted mb-0">Engagé dans aucune saison.</p> : null}
               <ul className="list">
-                {user.enrollments.map((e) => (
-                  <li key={e.id}>
-                    <Link className="item" href={`/admin/saisons/${e.season.slug}`}>
-                      <div className="item-main">
-                        <div className="item-title">{e.season.title}</div>
-                        <div className="item-meta">départ {e.startingRanking}</div>
+                {user.enrollments.map((e) => {
+                  const goal = goals.get(e.seasonId);
+                  const writable = e.season.status === "DRAFT" || e.season.status === "OPEN";
+                  return (
+                    <li key={e.id} className="item" style={{ display: "block" }}>
+                      <div className="row-between">
+                        <div className="item-main">
+                          <Link className="item-title link" href={`/admin/saisons/${e.season.slug}`}>
+                            {e.season.title}
+                          </Link>
+                          <div className="item-meta">départ {e.startingRanking}</div>
+                        </div>
+                        <SeasonStatusBadge status={e.season.status} />
                       </div>
-                      <span className="chev">
-                        <Icon name="chev-r" />
-                      </span>
-                    </Link>
-                  </li>
-                ))}
+                      {goal ? (
+                        <>
+                          <p className="small mb-0 mt-2">
+                            <strong>
+                              {goal.played} / {goal.target} matchs
+                            </strong>
+                            {goal.reached ? " · objectif atteint" : ` · encore ${goal.remaining}`}
+                            {goal.pending > 0 ? ` · ${goal.pending} en attente` : ""}
+                          </p>
+                          <div className="meter mt-2" aria-hidden="true">
+                            <span style={{ width: `${goal.percent}%` }} />
+                          </div>
+                        </>
+                      ) : !writable ? (
+                        <p className="small subtle mb-0 mt-2">Pas d&apos;objectif de matchs.</p>
+                      ) : null}
+                      {writable ? (
+                        <form action={setMatchGoalAction} className="row mt-2" style={{ gap: 8, alignItems: "flex-end" }}>
+                          <input type="hidden" name="userId" value={user.id} />
+                          <input type="hidden" name="seasonId" value={e.seasonId} />
+                          <div className="field" style={{ margin: 0 }}>
+                            <label htmlFor={`goal-${e.seasonId}`} className="small">
+                              Objectif de matchs
+                            </label>
+                            <input
+                              className="input mono"
+                              id={`goal-${e.seasonId}`}
+                              name="matchGoal"
+                              type="number"
+                              inputMode="numeric"
+                              min={1}
+                              max={GOAL_MAX}
+                              step={1}
+                              defaultValue={e.matchGoal ?? ""}
+                              placeholder="—"
+                              style={{ width: "6em", textAlign: "right" }}
+                            />
+                          </div>
+                          <button className="btn btn-secondary btn-sm" type="submit" style={{ minHeight: 44 }}>
+                            Enregistrer
+                          </button>
+                        </form>
+                      ) : null}
+                    </li>
+                  );
+                })}
               </ul>
+              <p className="hint mb-0">Objectif : matchs validés de la saison, hors forfaits (1 à 200, vide = aucun). Aucun effet sur les points.</p>
             </div>
           </div>
         </div>

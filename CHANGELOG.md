@@ -4,17 +4,14 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
-### Objectif de matchs par tranche (spec 005)
-- Nouvelle page admin **Objectifs** par saison (`/admin/saisons/<saison>/objectifs`) : un tableau à remplir,
-  une ligne « Tous les engagés (par défaut) » puis une ligne par **étiquette** (la tranche d'âge passe par
-  une étiquette : l'application ne stocke toujours aucun âge). Pour chaque ligne : engagés ayant atteint
-  l'objectif / engagés concernés.
+### Objectif de matchs par joueur et par saison (spec 005)
+- Sur la fiche d'un joueur, carte « Saisons » : l'admin fixe son **objectif de matchs** pour chaque saison
+  (1 à 200, vide = aucun) et voit sa progression ; lecture seule une fois la saison clôturée.
 - Sur l'accueil du joueur : **« n / objectif matchs »**, jauge, matchs restants ou « Objectif atteint », et
   matchs en attente de validation. Comptent les matchs validés hors forfaits ; aucun effet sur les points.
-- Plusieurs étiquettes avec objectif : le plus élevé est retenu.
-- Modifications tracées au journal d'audit (type « Saison »).
-- **Migration** `20261113170000_match_goals` (colonne `Season.matchGoal`, table `MatchGoal`) à appliquer
-  avant le déploiement (`npm run db:migrate:remote`).
+- Modifications tracées au journal d'audit (type « Engagement »).
+- **Migration** `20261113180000_enrollment_match_goal` (colonne `Enrollment.matchGoal`) à appliquer avant le
+  déploiement (`npm run db:migrate:remote`).
 
 ## [1.3.0] — 2026-11-13
 

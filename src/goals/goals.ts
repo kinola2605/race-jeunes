@@ -1,23 +1,8 @@
-// Objectif du nombre de matchs par saison et par étiquette (spec 005). Fonctions pures, sans base.
+// Objectif du nombre de matchs par joueur et par saison (spec 005). Fonctions pures, sans base.
 
 export const GOAL_MAX = 200;
 
-/** FR-502 : objectif le plus élevé parmi les étiquettes du joueur, sinon l'objectif par défaut. */
-export function retainedGoal(
-  defaultGoal: number | null,
-  tagGoals: ReadonlyMap<string, number>,
-  playerTagIds: readonly string[],
-): { target: number; tagId: string | null } | null {
-  let best: { target: number; tagId: string } | null = null;
-  for (const tagId of playerTagIds) {
-    const target = tagGoals.get(tagId);
-    if (target !== undefined && (!best || target > best.target)) best = { target, tagId };
-  }
-  if (best) return best;
-  return defaultGoal !== null ? { target: defaultGoal, tagId: null } : null;
-}
-
-/** FR-503 : matchs validés, hors forfaits. */
+/** FR-502 : matchs validés, hors forfaits. */
 export function countsTowardGoal(m: { status: string; kind: string }): boolean {
   return m.status === "VALIDATED" && m.kind !== "WALKOVER";
 }
@@ -41,7 +26,7 @@ export function goalProgress(played: number, target: number): GoalProgress {
   };
 }
 
-/** FR-501 : case vide = pas d'objectif ; sinon entier de 1 à GOAL_MAX. */
+/** FR-500/501 : case vide = pas d'objectif ; sinon entier de 1 à GOAL_MAX. */
 export function parseGoal(raw: string): { ok: true; value: number | null } | { ok: false } {
   const s = raw.trim();
   if (s === "") return { ok: true, value: null };

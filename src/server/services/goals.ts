@@ -1,119 +1,60 @@
 import "server-only";
-import { countsTowardGoal, goalProgress, parseGoal, retainedGoal, type GoalProgress } from "@/goals/goals";
-import { UserError, assertAdmin, audit, db, type Actor, type Tx } from "./common";
+import { countsTowardGoal, goalProgress, parseGoal, type GoalProgress } from "@/goals/goals";
+import { UserError, assertAdmin, audit, db } from "./common";
 import { assertWritable } from "./seasons";
+import type { Actor } from "./common";
 
-/** Matchs comptés pour l'objectif (FR-503) et matchs en attente, par joueur. */
-async function matchCounts(tx: Tx, seasonId: string, userId?: string) {
-  const matches = await tx.match.findMany({
-    where: {
-      seasonId,
-      status: { in: ["VALIDATED", "PENDING"] },
-      ...(userId ? { OR: [{ playerAId: userId }, { playerBId: userId }] } : {}),
-    },
-    select: { playerAId: true, playerBId: true, status: true, kind: true },
+export type GoalStatus = GoalProgress & { pending: number };
+
+/** FR-502 : matchs comptés (validés hors forfaits) et en attente d'un joueur, par saison. */
+async function countsOf(userId: string, seasonIds: string[]) {
+  const matches = await db.match.findMany({
+    where: { seasonId: { in: seasonIds }, status: { in: ["VALIDATED", "PENDING"] }, OR: [{ playerAId: userId }, { playerBId: userId }] },
+    select: { seasonId: true, status: true, kind: true },
   });
-  const played = new Map<string, number>();
-  const pending = new Map<string, number>();
+  const out = new Map<string, { played: number; pending: number }>(seasonIds.map((id) => [id, { played: 0, pending: 0 }]));
   for (const m of matches) {
-    const target = countsTowardGoal(m) ? played : m.status === "PENDING" ? pending : null;
-    if (!target) continue;
-    for (const id of [m.playerAId, m.playerBId]) if (id) target.set(id, (target.get(id) ?? 0) + 1);
+    const c = out.get(m.seasonId)!;
+    if (countsTowardGoal(m)) c.played++;
+    else if (m.status === "PENDING") c.pending++;
   }
-  return { played, pending };
+  return out;
 }
 
-async function goalsOf(tx: Tx, seasonId: string) {
-  const [season, rows] = await Promise.all([
-    tx.season.findUniqueOrThrow({ where: { id: seasonId }, select: { matchGoal: true } }),
-    tx.matchGoal.findMany({ where: { seasonId } }),
-  ]);
-  return { defaultGoal: season.matchGoal, tagGoals: new Map(rows.map((r) => [r.tagId, r.target])) };
+/** FR-503, FR-505 : objectif et progression d'un engagé pour une saison, ou null sans objectif. */
+export async function playerGoal(seasonId: string, userId: string): Promise<GoalStatus | null> {
+  const e = await db.enrollment.findUnique({ where: { seasonId_userId: { seasonId, userId } }, select: { matchGoal: true } });
+  if (!e?.matchGoal) return null;
+  const c = (await countsOf(userId, [seasonId])).get(seasonId)!;
+  return { ...goalProgress(c.played, e.matchGoal), pending: c.pending };
 }
 
-export interface GoalRow {
-  /** null = ligne « Tous les engagés (par défaut) » */
-  tagId: string | null;
-  label: string;
-  target: number | null;
-  concerned: number;
-  reached: number;
+/** FR-501 : progression par saison pour la fiche joueur (clé = seasonId ; absent = pas d'objectif). */
+export async function goalsOfPlayer(userId: string, enrollments: { seasonId: string; matchGoal: number | null }[]): Promise<Map<string, GoalStatus>> {
+  const withGoal = enrollments.filter((e) => e.matchGoal);
+  const counts = await countsOf(userId, withGoal.map((e) => e.seasonId));
+  return new Map(withGoal.map((e) => {
+    const c = counts.get(e.seasonId)!;
+    return [e.seasonId, { ...goalProgress(c.played, e.matchGoal!), pending: c.pending }];
+  }));
 }
 
-/** E-Objectifs — FR-501, FR-504 : tableau admin (ligne par défaut puis une ligne par étiquette). */
-export async function goalBoard(seasonId: string): Promise<GoalRow[]> {
-  const [{ defaultGoal, tagGoals }, tags, enrollments, { played }] = await Promise.all([
-    goalsOf(db, seasonId),
-    db.tag.findMany({ orderBy: { name: "asc" } }),
-    db.enrollment.findMany({ where: { seasonId }, select: { userId: true, user: { select: { tags: { select: { tagId: true } } } } } }),
-    matchCounts(db, seasonId),
-  ]);
-  const rows: GoalRow[] = [
-    { tagId: null, label: "Tous les engagés (par défaut)", target: defaultGoal, concerned: 0, reached: 0 },
-    ...tags.map((t) => ({ tagId: t.id, label: t.name, target: tagGoals.get(t.id) ?? null, concerned: 0, reached: 0 })),
-  ];
-  const byTag = new Map(rows.map((r) => [r.tagId, r]));
-  for (const e of enrollments) {
-    const goal = retainedGoal(defaultGoal, tagGoals, e.user.tags.map((t) => t.tagId));
-    if (!goal) continue;
-    const row = byTag.get(goal.tagId)!;
-    row.concerned++;
-    if ((played.get(e.userId) ?? 0) >= goal.target) row.reached++;
-  }
-  return rows;
-}
-
-/** FR-501, FR-506, FR-507 : enregistre tout le tableau. `input` : clé "default" ou id d'étiquette → saisie brute. */
-export async function saveGoals(actor: Actor, seasonId: string, input: Record<string, string>): Promise<void> {
+/** FR-501, FR-504 : fixe, modifie ou efface (saisie vide) l'objectif d'un engagé. */
+export async function setMatchGoal(actor: Actor, seasonId: string, userId: string, raw: string): Promise<number | null> {
   assertAdmin(actor);
-  await db.$transaction(async (tx) => {
+  const parsed = parseGoal(raw);
+  if (!parsed.ok) throw new UserError("Objectif : saisissez un nombre entier de matchs entre 1 et 200, ou laissez vide.");
+  return db.$transaction(async (tx) => {
     const season = await tx.season.findUniqueOrThrow({ where: { id: seasonId } });
     assertWritable(season);
-    const tags = await tx.tag.findMany();
-    const parse = (key: string, label: string) => {
-      const r = parseGoal(input[key] ?? "");
-      if (!r.ok) throw new UserError(`« ${label} » : saisissez un nombre entier de matchs entre 1 et 200, ou laissez vide.`);
-      return r.value;
-    };
-    const nextDefault = parse("default", "Tous les engagés");
-    const next = new Map<string, number>();
-    for (const t of tags) {
-      const v = parse(t.id, t.name);
-      if (v !== null) next.set(t.id, v);
-    }
-
-    const before = await goalsOf(tx, seasonId);
-    const named = (m: ReadonlyMap<string, number>, d: number | null) => ({
-      "par défaut": d,
-      ...Object.fromEntries(tags.filter((t) => m.has(t.id)).map((t) => [t.name, m.get(t.id)!])),
+    const before = await tx.enrollment.findUnique({ where: { seasonId_userId: { seasonId, userId } }, include: { user: true } });
+    if (!before) throw new UserError("Ce joueur n'est pas engagé dans cette saison.");
+    if (before.matchGoal === parsed.value) return parsed.value;
+    await tx.enrollment.update({ where: { id: before.id }, data: { matchGoal: parsed.value } });
+    await audit(tx, actor, "Engagement", "Objectif de matchs modifié", `${season.slug} · ${before.user.pseudo}`, {
+      avant: before.matchGoal,
+      "après": parsed.value,
     });
-
-    await tx.season.update({ where: { id: seasonId }, data: { matchGoal: nextDefault } });
-    await tx.matchGoal.deleteMany({ where: { seasonId, tagId: { notIn: [...next.keys()] } } });
-    for (const [tagId, target] of next) {
-      await tx.matchGoal.upsert({
-        where: { seasonId_tagId: { seasonId, tagId } },
-        create: { seasonId, tagId, target },
-        update: { target },
-      });
-    }
-    await audit(tx, actor, "Saison", "Objectifs de matchs modifiés", season.slug, {
-      avant: named(before.tagGoals, before.defaultGoal),
-      "après": named(next, nextDefault),
-    });
+    return parsed.value;
   });
-}
-
-/** FR-505, FR-508 : objectif et progression d'un engagé, ou null s'il n'a pas d'objectif. */
-export async function playerGoal(seasonId: string, userId: string): Promise<(GoalProgress & { pending: number }) | null> {
-  const enrollment = await db.enrollment.findUnique({
-    where: { seasonId_userId: { seasonId, userId } },
-    select: { user: { select: { tags: { select: { tagId: true } } } } },
-  });
-  if (!enrollment) return null;
-  const { defaultGoal, tagGoals } = await goalsOf(db, seasonId);
-  const goal = retainedGoal(defaultGoal, tagGoals, enrollment.user.tags.map((t) => t.tagId));
-  if (!goal) return null;
-  const { played, pending } = await matchCounts(db, seasonId, userId);
-  return { ...goalProgress(played.get(userId) ?? 0, goal.target), pending: pending.get(userId) ?? 0 };
 }

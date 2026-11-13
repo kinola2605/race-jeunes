@@ -1,22 +1,32 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 import { ADMIN, PLAYER, login, logout } from "./helpers";
 
-const PAGE = "/admin/saisons/race-jeunes-2026-27/objectifs";
+const SEASON = "Race jeunes 2026-2027";
 
-test("objectif de matchs : l'admin remplit le tableau, le joueur suit sa progression (spec 005)", async ({ page }) => {
-  // 1. L'admin fixe 12 matchs pour l'étiquette « Groupe B » (celle d'AceDuMatin) et 3 par défaut.
+async function setGoal(page: Page, value: string) {
+  await page.goto("/admin/joueurs");
+  await page.getByRole("link", { name: new RegExp(PLAYER.pseudo) }).first().click();
+  const season = page.getByRole("listitem").filter({ hasText: SEASON });
+  await season.getByLabel("Objectif de matchs").fill(value);
+  await season.getByRole("button", { name: "Enregistrer" }).click();
+}
+
+test("objectif de matchs : l'admin le fixe sur la fiche joueur, le joueur le suit sur son accueil (spec 005)", async ({ page }) => {
+  // 1. L'admin fixe 12 matchs pour AceDuMatin dans la saison ouverte.
   await login(page, ADMIN.pseudo, ADMIN.password);
-  await page.goto(PAGE);
-  await page.getByLabel("Groupe B").fill("12");
-  await page.getByLabel("Tous les engagés (par défaut)").fill("3");
-  await page.getByRole("button", { name: "Enregistrer les objectifs" }).click();
-  await expect(page.locator(".alert-title").first()).toHaveText("Objectifs enregistrés.");
-  await expect(page.getByLabel("Groupe B")).toHaveValue("12");
+  await setGoal(page, "12");
+  await expect(page.locator(".alert-title").first()).toHaveText("Objectif enregistré : 12 matchs.");
+  await expect(page.getByRole("listitem").filter({ hasText: SEASON })).toContainText("/ 12 matchs");
+  // une valeur hors bornes est refusée (contrôle serveur, au-delà du contrôle du navigateur)
+  await page.getByRole("listitem").filter({ hasText: SEASON }).getByLabel("Objectif de matchs").evaluate((el) => el.removeAttribute("max"));
+  await page.getByRole("listitem").filter({ hasText: SEASON }).getByLabel("Objectif de matchs").fill("500");
+  await page.getByRole("listitem").filter({ hasText: SEASON }).getByRole("button", { name: "Enregistrer" }).click();
+  await expect(page.locator(".alert-title").first()).toContainText("entre 1 et 200");
   await page.goto("/admin/journal");
-  await expect(page.getByText("Objectifs de matchs modifiés").first()).toBeVisible();
+  await expect(page.getByText("Objectif de matchs modifié").first()).toBeVisible();
   await logout(page);
 
-  // 2. Le joueur voit l'objectif de son étiquette (le plus précis prime sur le défaut), sans les points.
+  // 2. Le joueur voit sa progression.
   await login(page, PLAYER.pseudo, PLAYER.password);
   await page.goto("/accueil");
   const section = page.getByRole("region", { name: "Mon objectif de matchs" });
@@ -24,13 +34,10 @@ test("objectif de matchs : l'admin remplit le tableau, le joueur suit sa progres
   await expect(section.getByRole("progressbar")).toHaveAttribute("aria-valuemax", "12");
   await logout(page);
 
-  // 3. Retour à l'état initial : cases vides = aucun objectif, plus d'indicateur pour le joueur.
+  // 3. Objectif effacé : plus d'indicateur.
   await login(page, ADMIN.pseudo, ADMIN.password);
-  await page.goto(PAGE);
-  await page.getByLabel("Groupe B").fill("");
-  await page.getByLabel("Tous les engagés (par défaut)").fill("");
-  await page.getByRole("button", { name: "Enregistrer les objectifs" }).click();
-  await expect(page.locator(".alert-title").first()).toHaveText("Objectifs enregistrés.");
+  await setGoal(page, "");
+  await expect(page.locator(".alert-title").first()).toHaveText("Objectif retiré.");
   await logout(page);
   await login(page, PLAYER.pseudo, PLAYER.password);
   await page.goto("/accueil");

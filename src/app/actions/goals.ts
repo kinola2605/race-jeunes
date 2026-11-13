@@ -1,20 +1,16 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/server/auth/session";
-import { db } from "@/server/db";
-import { saveGoals } from "@/server/services/goals";
+import { setMatchGoal } from "@/server/services/goals";
 import { run, str } from "./util";
 
-/** Spec 005 — FR-501, FR-506, FR-507 */
-export async function saveGoalsAction(fd: FormData): Promise<void> {
+/** Spec 005 — FR-501, FR-504 : objectif de matchs d'un joueur pour une saison, depuis sa fiche. */
+export async function setMatchGoalAction(fd: FormData): Promise<void> {
   const admin = await requireAdmin();
-  const seasonId = str(fd, "seasonId");
-  const season = await db.season.findUnique({ where: { id: seasonId }, select: { slug: true } });
-  await run(`/admin/saisons/${season?.slug ?? ""}/objectifs`, async () => {
-    const input: Record<string, string> = {};
-    for (const [k, v] of fd.entries()) if (k.startsWith("goal:") && typeof v === "string") input[k.slice(5)] = v;
-    await saveGoals(admin, seasonId, input);
+  const userId = str(fd, "userId");
+  await run(`/admin/joueurs/${userId}`, async () => {
+    const goal = await setMatchGoal(admin, str(fd, "seasonId"), userId, str(fd, "matchGoal"));
     revalidatePath("/accueil");
-    return "Objectifs enregistrés.";
+    return goal ? `Objectif enregistré : ${goal} matchs.` : "Objectif retiré.";
   });
 }

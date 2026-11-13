@@ -22,7 +22,7 @@ sur l'ensemble des deux répertoires : la prochaine spec prend le numéro suivan
 | Spec | Statut |
 |---|---|
 | [002-evolutions-club](002-evolutions-club/spec.md) | Brouillon — préparation du rendez-vous club |
-| [005-objectif-matchs](005-objectif-matchs/spec.md) | Révisée (v2) — maquette à valider |
+| [005-objectif-matchs](005-objectif-matchs/spec.md) | Implémentée — en revue (PR #7) |
 | [006-bonus-tournoi](006-bonus-tournoi/spec.md) | Brouillon |
 | [007-photos-profil](007-photos-profil/spec.md) | Brouillon |
 | [008-espace-rgpd](008-espace-rgpd/spec.md) | Brouillon |
