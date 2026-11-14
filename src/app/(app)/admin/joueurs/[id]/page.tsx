@@ -17,8 +17,17 @@ import { Avatar } from "@/components/avatar";
 
 export const metadata: Metadata = { title: "Joueur" };
 
-/** E08a (détail) — FR-023 à FR-025 */
-export default async function JoueurPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ ok?: string; erreur?: string; saison?: string }> }) {
+/** Spec 014 : la fiche est découpée en quatre onglets, portés par l'URL (?onglet=). */
+const TABS = [
+  { key: "profil", label: "Profil" },
+  { key: "saisons", label: "Saisons" },
+  { key: "mental", label: "Mental" },
+  { key: "compte", label: "Compte" },
+] as const;
+type TabKey = (typeof TABS)[number]["key"];
+
+/** E08a (détail) — FR-023 à FR-025, FR-1400 à FR-1406 */
+export default async function JoueurPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ ok?: string; erreur?: string; saison?: string; onglet?: string }> }) {
   const { id } = await params;
   const sp = await searchParams;
   const user = await db.user.findUnique({
@@ -32,12 +41,15 @@ export default async function JoueurPage({ params, searchParams }: { params: Pro
   if (!user || user.role !== "PLAYER") notFound();
   // spec 012 : saisons non brouillon, de la plus récente à la plus ancienne
   const played = user.enrollments.filter((e) => e.season.status !== "DRAFT").sort((a, b) => b.season.createdAt.getTime() - a.season.createdAt.getTime());
+  const tab: TabKey = TABS.find((t) => t.key === sp.onglet)?.key ?? "profil";
+  const base = `/admin/joueurs/${user.id}`;
+  // FR-1405 : chaque onglet ne charge que ses données
   const [tags, goals, mental] = await Promise.all([
-    listTags(),
-    goalsOfPlayer(user.id, user.enrollments),
-    mentalOfPlayer(user.id, played.map((e) => e.seasonId)),
+    tab === "profil" ? listTags() : [],
+    tab === "saisons" ? goalsOfPlayer(user.id, user.enrollments) : null,
+    tab === "mental" ? mentalOfPlayer(user.id, played.map((e) => e.seasonId)) : null,
   ]);
-  const mentalSeasons: MentalSeason[] = played.map((e) => ({ slug: e.season.slug, title: e.season.title, ...mental.get(e.seasonId)! }));
+  const mentalSeasons: MentalSeason[] = mental ? played.map((e) => ({ slug: e.season.slug, title: e.season.title, ...mental.get(e.seasonId)! })) : [];
   const mentalCurrent = mentalSeasons.find((s) => s.slug === sp.saison) ?? mentalSeasons[0];
   const mine = new Set(user.tags.map((t) => t.tag.name));
 
@@ -67,7 +79,16 @@ export default async function JoueurPage({ params, searchParams }: { params: Pro
         }
       />
       <Flash ok={sp.ok} error={sp.erreur} />
-      <div className="layout-2">
+      <nav className="seg seg-eq mb-4" aria-label="Sections de la fiche">
+        {TABS.map((t) => (
+          <Link key={t.key} href={t.key === "profil" ? base : `${base}?onglet=${t.key}`} aria-current={tab === t.key ? "true" : undefined}>
+            {t.label}
+          </Link>
+        ))}
+      </nav>
+
+      {tab === "profil" ? (
+        <div className="layout-2">
         <form action={updatePlayerAction} className="cases">
           <div className="case">
             <h2 className="case-title">Profil</h2>
@@ -106,6 +127,32 @@ export default async function JoueurPage({ params, searchParams }: { params: Pro
           </div>
         </form>
 
+          <div className="stack">
+          <div className="cases">
+            <div className="case">
+              <h2 className="case-title">Historique du classement</h2>
+              {user.rankingChanges.length === 0 ? <p className="small muted mb-0">Aucun changement enregistré.</p> : null}
+              <ul className="list">
+                {user.rankingChanges.map((c) => (
+                  <li key={c.id}>
+                    <div className="item" style={{ minHeight: 0 }}>
+                      <div className="item-main">
+                        <div className="item-title">
+                          {c.from ? `${c.from} → ` : ""}
+                          {c.to}
+                        </div>
+                      </div>
+                      <span className="small subtle">{formatDateTime(c.effectiveAt)}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          </div>
+        </div>
+      ) : null}
+      {tab === "saisons" ? (
         <div className="stack">
           <div className="cases">
             <div className="case">
@@ -113,7 +160,7 @@ export default async function JoueurPage({ params, searchParams }: { params: Pro
               {user.enrollments.length === 0 ? <p className="small muted mb-0">Engagé dans aucune saison.</p> : null}
               <ul className="list">
                 {user.enrollments.map((e) => {
-                  const goal = goals.get(e.seasonId);
+                  const goal = goals?.get(e.seasonId);
                   const writable = e.season.status === "DRAFT" || e.season.status === "OPEN";
                   return (
                     <li key={e.id} className="item" style={{ display: "block" }}>
@@ -176,16 +223,32 @@ export default async function JoueurPage({ params, searchParams }: { params: Pro
               <p className="hint mb-0">Objectif : matchs validés de la saison, hors forfaits (1 à 200, vide = aucun). Aucun effet sur les points.</p>
             </div>
           </div>
+        </div>
+      ) : null}
+      {tab === "mental" ? (
+        <div className="stack">
           {mentalCurrent ? (
             <div className="cases">
               <section className="case" id="mental" aria-labelledby="t-mental">
                 <h2 className="case-title" id="t-mental">
                   Profil mental
                 </h2>
-                <MentalProfileCard seasons={mentalSeasons} current={mentalCurrent} hrefFor={(slug) => `/admin/joueurs/${user.id}?saison=${slug}#mental`} />
+                <MentalProfileCard seasons={mentalSeasons} current={mentalCurrent} hrefFor={(slug) => `${base}?onglet=mental&saison=${slug}`} />
               </section>
             </div>
-          ) : null}
+          ) : (
+            <div className="cases">
+              <div className="case">
+                <h2 className="case-title">Profil mental</h2>
+                <p className="small muted mb-0">Aucune saison ouverte ou terminée pour ce joueur : le profil mental se calcule à partir de ses matchs validés.</p>
+              </div>
+            </div>
+          )}
+        </div>
+      ) : null}
+      {tab === "compte" ? (
+        <div className="layout-2">
+          <div className="stack">
           <div className="cases">
             <div className="case">
               <h2 className="case-title">Accès</h2>
@@ -196,26 +259,8 @@ export default async function JoueurPage({ params, searchParams }: { params: Pro
               </a>
             </div>
           </div>
-          <div className="cases">
-            <div className="case">
-              <h2 className="case-title">Historique du classement</h2>
-              <ul className="list">
-                {user.rankingChanges.map((c) => (
-                  <li key={c.id}>
-                    <div className="item" style={{ minHeight: 0 }}>
-                      <div className="item-main">
-                        <div className="item-title">
-                          {c.from ? `${c.from} → ` : ""}
-                          {c.to}
-                        </div>
-                      </div>
-                      <span className="small subtle">{formatDateTime(c.effectiveAt)}</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
+          <div className="stack">
           <div className="cases">
             <div className={`case${user.status === "ACTIVE" ? " case-danger" : ""}`}>
               <h2 className="case-title">{user.status === "ACTIVE" ? "Désactivation" : "Compte désactivé"}</h2>
@@ -245,8 +290,9 @@ export default async function JoueurPage({ params, searchParams }: { params: Pro
               </form>
             </div>
           </div>
+          </div>
         </div>
-      </div>
+      ) : null}
     </>
   );
 }

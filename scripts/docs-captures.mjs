@@ -25,6 +25,7 @@ const SHOTS = {
     ["admin-suivi", "/admin"],
     ["admin-matchs", "/admin/matchs"],
     ["admin-bareme", `/admin/saisons/${SEASON}/bareme`],
+    ["admin-fiche-joueur", null],
   ],
 };
 
@@ -40,6 +41,19 @@ async function capture(account, shots) {
   await page.getByRole("button", { name: "Se connecter" }).click();
   await page.waitForURL((u) => !u.pathname.startsWith("/connexion"));
   for (const [name, path] of shots) {
+    // la fiche joueur n'a pas d'adresse fixe : on l'ouvre depuis la liste
+    if (path === null) {
+      await page.goto(`${base}/admin/joueurs?q=${PLAYER.pseudo}`, { waitUntil: "networkidle" });
+      await page
+        .getByRole("link", { name: new RegExp(PLAYER.pseudo) })
+        .first()
+        .click();
+      await page.waitForURL(/\/admin\/joueurs\/[^/?]+$/);
+      await page.waitForLoadState("networkidle");
+      await page.screenshot({ path: `${out}/${name}.png` });
+      console.log(`${out}/${name}.png`);
+      continue;
+    }
     const response = await page.goto(base + path, { waitUntil: "networkidle" });
     if (!response || !response.ok()) throw new Error(`${path} : réponse ${response?.status()}`);
     await page.screenshot({ path: `${out}/${name}.png` });

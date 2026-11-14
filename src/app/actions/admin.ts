@@ -53,7 +53,7 @@ export async function setStatusAction(fd: FormData): Promise<void> {
   const admin = await requireAdmin();
   const id = str(fd, "userId");
   const status = str(fd, "status") === "DISABLED" ? "DISABLED" : "ACTIVE";
-  await run(`/admin/joueurs/${id}`, async () => {
+  await run(`/admin/joueurs/${id}?onglet=compte`, async () => {
     await setAccountStatus(admin, id, status);
     return status === "DISABLED" ? "Compte désactivé : ses sessions sont coupées." : "Compte réactivé.";
   });

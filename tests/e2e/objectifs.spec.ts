@@ -1,11 +1,12 @@
 import { expect, test, type Page } from "@playwright/test";
-import { ADMIN, PLAYER, login, logout } from "./helpers";
+import { ADMIN, PLAYER, login, logout, openPlayerTab } from "./helpers";
 
 const SEASON = "Race jeunes 2026-2027";
 
 async function setGoal(page: Page, value: string) {
   await page.goto("/admin/joueurs");
   await page.getByRole("link", { name: new RegExp(PLAYER.pseudo) }).first().click();
+  await openPlayerTab(page, "Saisons");
   const season = page.getByRole("listitem").filter({ hasText: SEASON });
   await season.getByLabel("Objectif de matchs").fill(value);
   await season.getByRole("button", { name: "Enregistrer" }).click();

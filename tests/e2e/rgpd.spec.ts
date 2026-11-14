@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { expect, test } from "@playwright/test";
-import { ADMIN, PLAYER, login, logout } from "./helpers";
+import { ADMIN, PLAYER, login, logout, openPlayerTab } from "./helpers";
 
 test("espace RGPD : le joueur voit et télécharge ses données, sans secret (spec 008)", async ({ page }) => {
   await login(page, PLAYER.pseudo, PLAYER.password);
@@ -34,6 +34,7 @@ test("espace RGPD : l'admin télécharge les données d'un joueur depuis sa fich
   await login(page, ADMIN.pseudo, ADMIN.password);
   await page.goto("/admin/joueurs");
   await page.getByRole("link", { name: PLAYER.pseudo }).first().click();
+  await openPlayerTab(page, "Compte");
   const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("link", { name: "Télécharger ses données (RGPD)" }).click()]);
   expect(download.suggestedFilename()).toContain(`mes-donnees-${PLAYER.pseudo}-`);
   const data = JSON.parse(await readFile((await download.path())!, "utf-8"));

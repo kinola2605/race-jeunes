@@ -8,7 +8,7 @@ import { run, str } from "./util";
 export async function setMatchGoalAction(fd: FormData): Promise<void> {
   const admin = await requireAdmin();
   const userId = str(fd, "userId");
-  await run(`/admin/joueurs/${userId}`, async () => {
+  await run(`/admin/joueurs/${userId}?onglet=saisons`, async () => {
     const goal = await setMatchGoal(admin, str(fd, "seasonId"), userId, str(fd, "matchGoal"));
     revalidatePath("/accueil");
     return goal ? `Objectif enregistré : ${goal} matchs.` : "Objectif retiré.";
