@@ -38,9 +38,12 @@ export default async function ConnexionPage() {
               l&apos;administrateur du club.
             </span>
           </p>
+          <p className="row" style={{ flexWrap: "nowrap", alignItems: "flex-start" }}>
+            <Icon name="shield" />
+            <span>Aucune donnée personnelle collectée, aucun cookie de suivi.</span>
+          </p>
         </div>
       </main>
-      <footer className="foot">Aucune donnée personnelle collectée · aucun cookie de suivi</footer>
     </div>
   );
 }

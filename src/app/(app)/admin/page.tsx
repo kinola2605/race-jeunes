@@ -4,7 +4,7 @@ import { requireAdmin } from "@/server/auth/session";
 import { defaultSeasonFor } from "@/server/services/player";
 import { adminDashboard } from "@/server/services/dashboard";
 import { validateMatchesAction } from "@/app/actions/matches";
-import { Alert, EmptyState, Icon, PageHead, formatDate } from "@/components/ui";
+import { Alert, EmptyState, Icon, PageHead, ScoreBoard, formatDate } from "@/components/ui";
 
 export const metadata: Metadata = { title: "Suivi" };
 
@@ -16,38 +16,41 @@ export default async function SuiviPage() {
   const oldest = d.pending[0];
   const ageDays = oldest ? Math.floor((Date.now() - oldest.createdAt.getTime()) / 86400000) : 0;
   const daysSince = (date: Date) => Math.floor((Date.now() - date.getTime()) / 86400000);
+  const anomalies = d.duplicates.size + d.externalNc.length;
 
   return (
     <>
       <PageHead eyebrow={`Tableau de bord${season ? ` · ${season.title}` : ""}`} title="Suivi" />
-      <div className="cases cases-4 stats">
-        <Link className="case" href="/admin/matchs" style={{ textDecoration: "none" }}>
+      {/* Spec 010 : un indicateur principal (celui qui appelle une action), trois secondaires. */}
+      <div className={`kpi-main${d.pending.length > 0 ? " is-hot" : ""}`}>
+        <div>
           <span className="stat-label">Matchs à valider</span>
-          <span className="stat-value" style={{ color: "var(--warning)" }}>{d.pending.length}</span>
-          <span className="small subtle">
-            <Icon name="clock" /> {oldest ? `le plus ancien : ${ageDays} j` : "rien en attente"}
+          <span className="stat-value" style={d.pending.length > 0 ? { color: "var(--warning)" } : { color: "var(--text-subtle)" }}>
+            {d.pending.length}
           </span>
-        </Link>
-        <a className="case" href="#anomalies" style={{ textDecoration: "none" }}>
+          <span className="small subtle">{oldest ? `le plus ancien attend depuis ${ageDays} j` : "rien en attente"}</span>
+        </div>
+        {d.pending.length > 0 ? (
+          <Link className="btn btn-primary" href="/admin/matchs">
+            Traiter la file
+          </Link>
+        ) : null}
+      </div>
+      <div className="kpi3">
+        <a className="case" href="#anomalies">
           <span className="stat-label">Anomalies</span>
-          <span className="stat-value" style={{ color: "var(--error)" }}>{d.duplicates.size + d.externalNc.length}</span>
-          <span className="small subtle">
-            <Icon name="alert" /> à vérifier
-          </span>
+          <span className="stat-value" style={{ color: anomalies > 0 ? "var(--error)" : "var(--text-subtle)" }}>{anomalies}</span>
+          <span className="small subtle">{anomalies > 0 ? "à vérifier" : "aucune"}</span>
         </a>
-        <a className="case" href="#mdp" style={{ textDecoration: "none" }}>
+        <a className="case" href="#mdp">
           <span className="stat-label">Mdp temporaires</span>
           <span className="stat-value">{d.temporary.length}</span>
-          <span className="small subtle">
-            <Icon name="key" /> jamais changés
-          </span>
+          <span className="small subtle">jamais changés</span>
         </a>
-        <a className="case" href="#sans-match" style={{ textDecoration: "none" }}>
+        <a className="case" href="#sans-match">
           <span className="stat-label">Sans match</span>
           <span className="stat-value">{d.withoutMatch.length}</span>
-          <span className="small subtle">
-            <Icon name="users" /> sur {d.enrolledCount} engagés
-          </span>
+          <span className="small subtle">sur {d.enrolledCount}</span>
         </a>
       </div>
 
@@ -64,21 +67,31 @@ export default async function SuiviPage() {
           {d.pending.length === 0 ? (
             <EmptyState icon="check" title="Rien à valider" />
           ) : (
-            <ul className="list">
+            <ul className="mcards">
               {d.pending.slice(0, 4).map((m) => (
-                <li key={m.id}>
-                  <div className="item">
-                    <div className="item-main">
-                      <div className="item-title">
-                        {m.playerA.pseudo} <span className="subtle">vs</span> {m.playerB?.pseudo ?? `Ext. · ${m.externalLabel}`}
-                      </div>
-                      <div className="item-meta">
-                        {formatDate(m.playedOn)} · {m.kind === "WALKOVER" ? "forfait" : m.score} · vainqueur {m.winner === "A" ? m.playerA.pseudo : (m.playerB?.pseudo ?? "adversaire extérieur")}
-                      </div>
-                    </div>
+                <li key={m.id} className="mcard">
+                  <ScoreBoard
+                    a={
+                      <>
+                        {m.playerA.pseudo} <span className="subtle small">{m.rankingA}</span>
+                      </>
+                    }
+                    b={
+                      <>
+                        {m.playerB?.pseudo ?? `Ext. · ${m.externalLabel}`} <span className="subtle small">{m.rankingB ?? m.externalRanking}</span>
+                      </>
+                    }
+                    winner={m.winner === "A" ? "A" : "B"}
+                    score={m.score}
+                    walkover={m.kind === "WALKOVER"}
+                  />
+                  <div className="row-between">
+                    <span className="item-meta">
+                      {formatDate(m.playedOn)} · depuis {daysSince(m.createdAt)} j
+                    </span>
                     <form action={validateMatchesAction}>
                       <input type="hidden" name="matchId" value={m.id} />
-                      <button className="btn btn-secondary btn-sm" type="submit" aria-label={`Valider le match ${m.playerA.pseudo} contre ${m.playerB?.pseudo ?? m.externalLabel}`}>
+                      <button className="btn btn-ok btn-sm" type="submit" aria-label={`Valider le match ${m.playerA.pseudo} contre ${m.playerB?.pseudo ?? m.externalLabel}`}>
                         <Icon name="check" />
                         Valider
                       </button>

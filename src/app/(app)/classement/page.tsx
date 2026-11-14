@@ -9,7 +9,7 @@ import { db } from "@/server/db";
 import { seriesOf, isRanking } from "@/scoring";
 import { SeasonPicker } from "@/components/season-picker";
 import { Avatar } from "@/components/avatar";
-import { EmptyState, Icon, PageHead, formatDateTime } from "@/components/ui";
+import { EmptyState, Icon, Ordinal, PageHead, formatDateTime, pts } from "@/components/ui";
 
 export const metadata: Metadata = { title: "Classement" };
 
@@ -62,34 +62,44 @@ export default async function ClassementPage({ searchParams }: { searchParams: S
   return (
     <>
       <PageHead
-        eyebrow="Classement de la Race"
-        title={season.title}
+        eyebrow={season.title}
+        title="Classement"
         lead={`${all.length} engagés${lastEntry ? ` · mis à jour le ${formatDateTime(lastEntry.createdAt)}` : ""} · seuls les matchs validés comptent`}
       />
       <div className="toolbar">
         <SeasonPicker seasons={seasons} current={season.slug} />
       </div>
-      <div className="chips mb-4" role="group" aria-label="Filtrer par étiquette ou série">
-        <Link className="chip" href={q({ tag: undefined, serie: undefined })} aria-current={!sp.tag && !sp.serie ? "true" : undefined} style={!sp.tag && !sp.serie ? { border: "2px solid var(--text)", fontWeight: 600 } : undefined}>
-          Tous
-        </Link>
-        {tags.map((t) => (
-          <Link key={t} className="chip" href={q({ tag: t })} aria-current={sp.tag === t ? "true" : undefined} style={sp.tag === t ? { border: "2px solid var(--text)", fontWeight: 600 } : undefined}>
-            <Icon name="tag" />
-            {t}
+      {/* Spec 010, FR-1007 : deux rangées libellées qui passent à la ligne. */}
+      <div className="mb-4">
+        <div className="filter-row" role="group" aria-label="Filtrer par étiquette">
+          <span className="filter-label" aria-hidden="true">
+            Étiquette
+          </span>
+          <Link className="chip" href={q({ tag: undefined, serie: undefined })} aria-current={!sp.tag && !sp.serie ? "true" : undefined}>
+            Tous
           </Link>
-        ))}
-        {(
-          [
-            ["15+", "15/x et mieux"],
-            ["30", "30/x"],
-            ["40-NC", "40 et NC"],
-          ] as const
-        ).map(([k, label]) => (
-          <Link key={k} className="chip" href={q({ serie: k })} aria-current={sp.serie === k ? "true" : undefined} style={sp.serie === k ? { border: "2px solid var(--text)", fontWeight: 600 } : undefined}>
-            {label}
-          </Link>
-        ))}
+          {tags.map((t) => (
+            <Link key={t} className="chip" href={q({ tag: t })} aria-current={sp.tag === t ? "true" : undefined}>
+              {t}
+            </Link>
+          ))}
+        </div>
+        <div className="filter-row" role="group" aria-label="Filtrer par série">
+          <span className="filter-label" aria-hidden="true">
+            Série
+          </span>
+          {(
+            [
+              ["15+", "15/x et mieux"],
+              ["30", "30/x"],
+              ["40-NC", "40 et NC"],
+            ] as const
+          ).map(([k, label]) => (
+            <Link key={k} className="chip" href={q({ serie: k })} aria-current={sp.serie === k ? "true" : undefined}>
+              {label}
+            </Link>
+          ))}
+        </div>
       </div>
 
       {notice ? <p className="small muted">{notice}</p> : null}
@@ -117,8 +127,7 @@ export default async function ClassementPage({ searchParams }: { searchParams: S
                       {me ? <span className="badge badge-me">Vous</span> : null}
                     </div>
                     <div className="item-meta">
-                      {r.startingRanking} · {r.wins} V · {r.losses} D · {r.perfs} perf{r.perfs > 1 ? "s" : ""}
-                      {r.tags.length ? ` · ${r.tags.join(", ")}` : ""}
+                      {r.startingRanking} · {r.wins} V {r.losses} D · {r.perfs} perf{r.perfs > 1 ? "s" : ""}
                     </div>
                   </div>
                   <span className="rank-pts">
@@ -129,6 +138,19 @@ export default async function ClassementPage({ searchParams }: { searchParams: S
               );
             })}
           </ol>
+          {/* Spec 010, FR-1005 : le joueur garde sa position sous les yeux et accède au détail de son calcul. */}
+          {!admin && detailRow ? (
+            <Link className="me-bar" href="#detail" aria-label={`Ma position : ${detailRow.rank}e, ${pts(detailRow.points)}. Voir le détail de mon calcul`}>
+              <span className="rank-pos">
+                <Ordinal n={detailRow.rank} />
+              </span>
+              <div className="item-main">
+                <div className="strong">Vous · {pts(detailRow.points)}</div>
+                <div className="item-meta">Voir le détail de mon calcul</div>
+              </div>
+              <Icon name="chev-d" />
+            </Link>
+          ) : null}
           <div className="table-wrap hide-mobile">
             <table className="table">
               <caption className="sr-only">Classement {season.title}</caption>

@@ -21,6 +21,7 @@ sur l'ensemble des deux répertoires : la prochaine spec prend le numéro suivan
 | [007-photos-profil](livrees/007-photos-profil/spec.md) | 1.6.0 | Avatars de profil (galerie, sans photo) |
 | [008-espace-rgpd](livrees/008-espace-rgpd/spec.md) | 1.7.0 | Espace RGPD : consulter et télécharger ses données |
 | [009-envoi-mot-de-passe-email](livrees/009-envoi-mot-de-passe-email/spec.md) | 1.8.0 | Envoi des identifiants depuis la messagerie de l'admin |
+| [010-ergonomie](livrees/010-ergonomie/spec.md) | 1.9.0 | Ergonomie : réorganisation des écrans (revue UX) |
 
 ## En cours
 

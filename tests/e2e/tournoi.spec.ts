@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { ADMIN, login, logout, uniquePseudo } from "./helpers";
+import { ADMIN, fillScore, login, logout, uniquePseudo } from "./helpers";
 
 const SEASON = "Race jeunes 2026-2027";
 
@@ -10,7 +10,8 @@ async function enterTournamentWin(page: Page, pseudo: string, tournament: string
   await page.getByRole("button", { name: "Extérieur" }).click();
   await page.getByLabel("Libellé de l'adversaire").fill("Tableau 13 ans");
   await page.getByLabel("Classement de l'adversaire").selectOption("30/2");
-  await page.getByLabel("Type de match").selectOption(kind);
+  if (kind === "WALKOVER") await page.getByRole("radiogroup", { name: "Type de match" }).getByText("Forfait", { exact: true }).click();
+  else await fillScore(page);
   await page.getByLabel("Match joué en tournoi").check();
   await page.getByLabel("Nom du tournoi").fill(tournament);
   await page.getByRole("button", { name: "Enregistrer le match" }).click();

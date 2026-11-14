@@ -27,6 +27,14 @@ export async function logout(page: Page) {
   await expect(page).toHaveURL(/\/connexion$/);
 }
 
+/** Saisie du score dans le formulaire de match : il n'est plus prérempli (spec 010, FR-1009). */
+export async function fillScore(page: Page, sets: [number, number][] = [[6, 4], [6, 3]]) {
+  for (const [i, [a, b]] of sets.entries()) {
+    await page.locator(`input[name="s${i + 1}a"]`).fill(String(a));
+    await page.locator(`input[name="s${i + 1}b"]`).fill(String(b));
+  }
+}
+
 export function uniquePseudo(prefix: string): string {
   return `${prefix}${Date.now().toString(36).slice(-6)}`;
 }

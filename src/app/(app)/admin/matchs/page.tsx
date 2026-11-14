@@ -4,13 +4,13 @@ import { db } from "@/server/db";
 import { findDuplicates, matchesOfSeason, pendingMatches } from "@/server/services/matches";
 import { cancelMatchAction, refuseMatchAction, validateMatchesAction, validateOneAction } from "@/app/actions/matches";
 import { ConfirmButton, SubmitButton } from "@/components/forms";
-import { Alert, EmptyState, Flash, Icon, MatchStatusBadge, PageHead, PiiNotice, formatDate } from "@/components/ui";
+import { EmptyState, Flash, Icon, MatchStatusBadge, PageHead, PiiNotice, ScoreBoard, formatDate } from "@/components/ui";
 
 export const metadata: Metadata = { title: "Matchs" };
 
 type Search = Promise<{ ok?: string; erreur?: string; vue?: string; refuser?: string }>;
 
-/** E12b — FR-103, FR-105, FR-107 */
+/** E12b — FR-103, FR-105, FR-107 ; présentation en cartes : spec 010 */
 export default async function MatchsAdminPage({ searchParams }: { searchParams: Search }) {
   const sp = await searchParams;
   const pending = await pendingMatches();
@@ -20,21 +20,23 @@ export default async function MatchsAdminPage({ searchParams }: { searchParams: 
   const vue = sp.vue === "valides" || sp.vue === "clos" ? sp.vue : "attente";
   const others = vue === "valides" ? all.filter((m) => m.status === "VALIDATED").slice(0, 60) : vue === "clos" ? all.filter((m) => m.status === "REFUSED" || m.status === "CANCELLED").slice(0, 60) : [];
   const refusing = sp.refuser ? pending.find((m) => m.id === sp.refuser) : undefined;
+  const daysSince = (date: Date) => Math.floor((Date.now() - date.getTime()) / 86400000);
   const label = (m: (typeof pending)[number]) => `${m.playerA.pseudo} vs ${m.playerB?.pseudo ?? `Ext. · ${m.externalLabel}`}`;
 
   return (
     <>
-      <PageHead eyebrow="Matchs · saisons ouvertes" title="File de validation" lead={`${pending.length} match${pending.length > 1 ? "s" : ""} en attente · du plus ancien au plus récent`} />
-      <Flash ok={sp.ok} error={sp.erreur} />
-      <div className="row mb-4">
-        <Link className="btn btn-primary" href="/admin/matchs/nouveau">
+      {/* L'écran sert d'abord à valider : la saisie devient une action secondaire. */}
+      <div className="row-between nowrap" style={{ alignItems: "flex-start" }}>
+        <PageHead eyebrow="Matchs · saisons ouvertes" title="File de validation" lead={`${pending.length} match${pending.length > 1 ? "s" : ""} en attente · du plus ancien au plus récent`} />
+        <Link className="btn btn-secondary btn-sm" href="/admin/matchs/nouveau" aria-label="Saisir un match">
           <Icon name="plus" />
-          Saisir un match
+          Saisir
         </Link>
       </div>
-      <nav className="seg mb-4" aria-label="Vue">
+      <Flash ok={sp.ok} error={sp.erreur} />
+      <nav className="seg seg-eq mb-4" aria-label="Vue">
         <Link href="/admin/matchs" aria-current={vue === "attente" ? "true" : undefined}>
-          En attente ({pending.length})
+          En attente <small>{pending.length}</small>
         </Link>
         <Link href="/admin/matchs?vue=valides" aria-current={vue === "valides" ? "true" : undefined}>
           Validés
@@ -50,44 +52,65 @@ export default async function MatchsAdminPage({ searchParams }: { searchParams: 
             <p>Tous les matchs déclarés ont été traités.</p>
           </EmptyState>
         ) : (
-          <form action={validateMatchesAction}>
-            <ul className="list">
+          <form action={validateMatchesAction} className="select-form">
+            <ul className="mcards mcards-2">
               {pending.map((m) => (
-                <li key={m.id}>
-                  <div className="item" style={{ alignItems: "flex-start" }}>
-                    <input type="checkbox" name="matchId" value={m.id} aria-label={`Sélectionner le match ${label(m)}`} style={{ width: 22, height: 22, marginTop: 4, accentColor: "var(--accent)" }} />
-                    <div className="item-main">
-                      <div className="item-title">{label(m)}</div>
-                      <div className="item-meta">
-                        {m.season.title} · {formatDate(m.playedOn)} · {m.kind === "WALKOVER" ? "forfait" : m.score}
-                        {m.kind === "RETIREMENT" ? " (abandon)" : ""}
-                        {m.tournament ? <> · tournoi <strong>{m.tournament}</strong></> : null} · vainqueur <strong>{m.winner === "A" ? m.playerA.pseudo : (m.playerB?.pseudo ?? "adversaire extérieur")}</strong>
-                      </div>
-                      {m.externalLabel ? <div className="item-meta">Classement extérieur : {m.externalRanking}</div> : null}
-                      {duplicates.has(m.id) ? (
-                        <div className="mt-2">
-                          <Alert kind="ko" title="Doublon probable">
-                            Même paire et même date qu&apos;une autre saisie : validez l&apos;une et refusez l&apos;autre.
-                          </Alert>
-                        </div>
+                <li key={m.id} className="mcard">
+                  <div className="mcard-head">
+                    <input type="checkbox" name="matchId" value={m.id} aria-label={`Sélectionner le match ${label(m)}`} />
+                    <span className="item-meta grow">
+                      <span className="sr-only">{label(m)} · </span>
+                      {formatDate(m.playedOn)} · depuis {daysSince(m.createdAt)} j · {m.season.title}
+                      {m.kind === "RETIREMENT" ? " · abandon" : ""}
+                      {m.tournament ? (
+                        <>
+                          {" "}
+                          · tournoi <strong>{m.tournament}</strong>
+                        </>
                       ) : null}
-                      <div className="row mt-2" style={{ gap: 6 }}>
-                        <button className="btn btn-secondary btn-sm" type="submit" formAction={validateOneAction.bind(null, m.id)}>
-                          <Icon name="check" />
-                          Valider
-                        </button>
-                        <Link className="btn btn-ghost btn-sm" href={`/admin/matchs?refuser=${m.id}`}>
-                          <Icon name="x" />
-                          Refuser…
-                        </Link>
-                      </div>
-                    </div>
+                    </span>
+                    {duplicates.has(m.id) ? (
+                      <span className="badge badge-ko">
+                        <Icon name="alert" />
+                        Doublon probable
+                      </span>
+                    ) : null}
+                  </div>
+                  <ScoreBoard
+                    a={
+                      <>
+                        {m.playerA.pseudo} <span className="subtle small">{m.rankingA}</span>
+                      </>
+                    }
+                    b={
+                      <>
+                        {m.playerB?.pseudo ?? `Ext. · ${m.externalLabel}`} <span className="subtle small">{m.rankingB ?? m.externalRanking}</span>
+                      </>
+                    }
+                    winner={m.winner === "A" ? "A" : "B"}
+                    score={m.score}
+                    walkover={m.kind === "WALKOVER"}
+                  />
+                  {duplicates.has(m.id) ? <p className="small muted mb-0">Même paire et même date qu&apos;une autre saisie : validez l&apos;une et refusez l&apos;autre.</p> : null}
+                  <div className="mcard-actions">
+                    <button className="btn btn-ok grow" type="submit" formAction={validateOneAction.bind(null, m.id)}>
+                      <Icon name="check" />
+                      Valider
+                    </button>
+                    <Link className="btn btn-ghost" href={`/admin/matchs?refuser=${m.id}`}>
+                      <Icon name="x" />
+                      Refuser…
+                    </Link>
                   </div>
                 </li>
               ))}
             </ul>
-            <div className="sticky-cta">
-              <SubmitButton className="btn btn-secondary">
+            {/* affichée seulement quand au moins un match est coché (CSS :has) */}
+            <div className="select-bar">
+              <span>
+                <span className="select-count" aria-hidden="true" /> sélectionné(s)
+              </span>
+              <SubmitButton className="btn btn-ok">
                 <Icon name="check" />
                 Valider la sélection
               </SubmitButton>

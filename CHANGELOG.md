@@ -4,6 +4,27 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
+## [1.9.0] — 2026-11-14
+
+### Ergonomie (spec 010, revue UX)
+Réorganisation des écrans, sans fonctionnalité, route, règle de calcul ni donnée nouvelle. Aucune migration.
+- **Navigation** : « Saisir » est au centre de la barre d'onglets du joueur ; sur grand écran, le compte descend
+  en bas de la barre latérale.
+- **Accueil** : bilan intégré au bloc « Ma position », écart formulé comme un objectif (« Plus que N pts pour
+  rejoindre le Xe »), alerte « en attente » juste dessous, dernier match cliquable ; deux colonnes sur grand écran.
+- **Classement** : barre « Ma position » toujours visible sur mobile, avec accès au détail du calcul ; filtres
+  en deux rangées libellées.
+- **Mes matchs** : bande de chiffres, onglets avec compteurs, regroupement par mois, score en cases ; le badge
+  « Validé » n'est plus affiché.
+- **Déclarer un match** : trois étapes, adversaire replié une fois choisi, estimation des points dans la barre
+  d'envoi. **Le score n'est plus prérempli** (6/4 6/3 auparavant) : il se saisit au clavier ou aux boutons − / +.
+- **Admin** : file de validation en cartes « tableau de score » (vainqueur coché), bouton « Valider » en vert,
+  barre de sélection affichée seulement quand un match est coché ; « Suivi » avec un indicateur principal.
+- **Mon compte** : réglages en lignes, avatar et confidentialité repliables, « Se déconnecter » en bas de page.
+- Zones tactiles de 44 px minimum sur mobile, ordinaux en exposant, couleur corail réservée à l'action
+  principale et aux perfs.
+- Revue et maquettes : `design/revue-ux/revue-ux-2026-11.html`.
+
 ## [1.8.0] — 2026-11-13
 
 ### Envoi du mot de passe par e-mail (spec 009)
@@ -170,6 +191,7 @@ Première version de la Race jeunes.
 - Logo et bannière du projet.
 
 [Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.8.0...HEAD
+[1.9.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.9.0
 [1.8.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.8.0
 [1.7.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.7.0
 [1.6.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.6.0
