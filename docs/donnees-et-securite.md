@@ -60,7 +60,7 @@ outille donc les droits ([spec 008](../specs/livrees/008-espace-rgpd/spec.md)) :
 |---|---|
 | **Accès** | Mon compte → Mes données : la liste de ce qui est enregistré, par catégorie |
 | **Portabilité** | « Télécharger mes données » : un fichier JSON avec le compte, les saisons, les matchs vus par le joueur, ses points et leur détail, son journal, ses sessions. Jamais de mot de passe, de jeton, ni de donnée d'un autre joueur |
-| **Par l'admin** | Fiche joueur → « Télécharger ses données (RGPD) », y compris pour un compte désactivé |
+| **Par l'admin** | Fiche joueur → onglet Compte → « Télécharger ses données (RGPD) », y compris pour un compte désactivé |
 | **Rectification, effacement** | Sur demande au club, qui corrige ou désactive le compte |
 
 Chacun ne télécharge que ses propres données (contrôle côté serveur) et chaque téléchargement est tracé au

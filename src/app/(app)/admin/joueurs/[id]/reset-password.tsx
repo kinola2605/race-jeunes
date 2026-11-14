@@ -12,7 +12,7 @@ export function ResetPassword({ userId, pseudo }: { userId: string; pseudo: stri
     return (
       <div className="scrim" role="dialog" aria-modal="true" aria-label={`Nouveau mot de passe de ${pseudo}`}>
         <div className="dialog" style={{ maxHeight: "90vh", overflowY: "auto" }}>
-          <Handover {...state.handover} doneHref={`/admin/joueurs/${userId}`} />
+          <Handover {...state.handover} doneHref={`/admin/joueurs/${userId}?onglet=compte`} />
         </div>
       </div>
     );

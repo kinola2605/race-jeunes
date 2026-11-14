@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { ADMIN, login, uniquePseudo } from "./helpers";
+import { ADMIN, login, openPlayerTab, uniquePseudo } from "./helpers";
 
 // Spec 009 — envoi du mot de passe par e-mail via la messagerie de l'admin (lien mailto, aucune adresse côté app).
 test("création d'un joueur : « Envoyer par e-mail » prépare un message sans destinataire (FR-900 à FR-903)", async ({ page }) => {
@@ -34,6 +34,7 @@ test("réinitialisation : le même bouton est proposé avec le nouveau mot de pa
   await page.getByLabel(/J'ai remis/).check();
   await page.getByRole("link", { name: "Terminer" }).click();
   await page.getByRole("link", { name: pseudo }).first().click();
+  await openPlayerTab(page, "Compte");
   page.once("dialog", (d) => d.accept());
   await page.getByRole("button", { name: "Réinitialiser le mot de passe" }).click();
   const temp = (await page.getByTestId("temp-password").textContent())!.trim();

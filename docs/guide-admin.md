@@ -68,16 +68,19 @@ des comptes créés s'affichent une seule fois : imprimez les fiches à ce momen
 ### Gérer un compte
 
 La liste se recherche par pseudo et se filtre par **statut** (actif, désactivé, mot de passe temporaire) et
-par **étiquette**. La fiche d'un joueur permet de :
+par **étiquette**. La fiche d'un joueur a quatre onglets :
 
-- modifier le pseudo, le classement (chaque changement est daté dans « Historique du classement ») et les
-  étiquettes ;
-- fixer son **objectif de matchs** pour chaque saison (carte « Saisons ») : de 1 à 200, vide = pas d'objectif.
-  Le joueur voit alors sa progression sur son accueil. L'objectif n'a aucun effet sur les points ;
-- **réinitialiser le mot de passe** quand il l'a oublié : nouveau mot de passe temporaire, ses sessions en
-  cours sont coupées ;
-- **désactiver le compte** : le joueur est déconnecté immédiatement et ne peut plus se connecter. Un compte
-  n'est jamais supprimé, pour que les classements passés restent exacts. Il peut être réactivé.
+<p align="center"><img src="assets/captures/admin-fiche-joueur.png" alt="Fiche d'un joueur, onglet Profil" width="300"></p>
+
+| Onglet | Ce qu'on y fait |
+|---|---|
+| **Profil** | Modifier le pseudo, le classement et les étiquettes. Chaque changement de classement est daté dans « Historique du classement » |
+| **Saisons** | Voir ses engagements et fixer son **objectif de matchs** pour chaque saison : de 1 à 200, vide = pas d'objectif. Le joueur voit alors sa progression sur son accueil. L'objectif n'a aucun effet sur les points |
+| **Mental** | Lire son profil mental ([§10](#10-profil-mental)) |
+| **Compte** | **Réinitialiser le mot de passe** quand il l'a oublié (nouveau mot de passe temporaire, sessions coupées), télécharger ses données, **désactiver le compte** |
+
+Désactiver un compte déconnecte le joueur immédiatement et l'empêche de se reconnecter. Un compte n'est jamais
+supprimé, pour que les classements passés restent exacts. Il peut être réactivé.
 
 ## 3. Saisons
 
@@ -217,7 +220,7 @@ sans intervention technique.
 
 ## 10. Profil mental
 
-Sur la **fiche d'un joueur**, la carte « Profil mental » donne cinq indicateurs, calculés à partir des scores
+Sur la **fiche d'un joueur**, l'onglet **Mental** donne cinq indicateurs, calculés à partir des scores
 déjà enregistrés. Rien n'est à saisir.
 
 | Indicateur | Ce qu'il mesure |
@@ -240,7 +243,7 @@ toujours les nombres. Le profil mental est **réservé à l'admin** ; les joueur
 L'application enregistre un pseudo, un classement, des étiquettes, des matchs et des points. Rien d'autre.
 
 - Chaque joueur peut consulter et télécharger ses données depuis **Mon compte → Mes données**.
-- Vous pouvez le faire pour lui depuis sa fiche : **Télécharger ses données (RGPD)**, y compris pour un compte
+- Vous pouvez le faire pour lui depuis sa fiche, onglet **Compte** : **Télécharger ses données (RGPD)**, y compris pour un compte
   désactivé. Chaque téléchargement est tracé au journal.
 - Une demande de rectification ou d'effacement vous est adressée : vous corrigez le pseudo ou le classement
   depuis la fiche, ou vous désactivez le compte.
@@ -249,7 +252,7 @@ Détail : [Données personnelles et sécurité](donnees-et-securite.md).
 
 ## 12. Questions fréquentes
 
-**Un joueur a oublié son mot de passe.** Fiche du joueur → réinitialiser. Il n'existe pas de « mot de passe
+**Un joueur a oublié son mot de passe.** Fiche du joueur → onglet Compte → réinitialiser. Il n'existe pas de « mot de passe
 oublié » automatique, puisque l'application ne connaît aucune adresse e-mail.
 
 **Un joueur est bloqué à la connexion.** Après 5 échecs en 15 minutes sur un même pseudo, la connexion est

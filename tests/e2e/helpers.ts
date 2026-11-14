@@ -35,6 +35,13 @@ export async function fillScore(page: Page, sets: [number, number][] = [[6, 4], 
   }
 }
 
+/** Fiche joueur de l'admin : ouvre l'un des quatre onglets (spec 014). */
+export async function openPlayerTab(page: Page, tab: "Profil" | "Saisons" | "Mental" | "Compte") {
+  const link = page.getByRole("navigation", { name: "Sections de la fiche" }).getByRole("link", { name: tab, exact: true });
+  await link.click();
+  await expect(link).toHaveAttribute("aria-current", "true");
+}
+
 export function uniquePseudo(prefix: string): string {
   return `${prefix}${Date.now().toString(36).slice(-6)}`;
 }

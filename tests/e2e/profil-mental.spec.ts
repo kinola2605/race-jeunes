@@ -1,10 +1,11 @@
 import { expect, test } from "@playwright/test";
-import { ADMIN, PLAYER, login, logout } from "./helpers";
+import { ADMIN, PLAYER, login, logout, openPlayerTab } from "./helpers";
 
 test("profil mental : l'admin lit les cinq indicateurs d'un joueur, saison par saison (spec 012)", async ({ page }) => {
   await login(page, ADMIN.pseudo, ADMIN.password);
   await page.goto("/admin/joueurs");
   await page.getByRole("link", { name: new RegExp(PLAYER.pseudo) }).first().click();
+  await openPlayerTab(page, "Mental");
 
   const card = page.getByRole("region", { name: "Profil mental" });
   const current = card.getByRole("list", { name: "Indicateurs, Race jeunes 2026-2027" });

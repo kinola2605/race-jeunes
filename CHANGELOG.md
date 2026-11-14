@@ -4,6 +4,19 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
+## [1.12.0] — 2026-11-14
+
+### Fiche joueur en onglets (spec 014)
+Réorganisation de la fiche d'un joueur côté admin. Aucune fonctionnalité, règle ni donnée nouvelle. Aucune
+migration.
+- La fiche est découpée en **quatre onglets** : **Profil** (pseudo, classement, étiquettes, historique du
+  classement), **Saisons** (engagements et objectif de matchs), **Mental** (profil mental, dans son propre
+  onglet) et **Compte** (réinitialisation du mot de passe, données RGPD, désactivation).
+- L'onglet est porté par l'adresse (`?onglet=saisons`…) : il se partage, se retrouve avec le bouton Retour, et
+  l'on y revient après un enregistrement.
+- Chaque onglet ne charge que ses données : le profil mental n'est plus calculé à chaque ouverture de la fiche.
+- Guide de l'admin mis à jour.
+
 ## [1.11.1] — 2026-11-14
 
 ### Documentation (spec 013)
@@ -242,7 +255,8 @@ Première version de la Race jeunes.
 - CI GitHub Actions : lint, typage, tests unitaires, E2E Playwright, démarrage Docker.
 - Logo et bannière du projet.
 
-[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.11.1...HEAD
+[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.12.0...HEAD
+[1.12.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.12.0
 [1.11.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.11.1
 [1.11.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.11.0
 [1.10.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.10.0

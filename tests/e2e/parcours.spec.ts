@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { ADMIN, alertText, login, logout, uniquePseudo, fillScore } from "./helpers";
+import { ADMIN, alertText, login, logout, openPlayerTab, uniquePseudo, fillScore } from "./helpers";
 
 test.describe("authentification", () => {
   test("message identique pour pseudo inconnu et mauvais mot de passe (FR-003)", async ({ page }) => {
@@ -105,6 +105,7 @@ test("l'admin désactive un compte : la session du joueur est coupée (FR-009, F
 
   await admin.goto("/admin/joueurs?filtre=all&q=" + pseudo.toLowerCase());
   await admin.getByRole("link", { name: new RegExp(pseudo) }).first().click();
+  await openPlayerTab(admin, "Compte");
   admin.once("dialog", (d) => d.accept());
   await admin.getByRole("button", { name: "Désactiver le compte" }).click();
   await expect(admin.getByText("Compte désactivé : ses sessions sont coupées.")).toBeVisible();
