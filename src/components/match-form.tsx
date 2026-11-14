@@ -14,13 +14,41 @@ export interface MatchFormSeason {
   players: { id: string; pseudo: string; ranking: string }[];
 }
 
-/** E12a — saisie de match en bord de court (FR-100 à FR-102). */
+const KINDS = [
+  ["NORMAL", "Match joué"],
+  ["RETIREMENT", "Abandon"],
+  ["WALKOVER", "Forfait"],
+] as const;
+
+/**
+ * Jeux d'un set : saisie au clavier ou aux boutons − / + (spec 010, FR-1009).
+ * Aucune valeur par défaut : un score n'est jamais envoyé sans avoir été saisi.
+ */
+function ScoreStepper({ name, label, required }: { name: string; label: string; required: boolean }) {
+  const [value, setValue] = useState("");
+  const bump = (delta: number) =>
+    setValue((cur) => (cur === "" ? (delta > 0 ? "6" : "0") : String(Math.min(20, Math.max(0, Number(cur) + delta)))));
+  return (
+    <div className="stepper">
+      <button type="button" aria-label={`${label} : un jeu de moins`} onClick={() => bump(-1)}>
+        −
+      </button>
+      <input name={name} type="number" inputMode="numeric" min={0} max={20} required={required} aria-label={label} placeholder="–" value={value} onChange={(e) => setValue(e.target.value)} />
+      <button type="button" aria-label={`${label} : un jeu de plus`} onClick={() => bump(1)}>
+        +
+      </button>
+    </div>
+  );
+}
+
+/** E12a — saisie de match en bord de court (FR-100 à FR-102) ; déroulé en trois étapes : spec 010. */
 export function MatchForm({ seasons, meId, admin, today }: { seasons: MatchFormSeason[]; meId: string | null; admin: boolean; today: string }) {
   const [seasonId, setSeasonId] = useState(seasons[0]?.id ?? "");
   const season = seasons.find((s) => s.id === seasonId) ?? seasons[0];
   const [playerAId, setPlayerAId] = useState(admin ? "" : (meId ?? ""));
   const [type, setType] = useState<"club" | "external">("club");
   const [opponentId, setOpponentId] = useState("");
+  const [pickerOpen, setPickerOpen] = useState(true);
   const [query, setQuery] = useState("");
   const [extRanking, setExtRanking] = useState("NC");
   const [result, setResult] = useState<"WIN" | "LOSS">("WIN");
@@ -31,8 +59,11 @@ export function MatchForm({ seasons, meId, admin, today }: { seasons: MatchFormS
   const players = season?.players ?? [];
   const me = players.find((p) => p.id === playerAId);
   const opponents = players.filter((p) => p.id !== playerAId && p.pseudo.toLowerCase().includes(query.trim().toLowerCase()));
-  const opp = players.find((p) => p.id === opponentId);
+  const opp = players.find((p) => p.id === opponentId && p.id !== playerAId);
   const oppRanking = type === "club" ? opp?.ranking : extRanking;
+  const isPerfAgainst = (ranking: string) => Boolean(me && isRanking(ranking) && isRanking(me.ranking) && LADDER.indexOf(ranking) > LADDER.indexOf(me.ranking));
+  // la liste reste dans la page (le choix est envoyé par son bouton radio) ; elle est seulement repliée
+  const collapsed = type === "club" && Boolean(opp) && !pickerOpen;
 
   const estimate = useMemo(() => {
     if (!season?.rules || !me || !oppRanking || !isRanking(me.ranking) || !isRanking(oppRanking)) return null;
@@ -40,6 +71,8 @@ export function MatchForm({ seasons, meId, admin, today }: { seasons: MatchFormS
   }, [season, me, oppRanking, result, kind]);
 
   if (!season) return null;
+  const sideA = admin ? "Joueur" : "Vous";
+  const sideB = type === "club" && opp ? opp.pseudo : "Adversaire";
   return (
     <form className="court" action={declareMatchAction}>
       {seasons.length > 1 ? (
@@ -71,13 +104,13 @@ export function MatchForm({ seasons, meId, admin, today }: { seasons: MatchFormS
         </div>
       ) : null}
 
-      <div className="field">
-        <label htmlFor="playedOn">Date du match</label>
-        <input className="input" id="playedOn" name="playedOn" type="date" defaultValue={today} max={today} required />
-      </div>
-
       <fieldset>
-        <legend>Adversaire</legend>
+        <legend className="step-legend">
+          <span className="step-num" aria-hidden="true">
+            1
+          </span>
+          Adversaire et date
+        </legend>
         <input type="hidden" name="opponentType" value={type} />
         <div className="seg mb-4" role="group" aria-label="Type d'adversaire">
           <button type="button" aria-pressed={type === "club"} onClick={() => setType("club")}>
@@ -90,33 +123,60 @@ export function MatchForm({ seasons, meId, admin, today }: { seasons: MatchFormS
         </div>
         {type === "club" ? (
           <>
-            <div className="search">
+            {collapsed && opp ? (
+              <div className="picked">
+                <div className="item-main">
+                  <div className="item-title">
+                    {opp.pseudo}
+                    {isPerfAgainst(opp.ranking) ? (
+                      <span className="badge badge-perf">
+                        <Icon name="perf" />
+                        Perf possible
+                      </span>
+                    ) : null}
+                  </div>
+                  <div className="item-meta">{opp.ranking} · joueur du club</div>
+                </div>
+                <button className="btn btn-ghost btn-sm" type="button" onClick={() => setPickerOpen(true)}>
+                  <Icon name="edit" />
+                  Modifier
+                </button>
+              </div>
+            ) : null}
+            <div className="search" hidden={collapsed}>
               <label htmlFor="adv" className="sr-only">
                 Rechercher un engagé
               </label>
               <Icon name="search" />
               <input className="input" id="adv" type="search" placeholder="Rechercher un pseudo" value={query} onChange={(e) => setQuery(e.target.value)} autoComplete="off" />
             </div>
-            <div className="list mt-2" role="radiogroup" aria-label="Adversaire" style={{ maxHeight: 280, overflowY: "auto" }}>
+            <div className="list mt-2" role="radiogroup" aria-label="Adversaire" hidden={collapsed}>
               {opponents.length === 0 ? <p className="small subtle">Aucun engagé ne correspond.</p> : null}
-              {opponents.map((p) => {
-                const perf = me && isRanking(p.ranking) && isRanking(me.ranking) && LADDER.indexOf(p.ranking) > LADDER.indexOf(me.ranking);
-                return (
-                  <label key={p.id} className="item" style={{ minHeight: "var(--touch-court)", cursor: "pointer", borderBottom: "1px solid var(--line-soft)" }}>
-                    <input type="radio" name="opponentId" value={p.id} checked={opponentId === p.id} onChange={() => setOpponentId(p.id)} style={{ width: 22, height: 22, accentColor: "var(--accent)" }} />
-                    <div className="item-main">
-                      <div className="item-title">{p.pseudo}</div>
-                      <div className="item-meta">{p.ranking}</div>
-                    </div>
-                    {perf ? (
-                      <span className="badge badge-perf">
-                        <Icon name="perf" />
-                        Perf possible
-                      </span>
-                    ) : null}
-                  </label>
-                );
-              })}
+              {opponents.map((p) => (
+                <label key={p.id} className="item" style={{ minHeight: "var(--touch-court)", cursor: "pointer", borderBottom: "1px solid var(--line-soft)" }}>
+                  <input
+                    type="radio"
+                    name="opponentId"
+                    value={p.id}
+                    checked={opponentId === p.id}
+                    onChange={() => {
+                      setOpponentId(p.id);
+                      setPickerOpen(false);
+                    }}
+                    style={{ width: 22, height: 22, accentColor: "var(--accent)" }}
+                  />
+                  <div className="item-main">
+                    <div className="item-title">{p.pseudo}</div>
+                    <div className="item-meta">{p.ranking}</div>
+                  </div>
+                  {isPerfAgainst(p.ranking) ? (
+                    <span className="badge badge-perf">
+                      <Icon name="perf" />
+                      Perf possible
+                    </span>
+                  ) : null}
+                </label>
+              ))}
             </div>
           </>
         ) : (
@@ -138,10 +198,19 @@ export function MatchForm({ seasons, meId, admin, today }: { seasons: MatchFormS
             </div>
           </>
         )}
+        <div className="field mt-4 mb-0">
+          <label htmlFor="playedOn">Date du match</label>
+          <input className="input" id="playedOn" name="playedOn" type="date" defaultValue={today} max={today} required />
+        </div>
       </fieldset>
 
       <fieldset>
-        <legend>Résultat {admin ? "du joueur" : ""}</legend>
+        <legend className="step-legend">
+          <span className="step-num" aria-hidden="true">
+            2
+          </span>
+          Résultat {admin ? "du joueur" : ""}
+        </legend>
         <div className="big-choice">
           <label>
             <input type="radio" name="result" value="WIN" checked={result === "WIN"} onChange={() => setResult("WIN")} />
@@ -160,64 +229,75 @@ export function MatchForm({ seasons, meId, admin, today }: { seasons: MatchFormS
             </span>
           </label>
         </div>
-      </fieldset>
 
-      <div className="field">
-        <label htmlFor="kind">Type de match</label>
-        <select className="select" id="kind" name="kind" value={kind} onChange={(e) => setKind(e.target.value as typeof kind)}>
-          <option value="NORMAL">Match joué</option>
-          <option value="RETIREMENT">Abandon en cours de match</option>
-          <option value="WALKOVER">Forfait (non joué)</option>
-        </select>
-      </div>
-
-      <div className="field">
-        <label className="check">
-          <input type="checkbox" name="inTournament" checked={inTournament} onChange={(e) => setInTournament(e.target.checked)} /> Match joué en tournoi
-        </label>
-        {inTournament ? (
-          <>
-            <label htmlFor="tournament" className="mt-2">
-              Nom du tournoi
+        <div className="radio-seg mt-4" role="radiogroup" aria-label="Type de match">
+          {KINDS.map(([value, label]) => (
+            <label key={value}>
+              <input className="sr-only" type="radio" name="kind" value={value} checked={kind === value} onChange={() => setKind(value)} />
+              {label}
             </label>
-            <input
-              className="input"
-              id="tournament"
-              name="tournament"
-              list="tournaments"
-              placeholder="ex. TMC de Pâques 2027"
-              minLength={2}
-              maxLength={80}
-              required
-              autoComplete="off"
-              aria-describedby="tournament-hint tournament-pii"
-            />
-            <datalist id="tournaments">
-              {season.tournaments.map((t) => (
-                <option key={t} value={t} />
-              ))}
-            </datalist>
-            <p className="hint" id="tournament-hint">
-              {season.rules?.tournament
-                ? `Bonus : à partir de ${season.rules.tournament.fromWins} victoires dans le même tournoi, +${season.rules.tournament.points} pts par victoire.`
-                : "Reprenez le nom déjà utilisé par les autres joueurs du tournoi."}
-            </p>
-            <PiiNotice id="tournament-pii" />
-          </>
-        ) : null}
-      </div>
+          ))}
+        </div>
+        <p className="hint mt-2">
+          {kind === "NORMAL" ? "Le match est allé à son terme." : kind === "RETIREMENT" ? "Abandon en cours de match : indiquez le score au moment de l'arrêt." : "Forfait : le match n'a pas été joué, aucun score à saisir."}
+        </p>
+
+        <div className="field mt-4 mb-0">
+          <label className="check">
+            <input type="checkbox" name="inTournament" checked={inTournament} onChange={(e) => setInTournament(e.target.checked)} /> Match joué en tournoi
+          </label>
+          {inTournament ? (
+            <>
+              <label htmlFor="tournament" className="mt-2">
+                Nom du tournoi
+              </label>
+              <input
+                className="input"
+                id="tournament"
+                name="tournament"
+                list="tournaments"
+                placeholder="ex. TMC de Pâques 2027"
+                minLength={2}
+                maxLength={80}
+                required
+                autoComplete="off"
+                aria-describedby="tournament-hint tournament-pii"
+              />
+              <datalist id="tournaments">
+                {season.tournaments.map((t) => (
+                  <option key={t} value={t} />
+                ))}
+              </datalist>
+              <p className="hint" id="tournament-hint">
+                {season.rules?.tournament
+                  ? `Bonus : à partir de ${season.rules.tournament.fromWins} victoires dans le même tournoi, +${season.rules.tournament.points} pts par victoire.`
+                  : "Reprenez le nom déjà utilisé par les autres joueurs du tournoi."}
+              </p>
+              <PiiNotice id="tournament-pii" />
+            </>
+          ) : null}
+        </div>
+      </fieldset>
 
       {kind !== "WALKOVER" ? (
         <fieldset>
-          <legend>
-            Score <span className="subtle small">(jeux par set, {admin ? "joueur" : "vous"} d&apos;abord)</span>
+          <legend className="step-legend">
+            <span className="step-num" aria-hidden="true">
+              3
+            </span>
+            Score <span className="subtle small">(jeux par set)</span>
           </legend>
           <div className="sets">
+            <div className="set-row" aria-hidden="true">
+              <span />
+              <span className="set-head">{sideA}</span>
+              <span className="set-head">{sideB}</span>
+            </div>
             {[1, 2, ...(thirdSet ? [3] : [])].map((i) => (
               <div className="set-row" key={i}>
                 <span className="strong">{i === 3 ? "Set 3 / STB" : `Set ${i}`}</span>
-                <input className="input num" name={`s${i}a`} type="number" inputMode="numeric" min={0} max={20} required={i < 3} aria-label={`Set ${i}, jeux ${admin ? "du joueur" : "gagnés par vous"}`} defaultValue={i === 1 ? 6 : i === 2 ? 6 : undefined} style={{ textAlign: "center", fontSize: "var(--fs-xl)", fontWeight: 700 }} />
-                <input className="input num" name={`s${i}b`} type="number" inputMode="numeric" min={0} max={20} required={i < 3} aria-label={`Set ${i}, jeux de l'adversaire`} defaultValue={i === 1 ? 4 : i === 2 ? 3 : undefined} style={{ textAlign: "center", fontSize: "var(--fs-xl)", fontWeight: 700 }} />
+                <ScoreStepper name={`s${i}a`} required={i < 3} label={`Set ${i}, jeux ${admin ? "du joueur" : "gagnés par vous"}`} />
+                <ScoreStepper name={`s${i}b`} required={i < 3} label={`Set ${i}, jeux de l'adversaire`} />
               </div>
             ))}
             {!thirdSet ? (
@@ -234,35 +314,33 @@ export function MatchForm({ seasons, meId, admin, today }: { seasons: MatchFormS
         <label className="check">
           <input type="checkbox" name="validateNow" defaultChecked /> Valider immédiatement
         </label>
-      ) : null}
-
-      <div className="preview-points mt-4" role="status" aria-live="polite">
-        <div>
-          <span className="stat-label">Points estimés</span>
-          <span className="stat-value">{estimate ? `+${estimate.points}` : "—"}</span>
-        </div>
-        <div className="right small">
-          {estimate ? (
-            <>
-              {estimate.isPerf ? <strong>Perf</strong> : estimate.rule === "walkover" ? "Forfait" : "Écart"} :{" "}
-              {estimate.gap > 0 ? `+${estimate.gap}` : estimate.gap} échelon{Math.abs(estimate.gap) > 1 ? "s" : ""}
-              <br />
-              {me?.ranking} {result === "WIN" ? "bat" : "perd contre"} {oppRanking}
-            </>
-          ) : (
-            "Choisissez l'adversaire"
-          )}
-        </div>
-      </div>
-      {!admin ? (
-        <p className="small subtle mt-2">
+      ) : (
+        <p className="small subtle">
           Le match sera <strong>validé par le club</strong> avant d&apos;être compté.
         </p>
-      ) : null}
+      )}
+
+      {/* l'estimation reste visible à côté du bouton pendant toute la saisie */}
       <div className="sticky-cta">
-        <SubmitButton className="btn btn-primary btn-block" pendingLabel="Envoi en cours…">
-          {admin ? "Enregistrer le match" : "Envoyer le match"}
-        </SubmitButton>
+        <div className="send-bar">
+          <div className="send-est" role="status" aria-live="polite">
+            <span className="stat-label">Points estimés</span>
+            <span className="stat-value">{estimate ? `+${estimate.points}` : "—"}</span>
+            <span className="small subtle">
+              {estimate ? (
+                <>
+                  {estimate.isPerf ? <strong>Perf</strong> : estimate.rule === "walkover" ? "Forfait" : "Écart"} : {estimate.gap > 0 ? `+${estimate.gap}` : estimate.gap} échelon
+                  {Math.abs(estimate.gap) > 1 ? "s" : ""} · {me?.ranking} {result === "WIN" ? "bat" : "perd contre"} {oppRanking}
+                </>
+              ) : (
+                "Choisissez l'adversaire"
+              )}
+            </span>
+          </div>
+          <SubmitButton className="btn btn-primary" pendingLabel="Envoi…">
+            {admin ? "Enregistrer le match" : "Envoyer le match"}
+          </SubmitButton>
+        </div>
       </div>
     </form>
   );

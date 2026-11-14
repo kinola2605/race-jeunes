@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { requireUser } from "@/server/auth/session";
 import { matchFormSeasons, todayIso } from "@/server/services/match-form-data";
 import { MatchForm } from "@/components/match-form";
-import { EmptyState, Flash, PageHead } from "@/components/ui";
+import { EmptyState, Flash, Icon, PageHead } from "@/components/ui";
 
 export const metadata: Metadata = { title: "Déclarer un match" };
 
@@ -15,6 +16,11 @@ export default async function NouveauMatchPage({ searchParams }: { searchParams:
   const seasons = await matchFormSeasons(user);
   return (
     <div className="main-narrow" style={{ margin: "0 auto" }}>
+      {/* sur mobile, la barre d'onglets est masquée pendant la saisie (spec 010) : ce lien permet d'en sortir */}
+      <Link className="back-link" href="/accueil">
+        <Icon name="chev-l" />
+        Accueil
+      </Link>
       <PageHead eyebrow={seasons[0]?.title ?? "Race jeunes"} title="Déclarer un match" />
       <Flash ok={sp.ok} error={sp.erreur} />
       {seasons.length === 0 ? (

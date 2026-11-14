@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { ADMIN, alertText, login, logout, uniquePseudo } from "./helpers";
+import { ADMIN, alertText, login, logout, uniquePseudo, fillScore } from "./helpers";
 
 test.describe("authentification", () => {
   test("message identique pour pseudo inconnu et mauvais mot de passe (FR-003)", async ({ page }) => {
@@ -61,6 +61,12 @@ test("parcours complet : création de compte, mot de passe forcé, déclaration 
   await page.goto("/matchs/nouveau");
   await page.getByRole("radio", { name: /SliceMaster/ }).check();
   await expect(page.getByRole("status").filter({ hasText: "Points estimés" })).toContainText("+20");
+  // spec 010 : le score n'est plus prérempli, l'envoi sans score est bloqué par le navigateur
+  await page.getByRole("button", { name: "Envoyer le match" }).click();
+  await expect(page).toHaveURL(/\/matchs\/nouveau$/);
+  await page.getByRole("button", { name: "Set 1, jeux gagnés par vous : un jeu de plus" }).click();
+  await expect(page.locator('input[name="s1a"]')).toHaveValue("6");
+  await fillScore(page);
   await page.getByRole("button", { name: "Envoyer le match" }).click();
   await expect(page.getByText("Match envoyé")).toBeVisible();
   await logout(page);

@@ -127,6 +127,77 @@ export function EmptyState({ icon, title, children }: { icon: IconName; title: s
   );
 }
 
+/** Spec 010, FR-1011 — ordinal composé en exposant : 1er, 9e. */
+export function Ordinal({ n }: { n: number }) {
+  return (
+    <>
+      {n}
+      <sup className="ord">{n === 1 ? "er" : "e"}</sup>
+    </>
+  );
+}
+
+/** « 1 pt », « 2 pts ». */
+export function pts(n: number): string {
+  return `${n} pt${Math.abs(n) > 1 ? "s" : ""}`;
+}
+
+/** Sets d'un score normalisé (« 6/4 3/6 10-8 ») : [jeux du premier côté, jeux du second]. */
+function parseSets(score: string): [string, string][] {
+  return score
+    .split(" ")
+    .filter(Boolean)
+    .map((p) => {
+      const [x = "", y = ""] = p.split(p.includes("/") ? "/" : "-");
+      return [x, y];
+    });
+}
+
+/** Score en cases, du point de vue du lecteur (spec 010). */
+export function SetBoxes({ score }: { score: string }) {
+  return (
+    <span className="setbox" role="img" aria-label={`Score ${score}`}>
+      {parseSets(score).map(([x, y], i) => (
+        <span key={i} aria-hidden="true">
+          {x}-{y}
+        </span>
+      ))}
+    </span>
+  );
+}
+
+/** Tableau de score à deux lignes : le vainqueur est coché et en gras (spec 010). `score` est vu du côté A. */
+export function ScoreBoard({ a, b, winner, score, walkover }: { a: ReactNode; b: ReactNode; winner: "A" | "B"; score: string | null; walkover?: boolean }) {
+  const sets = score ? parseSets(score) : [];
+  const line = (side: "A" | "B", name: ReactNode) => {
+    const won = winner === side;
+    return (
+      <>
+        {won ? <Icon name="check" /> : <span />}
+        <span className={`score-name ${won ? "score-win" : "score-lose"}`}>
+          {name}
+          {won ? <span className="sr-only"> (vainqueur)</span> : null}
+        </span>
+        {walkover ? (
+          <span className="small subtle">{won ? "forfait" : ""}</span>
+        ) : (
+          <span className="setbox">
+            {sets.map((s, i) => (
+              <span key={i}>{side === "A" ? s[0] : s[1]}</span>
+            ))}
+          </span>
+        )}
+      </>
+    );
+  };
+  return (
+    <div className="score">
+      {line("A", a)}
+      {line("B", b)}
+    </div>
+  );
+}
+
 export function formatDate(d: Date): string {
   return d.toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
 }
