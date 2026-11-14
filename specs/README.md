@@ -23,6 +23,7 @@ sur l'ensemble des deux répertoires : la prochaine spec prend le numéro suivan
 | [009-envoi-mot-de-passe-email](livrees/009-envoi-mot-de-passe-email/spec.md) | 1.8.0 | Envoi des identifiants depuis la messagerie de l'admin |
 | [010-ergonomie](livrees/010-ergonomie/spec.md) | 1.9.0 | Ergonomie : réorganisation des écrans (revue UX) |
 | [011-ergonomie-admin](livrees/011-ergonomie-admin/spec.md) | 1.10.0 | Ergonomie des écrans d'administration |
+| [012-profil-mental](livrees/012-profil-mental/spec.md) | 1.11.0 | Profil mental calculé à partir des scores |
 
 ## En cours
 

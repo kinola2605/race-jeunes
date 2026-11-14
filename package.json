@@ -1,6 +1,6 @@
 {
   "name": "race-jeunes",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "private": true,
   "description": "Suivi de la Race jeunes d'un club de tennis — PWA en marque blanche, sans donnée personnelle",
   "scripts": {
@@ -19,6 +19,7 @@
     "db:migrate:remote": "node scripts/migrate.mjs",
     "db:migrate:status": "prisma migrate status",
     "db:seed": "tsx prisma/seed.ts",
+    "db:seed:volume": "tsx prisma/seed-volume.ts",
     "bootstrap-admin": "tsx scripts/bootstrap-admin.ts",
     "local-db": "node scripts/local-db.mjs"
   },

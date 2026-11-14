@@ -649,3 +649,13 @@ body { padding-top: env(safe-area-inset-top, 0px); }
 .seg-grid > button { justify-content: center; border-radius: calc(var(--r-card) - 4px); white-space: normal; text-align: center; line-height: 1.15; min-height: var(--touch-min); }
 @media (min-width: 768px) { .seg-grid { display: inline-flex; width: auto; border-radius: var(--r-pill); } .seg-grid > button { border-radius: var(--r-pill); white-space: nowrap; } }
 @media (max-width: 1023px) { .layout-2 > .cases + .stack, .layout-2 > .cases + .cases { margin-top: var(--s-3); } }
+
+/* ── Profil mental (spec 012) : cinq indicateurs, jauge du joueur et repère du groupe ── */
+.mental { display: grid; gap: var(--s-4); margin: 0; padding: 0; list-style: none; }
+.mental-head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-3); }
+.mental-value { font-size: var(--fs-xl); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.gauge { position: relative; height: 6px; border-radius: var(--r-pill); background: var(--line-soft); margin: var(--s-2) 0; }
+.gauge > span { display: block; height: 100%; border-radius: inherit; background: var(--accent); }
+.gauge > i { position: absolute; top: -4px; bottom: -4px; width: 2px; margin-left: -1px; background: var(--text); }
+.table th.mental-th { text-transform: none; letter-spacing: 0; font-size: inherit; font-weight: 500; color: inherit; white-space: normal; border-bottom-color: var(--line-soft); }
+.mental-group { white-space: nowrap; }

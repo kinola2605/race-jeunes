@@ -4,6 +4,21 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
+## [1.11.0] — 2026-11-14
+
+### Profil mental calculé (spec 012)
+- **Fiche joueur (admin)** : nouvelle carte « Profil mental », calculée à partir des scores déjà enregistrés,
+  sans rien à saisir : tie-breaks gagnés, sets décisifs gagnés (3e set ou super tie-break), retours après la
+  perte du premier set, perfs face à un mieux classé, contre-perfs face à un moins bien classé.
+- Chaque indicateur donne le pourcentage, les nombres (« 2 gagnés sur 3 joués ») et la valeur du groupe (tous
+  les engagés de la saison). Tableau « D'une saison à l'autre » dès que le joueur a plusieurs saisons.
+- Forfaits jamais comptés ; abandons exclus des sets décisifs et des retours. Réservé à l'admin.
+- Aucune donnée nouvelle, aucune migration.
+
+### Outillage
+- `npm run db:seed:volume` : jeu de données fictif et volumineux (4 saisons « Démo · … », 64 joueurs étiquetés
+  « Jeu de données », environ 1 400 matchs). Ajout seul ; `-- --purge` le retire entièrement.
+
 ## [1.10.0] — 2026-11-14
 
 ### Ergonomie des écrans d'administration (spec 011)
@@ -215,6 +230,7 @@ Première version de la Race jeunes.
 - Logo et bannière du projet.
 
 [Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.8.0...HEAD
+[1.11.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.11.0
 [1.10.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.10.0
 [1.9.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.9.1
 [1.9.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.9.0
