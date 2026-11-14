@@ -7,6 +7,8 @@ import { listTags } from "@/server/services/accounts";
 import { setStatusAction, updatePlayerAction } from "@/app/actions/admin";
 import { setMatchGoalAction } from "@/app/actions/goals";
 import { goalsOfPlayer } from "@/server/services/goals";
+import { mentalOfPlayer } from "@/server/services/mental";
+import { MentalProfileCard, type MentalSeason } from "@/components/mental-profile";
 import { GOAL_MAX } from "@/goals/goals";
 import { ConfirmButton, SubmitButton } from "@/components/forms";
 import { Flash, Icon, PageHead, PiiNotice, SeasonStatusBadge, formatDateTime } from "@/components/ui";
@@ -16,7 +18,7 @@ import { Avatar } from "@/components/avatar";
 export const metadata: Metadata = { title: "Joueur" };
 
 /** E08a (détail) — FR-023 à FR-025 */
-export default async function JoueurPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ ok?: string; erreur?: string }> }) {
+export default async function JoueurPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ ok?: string; erreur?: string; saison?: string }> }) {
   const { id } = await params;
   const sp = await searchParams;
   const user = await db.user.findUnique({
@@ -28,7 +30,15 @@ export default async function JoueurPage({ params, searchParams }: { params: Pro
     },
   });
   if (!user || user.role !== "PLAYER") notFound();
-  const [tags, goals] = await Promise.all([listTags(), goalsOfPlayer(user.id, user.enrollments)]);
+  // spec 012 : saisons non brouillon, de la plus récente à la plus ancienne
+  const played = user.enrollments.filter((e) => e.season.status !== "DRAFT").sort((a, b) => b.season.createdAt.getTime() - a.season.createdAt.getTime());
+  const [tags, goals, mental] = await Promise.all([
+    listTags(),
+    goalsOfPlayer(user.id, user.enrollments),
+    mentalOfPlayer(user.id, played.map((e) => e.seasonId)),
+  ]);
+  const mentalSeasons: MentalSeason[] = played.map((e) => ({ slug: e.season.slug, title: e.season.title, ...mental.get(e.seasonId)! }));
+  const mentalCurrent = mentalSeasons.find((s) => s.slug === sp.saison) ?? mentalSeasons[0];
   const mine = new Set(user.tags.map((t) => t.tag.name));
 
   return (
@@ -166,6 +176,16 @@ export default async function JoueurPage({ params, searchParams }: { params: Pro
               <p className="hint mb-0">Objectif : matchs validés de la saison, hors forfaits (1 à 200, vide = aucun). Aucun effet sur les points.</p>
             </div>
           </div>
+          {mentalCurrent ? (
+            <div className="cases">
+              <section className="case" id="mental" aria-labelledby="t-mental">
+                <h2 className="case-title" id="t-mental">
+                  Profil mental
+                </h2>
+                <MentalProfileCard seasons={mentalSeasons} current={mentalCurrent} hrefFor={(slug) => `/admin/joueurs/${user.id}?saison=${slug}#mental`} />
+              </section>
+            </div>
+          ) : null}
           <div className="cases">
             <div className="case">
               <h2 className="case-title">Accès</h2>

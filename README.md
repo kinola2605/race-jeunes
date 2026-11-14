@@ -131,6 +131,7 @@ cp .env.example .env                    # adapter DATABASE_URL
 npm run local-db                        # optionnel : PostgreSQL embarqué sur le port 54329 (autre terminal)
 npx prisma migrate deploy
 npm run db:seed                         # données de démonstration
+npm run db:seed:volume                  # optionnel : gros jeu fictif (4 saisons, 64 joueurs, ~1 400 matchs)
 npm run dev                             # http://localhost:3000
 ```
 
