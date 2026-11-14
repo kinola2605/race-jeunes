@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/kinola2605/race-jeunes/actions/workflows/ci.yml"><img src="https://github.com/kinola2605/race-jeunes/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-1.12.0-E28C57" alt="Version 1.12.0"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-1.12.1-E28C57" alt="Version 1.12.1"></a>
   <img src="https://img.shields.io/badge/couverture_moteur-100%25-6FDC9C" alt="Couverture du moteur de points : 100 %">
   <img src="https://img.shields.io/badge/donn%C3%A9es_personnelles-aucune-6FDC9C" alt="Aucune donnée personnelle">
   <img src="https://img.shields.io/badge/marque-blanche-EBB08C" alt="Marque blanche">
@@ -19,6 +19,14 @@ saison**, que le club règle lui-même sans toucher au code.
 **[Documentation](docs/README.md)** · [Guide de l'admin](docs/guide-admin.md) ·
 [Guide du joueur](docs/guide-joueur.md) · [Le barème expliqué](docs/bareme.md) ·
 [Journal des versions](CHANGELOG.md)
+
+<p align="center">
+  <a href="docs/assets/video/presentation.mp4">
+    <img src="docs/assets/video/presentation.gif" alt="Présentation animée de Race jeunes : connexion, accueil du joueur, déclaration d'un match avec points estimés, classement, détail du calcul, puis côté admin validation, barème, fiche joueur et apparence" width="100%">
+  </a>
+  <br>
+  <sub>Présentation en 48 secondes · <a href="docs/assets/video/presentation.mp4">vidéo en haute définition (MP4)</a></sub>
+</p>
 
 <p align="center">
   <img src="docs/assets/captures/joueur-accueil.png" alt="Accueil du joueur" width="24%">

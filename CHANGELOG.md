@@ -4,6 +4,15 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
+## [1.12.1] — 2026-11-14
+
+### Vidéo de présentation (spec 015)
+Aucun changement de l'application. Aucune migration.
+- **Vidéo de présentation** en tête du README : 48 secondes qui parcourent l'application côté joueur
+  (connexion, accueil, déclaration d'un match, classement, détail du calcul) puis côté admin (validation,
+  barème, fiche joueur, apparence). Aperçu animé (GIF) dans la page, MP4 1920×1080 en lien.
+- `npm run docs:video` : vidéo régénérée à partir des données de démonstration (Playwright + ffmpeg).
+
 ## [1.12.0] — 2026-11-14
 
 ### Fiche joueur en onglets (spec 014)
@@ -255,7 +264,8 @@ Première version de la Race jeunes.
 - CI GitHub Actions : lint, typage, tests unitaires, E2E Playwright, démarrage Docker.
 - Logo et bannière du projet.
 
-[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.12.0...HEAD
+[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.12.1...HEAD
+[1.12.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.12.1
 [1.12.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.12.0
 [1.11.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.11.1
 [1.11.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.11.0
