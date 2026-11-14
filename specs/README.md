@@ -24,6 +24,7 @@ sur l'ensemble des deux répertoires : la prochaine spec prend le numéro suivan
 | [010-ergonomie](livrees/010-ergonomie/spec.md) | 1.9.0 | Ergonomie : réorganisation des écrans (revue UX) |
 | [011-ergonomie-admin](livrees/011-ergonomie-admin/spec.md) | 1.10.0 | Ergonomie des écrans d'administration |
 | [012-profil-mental](livrees/012-profil-mental/spec.md) | 1.11.0 | Profil mental calculé à partir des scores |
+| [013-documentation](livrees/013-documentation/spec.md) | 1.11.1 | README et documentation du projet (`docs/`) |
 
 ## En cours
 

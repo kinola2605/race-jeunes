@@ -13,19 +13,33 @@ Ce projet suit le **Spec-Driven Development** : la spécification est la source 
 6. Avant d'ouvrir la PR :
 
    ```bash
-   npm run lint && npm run typecheck && npm run test:coverage && npm run build && npm run test:e2e
+   npm run lint && npm run typecheck && npm run test:coverage && npm run docs:check && npm run build && npm run test:e2e
    ```
 
 7. Interface : utilisez uniquement les tokens (`design/tokens.json` → `npm run tokens`) et les composants
    existants ; joignez des captures Playwright ; vérifiez les contrastes (`design/identite.md`).
 8. `main` est protégée : fusion par PR après CI verte et relecture.
 
+## Documentation
+
+La [documentation](docs/README.md) vit dans `docs/`, à côté du code. Les specs disent ce qui a été décidé et
+pourquoi ; la documentation dit comment s'en servir.
+
+- Une PR qui change un écran, une règle de calcul, une variable ou une commande corrige le document concerné
+  **dans la même PR** : [guide de l'admin](docs/guide-admin.md), [guide du joueur](docs/guide-joueur.md),
+  [barème](docs/bareme.md), [configuration](docs/configuration.md), [architecture](docs/architecture.md),
+  [données et sécurité](docs/donnees-et-securite.md).
+- Une nouvelle fonctionnalité s'ajoute au tableau « Fonctionnalités » du [README](README.md).
+- Si un écran illustré change : `npm run docs:captures` (application locale, données de démonstration).
+- `npm run docs:check` vérifie les liens et la version du README ; la CI le lance.
+
 ## Release
 
 **Chaque évolution poussée en production donne lieu à une release GitHub.** Dans la PR de l'évolution :
 
 1. Version [SemVer](https://semver.org/lang/fr/) dans `package.json` (et `package-lock.json`) ; section
-   `## [X.Y.Z] — AAAA-MM-JJ` et lien de version dans le [CHANGELOG](CHANGELOG.md).
+   `## [X.Y.Z] — AAAA-MM-JJ` et lien de version dans le [CHANGELOG](CHANGELOG.md) ; même numéro dans le badge
+   de version du [README](README.md) (`npm run docs:check` échoue sinon).
 2. Spec passée au statut « Déployée (vX.Y.Z) » et déplacée dans [`specs/livrees/`](specs/README.md).
 3. Migration éventuelle appliquée en production **avant** la fusion
    (`npm run db:migrate:remote -- .env.neon.production`, voir [DEPLOIEMENT.md](docs/DEPLOIEMENT.md)).
@@ -34,6 +48,12 @@ Après la fusion et le déploiement Vercel de production prêt :
 
 ```bash
 gh release create vX.Y.Z --target main --title "Race jeunes X.Y.Z" --notes "…section du CHANGELOG…"
+```
+
+Une fois la release créée, supprimez la branche de l'évolution, sur GitHub et en local :
+
+```bash
+git push origin --delete <branche> && git branch -d <branche>
 ```
 
 Ne committez jamais de secret (`.env` est ignoré) ni de donnée réelle de joueur.

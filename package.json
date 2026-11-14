@@ -1,6 +1,6 @@
 {
   "name": "race-jeunes",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "private": true,
   "description": "Suivi de la Race jeunes d'un club de tennis — PWA en marque blanche, sans donnée personnelle",
   "scripts": {
@@ -15,6 +15,8 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "tokens": "node scripts/build-tokens.mjs",
+    "docs:check": "node scripts/check-docs.mjs",
+    "docs:captures": "node scripts/docs-captures.mjs",
     "db:migrate": "prisma migrate deploy",
     "db:migrate:remote": "node scripts/migrate.mjs",
     "db:migrate:status": "prisma migrate status",

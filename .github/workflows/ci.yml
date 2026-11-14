@@ -28,6 +28,8 @@ jobs:
         run: npm run tokens && git diff --exit-code src/styles/tokens.css
       - run: npm run lint
       - run: npm run typecheck
+      - name: Documentation (liens, version du README)
+        run: npm run docs:check
       - name: Tests unitaires (moteur de points, couverture 100 %)
         run: npm run test:coverage
 
