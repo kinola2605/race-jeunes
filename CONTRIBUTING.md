@@ -30,7 +30,8 @@ pourquoi ; la documentation dit comment s'en servir.
   [barème](docs/bareme.md), [configuration](docs/configuration.md), [architecture](docs/architecture.md),
   [données et sécurité](docs/donnees-et-securite.md).
 - Une nouvelle fonctionnalité s'ajoute au tableau « Fonctionnalités » du [README](README.md).
-- Si un écran illustré change : `npm run docs:captures` (application locale, données de démonstration).
+- Si un écran illustré change : `npm run docs:captures` (application locale, données de démonstration), et
+  `npm run docs:video` si l'écran figure dans la vidéo de présentation.
 - `npm run docs:check` vérifie les liens et la version du README ; la CI le lance.
 
 ## Release

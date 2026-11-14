@@ -176,6 +176,21 @@ npm run docs:captures
 Par défaut le script vise `http://localhost:3000` ; `DOCS_BASE_URL` permet d'en changer. À relancer quand un
 écran illustré change.
 
+### Vidéo de présentation
+
+La vidéo du README (`docs/assets/video/presentation.mp4` et son aperçu `presentation.gif`) est tournée de la
+même façon, sur les données de démonstration : `scripts/video/captures.mjs` filme l'application image par image
+(téléphone Pixel 7, thème sombre), `scripts/video/composer.html` met en page chaque image (légendes, téléphone,
+fondus) et ffmpeg encode le tout.
+
+```bash
+# application démarrée en local sur une base de démonstration ; ffmpeg dans le PATH ou dans FFMPEG
+npm run docs:video
+```
+
+`VIDEO_BASE_URL` permet de viser un autre port local. La scène admin **valide un match** de la file de
+démonstration : relancer `npm run db:seed` sur une base neuve pour retrouver un tournage identique.
+
 ## 8. Déploiement
 
 Deux cibles, même code : [Vercel + Neon](DEPLOIEMENT.md) (production actuelle, région Francfort) et

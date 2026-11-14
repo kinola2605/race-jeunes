@@ -38,4 +38,5 @@ Choisissez votre entrée selon ce que vous venez faire.
 - Une PR qui change un écran ou une règle corrige le guide concerné **dans la même PR**.
 - `npm run docs:check` vérifie les liens et la version annoncée par le README (lancé par la CI).
 - `npm run docs:captures` régénère les captures d'écran à partir des données de démonstration
-  (application démarrée en local, voir [Architecture § Captures](architecture.md#captures-décran)).
+  (application démarrée en local, voir [Architecture § Captures](architecture.md#captures-décran)) ;
+  `npm run docs:video` régénère la vidéo de présentation du README de la même manière.
