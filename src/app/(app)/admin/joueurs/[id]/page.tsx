@@ -99,55 +99,6 @@ export default async function JoueurPage({ params, searchParams }: { params: Pro
         <div className="stack">
           <div className="cases">
             <div className="case">
-              <h2 className="case-title">Accès</h2>
-              <ResetPassword userId={user.id} pseudo={user.pseudo} />
-              <form action={setStatusAction} className="mt-4">
-                <input type="hidden" name="userId" value={user.id} />
-                {user.status === "ACTIVE" ? (
-                  <>
-                    <input type="hidden" name="status" value="DISABLED" />
-                    <ConfirmButton className="btn btn-danger" message={`Désactiver ${user.pseudo} ? Ses sessions seront coupées immédiatement.`}>
-                      <Icon name="lock" />
-                      Désactiver le compte
-                    </ConfirmButton>
-                  </>
-                ) : (
-                  <>
-                    <input type="hidden" name="status" value="ACTIVE" />
-                    <button className="btn btn-secondary" type="submit">
-                      Réactiver le compte
-                    </button>
-                  </>
-                )}
-              </form>
-              <a className="btn btn-ghost mt-4" href={`/api/mes-donnees?joueur=${encodeURIComponent(user.id)}`} download>
-                <Icon name="download" />
-                Télécharger ses données (RGPD)
-              </a>
-            </div>
-          </div>
-          <div className="cases">
-            <div className="case">
-              <h2 className="case-title">Historique du classement</h2>
-              <ul className="list">
-                {user.rankingChanges.map((c) => (
-                  <li key={c.id}>
-                    <div className="item" style={{ minHeight: 0 }}>
-                      <div className="item-main">
-                        <div className="item-title">
-                          {c.from ? `${c.from} → ` : ""}
-                          {c.to}
-                        </div>
-                      </div>
-                      <span className="small subtle">{formatDateTime(c.effectiveAt)}</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className="cases">
-            <div className="case">
               <h2 className="case-title">Saisons</h2>
               {user.enrollments.length === 0 ? <p className="small muted mb-0">Engagé dans aucune saison.</p> : null}
               <ul className="list">
@@ -213,6 +164,65 @@ export default async function JoueurPage({ params, searchParams }: { params: Pro
                 })}
               </ul>
               <p className="hint mb-0">Objectif : matchs validés de la saison, hors forfaits (1 à 200, vide = aucun). Aucun effet sur les points.</p>
+            </div>
+          </div>
+          <div className="cases">
+            <div className="case">
+              <h2 className="case-title">Accès</h2>
+              <ResetPassword userId={user.id} pseudo={user.pseudo} />
+              <a className="btn btn-secondary mt-4" href={`/api/mes-donnees?joueur=${encodeURIComponent(user.id)}`} download>
+                <Icon name="download" />
+                Télécharger ses données (RGPD)
+              </a>
+            </div>
+          </div>
+          <div className="cases">
+            <div className="case">
+              <h2 className="case-title">Historique du classement</h2>
+              <ul className="list">
+                {user.rankingChanges.map((c) => (
+                  <li key={c.id}>
+                    <div className="item" style={{ minHeight: 0 }}>
+                      <div className="item-main">
+                        <div className="item-title">
+                          {c.from ? `${c.from} → ` : ""}
+                          {c.to}
+                        </div>
+                      </div>
+                      <span className="small subtle">{formatDateTime(c.effectiveAt)}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div className="cases">
+            <div className={`case${user.status === "ACTIVE" ? " case-danger" : ""}`}>
+              <h2 className="case-title">{user.status === "ACTIVE" ? "Désactivation" : "Compte désactivé"}</h2>
+              <p className="small muted">
+                {user.status === "ACTIVE"
+                  ? "Le joueur ne pourra plus se connecter et ses sessions seront coupées. Son historique est conservé."
+                  : "Le joueur ne peut plus se connecter. Son historique est conservé."}
+              </p>
+              <form action={setStatusAction} >
+                <input type="hidden" name="userId" value={user.id} />
+                {user.status === "ACTIVE" ? (
+                  <>
+                    <input type="hidden" name="status" value="DISABLED" />
+                    <ConfirmButton className="btn btn-danger" message={`Désactiver ${user.pseudo} ? Ses sessions seront coupées immédiatement.`}>
+                      <Icon name="lock" />
+                      Désactiver le compte
+                    </ConfirmButton>
+                  </>
+                ) : (
+                  <>
+                    <input type="hidden" name="status" value="ACTIVE" />
+                    <button className="btn btn-secondary" type="submit">
+                      Réactiver le compte
+                    </button>
+                  </>
+                )}
+              </form>
             </div>
           </div>
         </div>

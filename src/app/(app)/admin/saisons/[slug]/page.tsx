@@ -46,52 +46,93 @@ export default async function SaisonPage({ params, searchParams }: { params: Pro
       <Flash ok={sp.ok} error={sp.erreur} />
       <div className="row mb-4">
         <SeasonStatusBadge status={season.status} />
-        <span className="small muted">
-          barème {published ? `v${published.version} publié` : "non publié"}
-          {draft ? ` · brouillon v${draft.version}` : ""}
-        </span>
       </div>
 
-      <div className="cases cases-4 stats">
-        <div className="case">
-          <span className="stat-label">Engagés</span>
-          <span className="stat-value">{enrolled}</span>
+      {/* Spec 011 : chiffres en bande, accès en lignes, exports regroupés. */}
+      <dl className="strip strip-card" aria-label="Chiffres de la saison">
+        <div>
+          <dt>Engagés</dt>
+          <dd>{enrolled}</dd>
         </div>
-        <div className="case">
-          <span className="stat-label">Validés</span>
-          <span className="stat-value">{count("VALIDATED")}</span>
+        <div>
+          <dt>Validés</dt>
+          <dd>{count("VALIDATED")}</dd>
         </div>
-        <div className="case">
-          <span className="stat-label">En attente</span>
-          <span className="stat-value" style={{ color: "var(--warning)" }}>{pending}</span>
+        <div>
+          <dt>En attente</dt>
+          <dd style={pending > 0 ? { color: "var(--warning)" } : undefined}>{pending}</dd>
         </div>
-        <div className="case">
-          <span className="stat-label">Refusés / annulés</span>
-          <span className="stat-value">{count("REFUSED") + count("CANCELLED")}</span>
+        <div>
+          <dt>Refusés, annulés</dt>
+          <dd>{count("REFUSED") + count("CANCELLED")}</dd>
         </div>
-      </div>
+      </dl>
 
-      <div className="row mt-6">
-        <Link className="btn btn-secondary" href={`/admin/saisons/${season.slug}/bareme`}>
-          <Icon name="sliders" />
-          Barème
-        </Link>
-        <Link className="btn btn-secondary" href={`/admin/saisons/${season.slug}/engagements`}>
-          <Icon name="users" />
-          Engagements
-        </Link>
-        <Link className="btn btn-secondary" href={`/classement?saison=${season.slug}`}>
-          <Icon name="trophy" />
-          Classement
-        </Link>
-        <a className="btn btn-ghost" href={`/api/export/classement?saison=${season.slug}`}>
-          <Icon name="download" />
-          Classement CSV
-        </a>
-        <a className="btn btn-ghost" href={`/api/export/matchs?saison=${season.slug}`}>
-          <Icon name="download" />
-          Matchs CSV
-        </a>
+      <div className="layout-2">
+        <section className="cases" aria-labelledby="t-gerer">
+          <div className="case">
+            <h2 className="case-title" id="t-gerer">
+              Gérer
+            </h2>
+            <ul className="settings">
+              <li>
+                <Link className="setting-link" href={`/admin/saisons/${season.slug}/bareme`}>
+                  <Icon name="sliders" />
+                  <span>
+                    Barème
+                    <span className="small subtle" style={{ display: "block", fontWeight: 400 }}>
+                      {published ? `v${published.version} publié` : "non publié"}
+                      {draft ? ` · brouillon v${draft.version}` : ""}
+                    </span>
+                  </span>
+                  <span className="chev">
+                    <Icon name="chev-r" />
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link className="setting-link" href={`/admin/saisons/${season.slug}/engagements`}>
+                  <Icon name="users" />
+                  <span>
+                    Engagements
+                    <span className="small subtle" style={{ display: "block", fontWeight: 400 }}>
+                      {enrolled} engagé{enrolled > 1 ? "s" : ""}
+                    </span>
+                  </span>
+                  <span className="chev">
+                    <Icon name="chev-r" />
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link className="setting-link" href={`/classement?saison=${season.slug}`}>
+                  <Icon name="trophy" />
+                  Classement
+                  <span className="chev">
+                    <Icon name="chev-r" />
+                  </span>
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </section>
+        <section className="cases" aria-labelledby="t-export">
+          <div className="case">
+            <h2 className="case-title" id="t-export">
+              Exporter (CSV)
+            </h2>
+            <div className="btn-pair" style={{ marginBottom: 0 }}>
+              <a className="btn btn-secondary" href={`/api/export/classement?saison=${season.slug}`}>
+                <Icon name="download" />
+                Classement
+              </a>
+              <a className="btn btn-secondary" href={`/api/export/matchs?saison=${season.slug}`}>
+                <Icon name="download" />
+                Matchs
+              </a>
+            </div>
+          </div>
+        </section>
       </div>
 
       <div className="layout-2 mt-8">

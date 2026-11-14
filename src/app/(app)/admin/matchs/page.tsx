@@ -118,22 +118,37 @@ export default async function MatchsAdminPage({ searchParams }: { searchParams: 
           </form>
         )
       ) : (
-        <ul className="list">
+        <ul className="mcards mcards-2">
           {others.length === 0 ? <p className="muted">Aucun match.</p> : null}
           {others.map((m) => (
-            <li key={m.id}>
-              <div className="item">
-                <div className="item-main">
-                  <div className="item-title">
-                    {label(m)} <MatchStatusBadge status={m.status} />
-                  </div>
-                  <div className="item-meta">
-                    {formatDate(m.playedOn)} · {m.score ?? "forfait"}
-                    {m.tournament ? ` · ${m.tournament}` : ""} · {m.entries.map((e) => `${e.userId === m.playerAId ? m.playerA.pseudo : m.playerB?.pseudo} +${e.points}`).join(" · ")}
-                    {m.refusalReason ? ` · motif : ${m.refusalReason}` : ""}
-                  </div>
-                </div>
-                {m.status === "VALIDATED" ? (
+            <li key={m.id} className="mcard">
+              <div className="mcard-head">
+                <span className="item-meta grow">
+                  <span className="sr-only">{label(m)} · </span>
+                  {formatDate(m.playedOn)}
+                  {m.tournament ? ` · ${m.tournament}` : ""}
+                </span>
+                {m.status === "VALIDATED" ? null : <MatchStatusBadge status={m.status} />}
+              </div>
+              <ScoreBoard
+                a={
+                  <>
+                    {m.playerA.pseudo} <span className="subtle small">{m.rankingA}</span>
+                  </>
+                }
+                b={
+                  <>
+                    {m.playerB?.pseudo ?? `Ext. · ${m.externalLabel}`} <span className="subtle small">{m.rankingB ?? m.externalRanking}</span>
+                  </>
+                }
+                winner={m.winner === "A" ? "A" : "B"}
+                score={m.score}
+                walkover={m.kind === "WALKOVER" || !m.score}
+              />
+              {m.refusalReason ? <p className="small muted mb-0">Motif : {m.refusalReason}</p> : null}
+              {m.status === "VALIDATED" ? (
+                <div className="row-between">
+                  <span className="small strong">{m.entries.map((e) => `${e.userId === m.playerAId ? m.playerA.pseudo : m.playerB?.pseudo} +${e.points}`).join(" · ")}</span>
                   <form action={cancelMatchAction}>
                     <input type="hidden" name="matchId" value={m.id} />
                     <input type="hidden" name="back" value="/admin/matchs?vue=valides" />
@@ -142,8 +157,8 @@ export default async function MatchsAdminPage({ searchParams }: { searchParams: 
                       Annuler
                     </ConfirmButton>
                   </form>
-                ) : null}
-              </div>
+                </div>
+              ) : null}
             </li>
           ))}
         </ul>

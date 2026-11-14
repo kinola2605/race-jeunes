@@ -4,6 +4,24 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
+## [1.10.0] — 2026-11-14
+
+### Ergonomie des écrans d'administration (spec 011)
+Même travail que la 1.9.0, appliqué aux écrans admin restants. Aucune fonctionnalité, route ni donnée nouvelle.
+Aucune migration.
+- **Joueurs** : actions côte à côte, recherche validée depuis le champ, filtres « Statut » et « Étiquette »
+  en deux rangées.
+- **Fiche joueur** : « Saisons » (objectif de matchs) juste après le profil ; la désactivation du compte a sa
+  propre carte en bas de page.
+- **Saisons** : regroupement par état (en cours, brouillons, terminées), chiffres en bande, accès sur une ligne.
+- **Détail d'une saison** : chiffres en bande, accès « Gérer » en lignes, exports CSV regroupés.
+- **Engagements** : la barre « Engager la sélection » n'apparaît que si un joueur est coché ; lignes des engagés
+  allégées.
+- **Barème** : les quatre onglets de l'éditeur sont visibles sur mobile.
+- **Journal** : regroupement par jour sur mobile, détails affichés en français (l'export CSV est inchangé).
+- **Matchs validés et refusés** : cartes « tableau de score », comme la file de validation.
+- Revue avec captures avant/après : `design/revue-ux/revue-ux-admin-2026-11.html`.
+
 ## [1.9.1] — 2026-11-14
 
 ### Correctif
@@ -197,6 +215,7 @@ Première version de la Race jeunes.
 - Logo et bannière du projet.
 
 [Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.8.0...HEAD
+[1.10.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.10.0
 [1.9.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.9.1
 [1.9.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.9.0
 [1.8.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.8.0
