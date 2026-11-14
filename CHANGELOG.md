@@ -4,6 +4,12 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
+## [1.9.1] — 2026-11-14
+
+### Correctif
+- Application installée sur iPhone : le haut de l'écran (logo, accès au compte) n'est plus masqué par la barre
+  d'état du téléphone. Le contenu commence désormais sous la zone de l'heure et de l'encoche.
+
 ## [1.9.0] — 2026-11-14
 
 ### Ergonomie (spec 010, revue UX)
@@ -191,6 +197,7 @@ Première version de la Race jeunes.
 - Logo et bannière du projet.
 
 [Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.8.0...HEAD
+[1.9.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.9.1
 [1.9.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.9.0
 [1.8.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.8.0
 [1.7.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.7.0
