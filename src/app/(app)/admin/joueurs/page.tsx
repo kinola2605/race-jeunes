@@ -28,7 +28,8 @@ export default async function JoueursPage({ searchParams }: { searchParams: Sear
         title="Joueurs"
         lead={`${counts.total} comptes · ${counts.active} actifs · ${counts.disabled} désactivés. Seul l'admin peut créer un compte.`}
       />
-      <div className="row mb-4">
+      {/* Spec 011 : la liste commence plus haut (actions côte à côte, recherche sur une ligne, filtres libellés). */}
+      <div className="btn-pair">
         <Link className="btn btn-primary" href="/admin/joueurs/nouveau">
           <Icon name="plus" />
           Nouveau joueur
@@ -45,34 +46,43 @@ export default async function JoueursPage({ searchParams }: { searchParams: Sear
           </label>
           <Icon name="search" />
           <input className="input" id="q" name="q" type="search" placeholder="Rechercher un pseudo" defaultValue={sp.q} />
+          <button className="icon-btn" type="submit" aria-label="Rechercher">
+            <Icon name="chev-r" />
+          </button>
         </div>
         <input type="hidden" name="filtre" value={filter} />
         {sp.tag ? <input type="hidden" name="tag" value={sp.tag} /> : null}
-        <button className="btn btn-secondary" type="submit">
-          Rechercher
-        </button>
       </form>
-      <div className="chips mb-4" role="group" aria-label="Filtrer">
-        <Link className={chip(filter === "active")} href={href({ filtre: "active" })} aria-current={filter === "active" ? "true" : undefined}>
-          Actifs ({counts.active})
-        </Link>
-        <Link className={chip(filter === "temporary")} href={href({ filtre: "temporary" })} aria-current={filter === "temporary" ? "true" : undefined}>
-          <Icon name="key" />
-          Mdp temporaire ({counts.temporary})
-        </Link>
-        <Link className={chip(filter === "disabled")} href={href({ filtre: "disabled" })} aria-current={filter === "disabled" ? "true" : undefined}>
-          <Icon name="lock" />
-          Désactivés ({counts.disabled})
-        </Link>
-        <Link className={chip(filter === "all")} href={href({ filtre: "all" })} aria-current={filter === "all" ? "true" : undefined}>
-          Tous
-        </Link>
-        {tags.map((t) => (
-          <Link key={t.id} className={chip(sp.tag === t.name)} href={href({ tag: sp.tag === t.name ? undefined : t.name })} aria-current={sp.tag === t.name ? "true" : undefined}>
-            <Icon name="tag" />
-            {t.name}
+      <div className="mb-4">
+        <div className="filter-row" role="group" aria-label="Filtrer par statut">
+          <span className="filter-label" aria-hidden="true">
+            Statut
+          </span>
+          <Link className={chip(filter === "active")} href={href({ filtre: "active" })} aria-current={filter === "active" ? "true" : undefined}>
+            Actifs ({counts.active})
           </Link>
-        ))}
+          <Link className={chip(filter === "temporary")} href={href({ filtre: "temporary" })} aria-current={filter === "temporary" ? "true" : undefined}>
+            Mdp temporaire ({counts.temporary})
+          </Link>
+          <Link className={chip(filter === "disabled")} href={href({ filtre: "disabled" })} aria-current={filter === "disabled" ? "true" : undefined}>
+            Désactivés ({counts.disabled})
+          </Link>
+          <Link className={chip(filter === "all")} href={href({ filtre: "all" })} aria-current={filter === "all" ? "true" : undefined}>
+            Tous
+          </Link>
+        </div>
+        {tags.length > 0 ? (
+          <div className="filter-row" role="group" aria-label="Filtrer par étiquette">
+            <span className="filter-label" aria-hidden="true">
+              Étiquette
+            </span>
+            {tags.map((t) => (
+              <Link key={t.id} className={chip(sp.tag === t.name)} href={href({ tag: sp.tag === t.name ? undefined : t.name })} aria-current={sp.tag === t.name ? "true" : undefined}>
+                {t.name}
+              </Link>
+            ))}
+          </div>
+        ) : null}
       </div>
 
       {players.length === 0 ? <p className="muted">Aucun compte ne correspond.</p> : null}
@@ -97,7 +107,7 @@ export default async function JoueursPage({ searchParams }: { searchParams: Sear
                   ) : null}
                 </div>
                 <div className="item-meta">
-                  {p.ranking} · {p.tags.map((t) => t.tag.name).join(", ") || "—"} · {p._count.enrollments} saison(s)
+                  {p.ranking} · {p.tags.map((t) => t.tag.name).join(", ") || "—"} · {p._count.enrollments} saison{p._count.enrollments > 1 ? "s" : ""}
                 </div>
               </div>
               <span className="chev">

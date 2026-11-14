@@ -52,19 +52,20 @@ export default async function EngagementsPage({ params, searchParams }: { params
           <h2 className="section-title" id="t-free">
             À engager ({free.length})
           </h2>
-          <div className="row mb-4">
-            <span className="small muted">Sélection rapide :</span>
+          <div className="filter-row mb-4" role="group" aria-label="Sélection rapide par étiquette">
+            <span className="filter-label" aria-hidden="true">
+              Cocher
+            </span>
             <Link className={`chip${!sp.tag ? " is-on" : ""}`} href={`/admin/saisons/${season.slug}/engagements`}>
-              Aucune
+              Aucun
             </Link>
             {tags.map((t) => (
               <Link key={t} className={`chip${sp.tag === t ? " is-on" : ""}`} href={`/admin/saisons/${season.slug}/engagements?tag=${encodeURIComponent(t)}`}>
-                <Icon name="tag" />
                 {t}
               </Link>
             ))}
           </div>
-          <form action={enrollAction}>
+          <form action={enrollAction} className="select-form">
             <input type="hidden" name="seasonId" value={season.id} />
             <ul className="list" aria-label="Joueurs non engagés">
               {free.map((b) => (
@@ -81,7 +82,11 @@ export default async function EngagementsPage({ params, searchParams }: { params
                 </li>
               ))}
             </ul>
-            <div className="sticky-cta">
+            {/* Spec 011 : la barre n'apparaît que si au moins un joueur est coché, avec le nombre coché. */}
+            <div className="select-bar">
+              <span>
+                <span className="select-count" aria-hidden="true" /> sélectionné(s)
+              </span>
               <SubmitButton>
                 <Icon name="plus" />
                 Engager la sélection
@@ -98,26 +103,23 @@ export default async function EngagementsPage({ params, searchParams }: { params
         <ul className="list">
           {enrolled.map((b) => (
             <li key={b.id}>
-              <div className="item" style={{ flexWrap: "wrap" }}>
-                <span className="res res-win">
-                  <Icon name="check" />
-                  <span className="sr-only">Engagé</span>
-                </span>
+              <div className="enr-row">
                 <div className="item-main">
                   <div className="item-title">{b.pseudo}</div>
                   <div className="item-meta">
-                    départ {b.enrollment!.startingRanking} · actuel {b.ranking} · {b.tags.join(", ") || "sans étiquette"}
+                    {b.enrollment!.startingRanking === b.ranking ? `départ ${b.ranking}` : `départ ${b.enrollment!.startingRanking} · actuel ${b.ranking}`}
+                    {b.tags.length ? ` · ${b.tags.join(", ")}` : ""}
                   </div>
                 </div>
                 {writable ? (
-                  <div className="row" style={{ gap: 6 }}>
-                    <form action={startingRankingAction} className="row" style={{ gap: 6 }}>
+                  <div className="enr-controls">
+                    <form action={startingRankingAction} className="enr-controls">
                       <input type="hidden" name="seasonId" value={season.id} />
                       <input type="hidden" name="userId" value={b.id} />
                       <label className="sr-only" htmlFor={`r-${b.id}`}>
                         Classement de départ de {b.pseudo}
                       </label>
-                      <select className="select" id={`r-${b.id}`} name="ranking" defaultValue={b.enrollment!.startingRanking} style={{ minHeight: 40, width: "auto" }}>
+                      <select className="select" id={`r-${b.id}`} name="ranking" defaultValue={b.enrollment!.startingRanking}>
                         {LADDER.map((r) => (
                           <option key={r}>{r}</option>
                         ))}

@@ -547,8 +547,8 @@ details.disclose[open] .chev .ic { transform: rotate(180deg); }
 .select-bar { display: none; position: sticky; bottom: calc(60px + env(safe-area-inset-bottom) + var(--s-2)); z-index: 30; align-items: center; justify-content: space-between; gap: var(--s-3); margin-top: var(--s-3); padding: var(--s-3) var(--s-4); border-radius: var(--r-card); background: var(--surface-sunken); border: var(--hairline) solid var(--line-soft); box-shadow: 0 8px 24px rgba(0, 0, 0, .35); }
 @media (min-width: 1024px) { .select-bar { bottom: var(--s-4); } }
 .select-form { counter-reset: sel; }
-.select-form input[name="matchId"]:checked { counter-increment: sel; }
-.select-form:has(input[name="matchId"]:checked) .select-bar { display: flex; }
+.select-form input[type="checkbox"]:checked { counter-increment: sel; }
+.select-form:has(input[type="checkbox"]:checked) .select-bar { display: flex; }
 .select-count::before { content: counter(sel); font-weight: 700; }
 .kpi-main { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); flex-wrap: wrap; padding: var(--s-5) var(--s-4); background: var(--surface-raised); border-radius: var(--r-card); }
 .kpi-main.is-hot { box-shadow: inset 0 0 0 var(--hairline) var(--warning); }
@@ -618,3 +618,34 @@ details.fold[open] > summary > .ic { transform: rotate(180deg); }
 /* Application installée sur iPhone (barre d'état translucide, viewport-fit=cover) : le contenu commence sous l'encoche. */
 body { padding-top: env(safe-area-inset-top, 0px); }
 .app { min-height: calc(100vh - env(safe-area-inset-top, 0px)); }
+
+/* =====================================================================
+   Spec 011 — ergonomie des écrans d'administration
+   ===================================================================== */
+.head-row { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s-3); }
+.head-row > .page-head { min-width: 0; }
+.head-row > .btn { flex: none; }
+.btn-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); margin-bottom: var(--s-4); }
+.btn-pair .btn { padding: 0 var(--s-2); font-size: var(--fs-sm); }
+@media (min-width: 768px) { .btn-pair { display: flex; gap: var(--s-3); } .btn-pair .btn { padding: 0 var(--s-5); font-size: var(--fs-base); } }
+.btn-trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-2); }
+.btn-trio .btn { padding: 0 var(--s-1); border-color: var(--line-soft); color: var(--text); font-size: var(--fs-sm); font-weight: 600; min-height: var(--touch-min); }
+.search .icon-btn { position: absolute; right: 2px; top: 2px; }
+.search .icon-btn .ic { position: static; color: var(--text); }
+.search:has(.icon-btn) .input { padding-right: 52px; }
+.case .strip { margin: var(--s-3) 0; padding: var(--s-3) 0; border-top: var(--hairline) solid var(--line-soft); border-bottom: var(--hairline) solid var(--line-soft); }
+.case .strip dt { color: var(--text-subtle); }
+.case .strip dd { font-size: var(--fs-lg); }
+.case-danger { box-shadow: inset 0 0 0 var(--hairline) var(--error); }
+.group-title { margin-top: var(--s-8); }
+.group-title:first-of-type { margin-top: var(--s-4); }
+.enr-row { display: flex; align-items: center; gap: var(--s-2) var(--s-3); flex-wrap: wrap; padding: var(--s-3) 0; }
+.enr-row .item-main { min-width: 140px; }
+.enr-controls { display: flex; align-items: center; gap: var(--s-2); margin-left: auto; }
+.enr-controls .select { min-height: var(--touch-min); width: auto; }
+.day-title { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding: var(--s-2) 0; margin-top: var(--s-6); }
+.log-time { flex: none; width: 48px; font-variant-numeric: tabular-nums; color: var(--text-subtle); font-size: var(--fs-sm); padding-top: 2px; }
+.seg-grid { display: grid; grid-template-columns: 1fr 1fr; width: 100%; border-radius: var(--r-card); overflow: visible; }
+.seg-grid > button { justify-content: center; border-radius: calc(var(--r-card) - 4px); white-space: normal; text-align: center; line-height: 1.15; min-height: var(--touch-min); }
+@media (min-width: 768px) { .seg-grid { display: inline-flex; width: auto; border-radius: var(--r-pill); } .seg-grid > button { border-radius: var(--r-pill); white-space: nowrap; } }
+@media (max-width: 1023px) { .layout-2 > .cases + .stack, .layout-2 > .cases + .cases { margin-top: var(--s-3); } }

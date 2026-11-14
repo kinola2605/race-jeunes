@@ -78,7 +78,7 @@ export function RuleEditor({ seasonId, writable, initial, published, draft, stal
   return (
     <>
       <div className="toolbar">
-        <div className="seg" role="tablist" aria-label="Sections de l'éditeur">
+        <div className="seg seg-grid" role="tablist" aria-label="Sections de l&apos;éditeur">
           {tabs.map(([k, label]) => (
             <button key={k} type="button" role="tab" aria-selected={tab === k} aria-controls={`p-${k}`} onClick={() => setTab(k)}>
               {label}
