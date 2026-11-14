@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/kinola2605/race-jeunes/actions/workflows/ci.yml"><img src="https://github.com/kinola2605/race-jeunes/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-1.12.1-E28C57" alt="Version 1.12.1"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-1.12.2-E28C57" alt="Version 1.12.2"></a>
   <img src="https://img.shields.io/badge/couverture_moteur-100%25-6FDC9C" alt="Couverture du moteur de points : 100 %">
   <img src="https://img.shields.io/badge/donn%C3%A9es_personnelles-aucune-6FDC9C" alt="Aucune donnée personnelle">
   <img src="https://img.shields.io/badge/marque-blanche-EBB08C" alt="Marque blanche">
@@ -87,7 +87,7 @@ barèmes différents, 20 pseudos, environ 120 matchs).
 | Admin du club | [Guide de l'admin](docs/guide-admin.md) · [Le barème expliqué](docs/bareme.md) |
 | Joueur ou parent | [Guide du joueur](docs/guide-joueur.md) |
 | Hébergeur | [Vercel + Neon (gratuit)](docs/DEPLOIEMENT.md) · [Docker](docs/installation-docker.md) · [Configuration](docs/configuration.md) |
-| Développeur | [Architecture](docs/architecture.md) · [Données personnelles et sécurité](docs/donnees-et-securite.md) · [Contribuer](CONTRIBUTING.md) |
+| Développeur | [Architecture](docs/architecture.md) · [Données personnelles et sécurité](docs/donnees-et-securite.md) · [Contribuer](CONTRIBUTING.md) · [Signaler une faille](SECURITY.md) |
 
 Sommaire complet : [docs/README.md](docs/README.md).
 

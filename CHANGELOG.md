@@ -4,6 +4,16 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
+## [1.12.2] — 2026-11-14
+
+### Préparation du dépôt public
+Aucune fonctionnalité nouvelle. Aucune migration.
+- Documentation et exemples **anonymisés** : plus aucune mention d'un club ou d'un déploiement réel
+  (`docs/DEPLOIEMENT.md`, spec 002). Les libellés de tournois de la démo, des maquettes et du champ « Libellé
+  de l'adversaire » utilisent des noms fictifs.
+- Captures d'écran régénérées à partir des données de démonstration.
+- `SECURITY.md` : signalement privé des vulnérabilités.
+
 ## [1.12.1] — 2026-11-14
 
 ### Vidéo de présentation (spec 015)
@@ -264,7 +274,8 @@ Première version de la Race jeunes.
 - CI GitHub Actions : lint, typage, tests unitaires, E2E Playwright, démarrage Docker.
 - Logo et bannière du projet.
 
-[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.12.1...HEAD
+[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.12.2...HEAD
+[1.12.2]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.12.2
 [1.12.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.12.1
 [1.12.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.12.0
 [1.11.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.11.1
