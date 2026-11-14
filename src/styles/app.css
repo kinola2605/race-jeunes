@@ -614,3 +614,7 @@ details.fold[open] > summary > .ic { transform: rotate(180deg); }
 
 .hero .stat-big { font-size: 52px; }
 .hero .stat-big small { font-size: var(--fs-lg); font-weight: 600; }
+
+/* Application installée sur iPhone (barre d'état translucide, viewport-fit=cover) : le contenu commence sous l'encoche. */
+body { padding-top: env(safe-area-inset-top, 0px); }
+.app { min-height: calc(100vh - env(safe-area-inset-top, 0px)); }
