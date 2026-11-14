@@ -4,6 +4,19 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
+## [1.11.1] — 2026-11-14
+
+### Documentation (spec 013)
+Aucun changement de l'application. Aucune migration.
+- **README** refait : présentation, captures d'écran, fonctionnalités à jour (il datait de la 1.2.1), essai en
+  5 minutes, sommaire par lecteur.
+- **Documentation dans `docs/`**, lue directement sur GitHub : guide de l'admin, guide du joueur, barème
+  expliqué avec exemples chiffrés, installation Docker, configuration (variables et commandes), architecture,
+  données personnelles et sécurité. Sommaire : `docs/README.md`. Le guide Vercel + Neon ne change pas.
+- `npm run docs:check` (lancé par la CI) : liens de la documentation et version annoncée par le README.
+- `npm run docs:captures` : captures d'écran régénérées à partir des données de démonstration.
+- `CONTRIBUTING.md` : la mise à jour de la documentation fait partie de chaque PR et de la release.
+
 ## [1.11.0] — 2026-11-14
 
 ### Profil mental calculé (spec 012)
@@ -229,7 +242,8 @@ Première version de la Race jeunes.
 - CI GitHub Actions : lint, typage, tests unitaires, E2E Playwright, démarrage Docker.
 - Logo et bannière du projet.
 
-[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.8.0...HEAD
+[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.11.1...HEAD
+[1.11.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.11.1
 [1.11.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.11.0
 [1.10.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.10.0
 [1.9.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.9.1
