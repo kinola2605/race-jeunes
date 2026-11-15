@@ -5,7 +5,7 @@ export const metadata = { title: "Hors connexion" };
 /** FR-160 — page servie par le service worker sans réseau. Aucune donnée. */
 export default function HorsLigne() {
   return (
-    <div className="app">
+    <div className="app app-public">
       <main id="main" className="main main-narrow">
         <EmptyState icon="offline" title="Hors connexion">
           <p>La Race nécessite le réseau pour afficher le classement et enregistrer les matchs. Réessayez dès que la connexion revient.</p>

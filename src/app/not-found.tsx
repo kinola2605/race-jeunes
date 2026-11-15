@@ -3,7 +3,7 @@ import { EmptyState } from "@/components/ui";
 
 export default function NotFound() {
   return (
-    <div className="app">
+    <div className="app app-public">
       <main id="main" className="main main-narrow">
         <EmptyState icon="alert" title="Page introuvable">
           <p>Le lien est peut-être ancien.</p>

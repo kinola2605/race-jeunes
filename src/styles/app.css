@@ -659,3 +659,38 @@ body { padding-top: env(safe-area-inset-top, 0px); }
 .gauge > i { position: absolute; top: -4px; bottom: -4px; width: 2px; margin-left: -1px; background: var(--text); }
 .table th.mental-th { text-transform: none; letter-spacing: 0; font-size: inherit; font-weight: 500; color: inherit; white-space: normal; border-bottom-color: var(--line-soft); }
 .mental-group { white-space: nowrap; }
+
+/* ---------- pages sans navigation (spec 017) ---------- */
+/* La grille « barre latérale + contenu » ne vaut que pour les pages qui ont une barre latérale. */
+@media (min-width: 1024px) {
+  .app-public { display: flex; }
+  .app-public .main { padding: var(--s-8) var(--s-4) var(--s-12); }
+}
+.auth { min-height: 100vh; min-height: 100dvh; display: grid; align-content: safe center; justify-items: center; padding: var(--s-6) var(--s-4); }
+.auth-inner { width: 100%; max-width: 440px; }
+.auth-card { width: 100%; }
+.auth-head { text-align: center; margin-bottom: var(--s-6); }
+.auth-head img { margin: 0 auto var(--s-4); object-fit: contain; }
+.auth-head .eyebrow { color: var(--accent-2); font-weight: 600; overflow-wrap: anywhere; }
+.auth-head .lead { margin-top: var(--s-2); }
+.auth-card .field:last-of-type { margin-bottom: var(--s-6); }
+.field-error { display: flex; align-items: flex-start; gap: 6px; margin: 0; font-size: var(--fs-sm); font-weight: 500; color: var(--error); }
+.field-error .ic, .field-warn .ic { width: 18px; height: 18px; margin-top: 1px; }
+.field-warn { display: flex; align-items: flex-start; gap: 6px; margin: 0; font-size: var(--fs-sm); color: var(--warning); }
+.auth-help { margin-top: var(--s-6); border-top: var(--hairline) solid var(--line-soft); }
+.auth-help details { border-bottom: var(--hairline) solid var(--line-soft); }
+.auth-help summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); min-height: var(--touch-min); cursor: pointer; font-size: var(--fs-sm); font-weight: 500; }
+.auth-help summary::-webkit-details-marker { display: none; }
+.auth-help summary .ic { color: var(--text-subtle); transition: transform var(--dur-fast); }
+.auth-help details[open] summary .ic { transform: rotate(180deg); }
+.auth-help details p { margin: 0; padding: 0 0 var(--s-3); font-size: var(--fs-sm); color: var(--text-muted); }
+.auth-note { display: flex; align-items: flex-start; justify-content: center; gap: var(--s-2); margin: var(--s-5) 0 0; font-size: var(--fs-xs); color: var(--text-subtle); text-align: left; }
+.auth-note .ic { width: 16px; height: 16px; margin-top: 1px; }
+@media (min-width: 600px) {
+  .auth-card { padding: var(--s-8); background: var(--surface-raised); border-radius: var(--r-card); }
+  [data-theme="light"] .auth-card { border: var(--hairline) solid var(--line-soft); }
+  .auth-card .input { background: var(--bg); }
+  [data-theme="light"] .auth-card .input { background: var(--surface-sunken); }
+  .auth-help details:last-child { border-bottom: 0; }
+  .auth-help details:last-child:not([open]) summary { margin-bottom: calc(-1 * var(--s-3)); }
+}

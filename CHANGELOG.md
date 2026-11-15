@@ -4,6 +4,21 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
+## [1.14.0] — 2026-11-15
+
+### Page de connexion revue (spec 017)
+Aucune migration.
+- **Centrage sur PC** : la connexion, l'installation, le changement de mot de passe et les pages « accès
+  refusé », « hors connexion » et « page introuvable » n'étaient pas centrées à partir de 1024 px (elles
+  héritaient de la colonne réservée à la barre latérale). Elles le sont désormais.
+- **Connexion au centre de la fenêtre**, dans une carte à partir de 600 px de large ; pleine largeur sur
+  téléphone. Phrase d'accroche sous le titre.
+- **Après une erreur, le pseudo reste saisi** et le curseur va dans le mot de passe.
+- **Champ vide signalé sous le champ**, sans requête : un oubli ne compte plus comme un échec de connexion.
+- **Avertissement « Verrouillage des majuscules activé »** pendant la saisie du mot de passe.
+- Aide **repliée** sous le bouton : « Mot de passe oublié ? », « Pas encore de compte ? ». La mention sur les
+  données personnelles reste visible.
+
 ## [1.13.0] — 2026-11-15
 
 ### Installation en un clic (spec 016)
@@ -295,7 +310,8 @@ Première version de la Race jeunes.
 - CI GitHub Actions : lint, typage, tests unitaires, E2E Playwright, démarrage Docker.
 - Logo et bannière du projet.
 
-[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.13.0...HEAD
+[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.14.0...HEAD
+[1.14.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.14.0
 [1.13.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.13.0
 [1.12.2]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.12.2
 [1.12.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.12.1

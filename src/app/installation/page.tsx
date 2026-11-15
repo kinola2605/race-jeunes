@@ -14,7 +14,7 @@ export default async function InstallationPage() {
   if (!(await needsInstallation())) notFound();
   const [brand, status] = [await getBrand(), installCodeStatus()];
   return (
-    <div className="app">
+    <div className="app app-public">
       <main id="main" className="main main-narrow">
         <div className="center" style={{ margin: "var(--s-6) 0 var(--s-6)" }}>
           <img className="logo-on-dark" src={brand.logoDark} alt="" width={96} height={96} style={{ margin: "0 auto", objectFit: "contain" }} />
