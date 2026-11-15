@@ -7,13 +7,15 @@ import { db } from "@/server/db";
 import { attempt, clientIp, str } from "./util";
 
 export type FormState = { error?: string; ok?: string } | undefined;
+/** Spec 017, FR-1704 : le pseudo saisi est renvoyé après un échec (jamais le mot de passe). */
+export type LoginState = { error: string; pseudo: string } | undefined;
 
 /** FR-001, FR-003, FR-004 */
-export async function loginAction(_prev: FormState, fd: FormData): Promise<FormState> {
+export async function loginAction(_prev: LoginState, fd: FormData): Promise<LoginState> {
   const pseudo = str(fd, "pseudo").slice(0, 40);
   const password = str(fd, "password").slice(0, 200);
   const result = await authenticate(pseudo, password, await clientIp());
-  if (!result.ok) return { error: result.error };
+  if (!result.ok) return { error: result.error, pseudo };
   await createSession(result.userId);
   const user = await db.user.findUniqueOrThrow({ where: { id: result.userId } });
   redirect(user.mustChangePassword ? "/mot-de-passe" : user.role === "ADMIN" ? "/admin" : "/accueil");

@@ -13,7 +13,7 @@ export default async function MotDePassePage() {
   const user = await requireUser({ allowTemporary: true });
   const forced = user.mustChangePassword;
   return (
-    <div className="app">
+    <div className="app app-public">
       <main id="main" className="main main-narrow">
         <PageHead
           eyebrow={forced ? `Première connexion · ${user.pseudo}` : `Mon compte · ${user.pseudo}`}
