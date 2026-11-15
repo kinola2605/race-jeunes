@@ -1,6 +1,6 @@
 # Spécification fonctionnelle — Installation en un clic
 
-**Branche** `feat/016-installation-un-clic` · **Créée** 2026-11-15 · **Statut** En développement · **Origine**
+**Branche** `feat/016-installation-un-clic` · **Créée** 2026-11-15 · **Statut** Déployée (v1.13.0, 2026-11-15) · **Origine**
 demande du mainteneur après la publication du dépôt
 
 > Ce document décrit le **quoi** et le **pourquoi**. La constitution reste la règle
