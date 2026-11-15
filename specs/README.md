@@ -27,6 +27,7 @@ sur l'ensemble des deux répertoires : la prochaine spec prend le numéro suivan
 | [013-documentation](livrees/013-documentation/spec.md) | 1.11.1 | README et documentation du projet (`docs/`) |
 | [014-fiche-joueur-onglets](livrees/014-fiche-joueur-onglets/spec.md) | 1.12.0 | Fiche joueur de l'admin en quatre onglets |
 | [015-video-presentation](livrees/015-video-presentation/spec.md) | 1.12.1 | Vidéo de présentation en tête du README |
+| [016-installation-un-clic](livrees/016-installation-un-clic/spec.md) | 1.13.0 | Installation en un clic par chaque club, mises à jour depuis GitHub |
 
 ## En cours
 

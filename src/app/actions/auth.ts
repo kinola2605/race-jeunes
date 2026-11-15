@@ -1,19 +1,12 @@
 "use server";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { authenticate, changeOwnPassword } from "@/server/services/accounts";
 import { createSession, destroyCurrentSession, requireUser, revokeSessions } from "@/server/auth/session";
 import { db } from "@/server/db";
-import { attempt, str } from "./util";
+import { attempt, clientIp, str } from "./util";
 
 export type FormState = { error?: string; ok?: string } | undefined;
-
-/** Origine réseau du client. Sur Vercel, `x-vercel-forwarded-for` est posé par la plateforme (non falsifiable). */
-async function clientIp(): Promise<string> {
-  const h = await headers();
-  const first = (v: string | null) => v?.split(",")[0]?.trim();
-  return first(h.get("x-vercel-forwarded-for")) || first(h.get("x-forwarded-for")) || h.get("x-real-ip") || "local";
-}
 
 /** FR-001, FR-003, FR-004 */
 export async function loginAction(_prev: FormState, fd: FormData): Promise<FormState> {

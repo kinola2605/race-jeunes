@@ -3,6 +3,7 @@ import type { AccountStatus, Prisma } from "@prisma/client";
 import { isRanking, type Ranking } from "@/scoring";
 import { burnPasswordCheck, checkNewPassword, generateTemporaryPassword, hashPassword, verifyPassword } from "@/server/auth/password";
 import { clearFailures, isLocked, recordFailure, throttleKey } from "@/server/auth/throttle";
+import { ensureSessionSecret } from "@/server/auth/stored-secret";
 import { SYSTEM_ACTOR, UserError, assertAdmin, audit, db, type Actor, type Tx } from "./common";
 import { parseCsv } from "./csv";
 
@@ -41,6 +42,7 @@ export const LOCKED_LOGIN_ERROR = "Trop de tentatives. Réessayez dans 15 minute
 /** FR-001, FR-003, FR-004 : message identique, verrouillage temporaire. */
 export async function authenticate(pseudoInput: string, password: string, ip: string): Promise<LoginResult> {
   const key = pseudoInput.trim().toLocaleLowerCase("fr");
+  await ensureSessionSecret();
   const keys = [throttleKey("pseudo", key), throttleKey("ip", ip)];
   if (await isLocked(keys)) return { ok: false, error: LOCKED_LOGIN_ERROR };
 

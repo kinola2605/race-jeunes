@@ -10,14 +10,15 @@ Choisissez votre entrée selon ce que vous venez faire.
 | [Guide du joueur](guide-joueur.md) | Joueurs et parents | Se connecter, déclarer un match, lire le classement et ses points |
 | [Le barème expliqué](bareme.md) | Admin, et tout joueur curieux | Comment un match devient des points, avec des exemples chiffrés |
 
-> Le dépôt GitHub est privé : les joueurs et les admins du club n'y ont pas accès. Pour leur transmettre un
-> guide, ouvrez-le sur GitHub puis imprimez la page (ou « Enregistrer au format PDF »).
+> Pour transmettre un guide aux joueurs ou à un autre admin, envoyez le lien de la page GitHub, ou ouvrez-la puis
+> imprimez-la (ou « Enregistrer au format PDF »).
 
 ## J'héberge l'application
 
 | Document | Contenu |
 |---|---|
-| [Mise en ligne gratuite : Vercel + Neon](DEPLOIEMENT.md) | Procédure complète, mises à jour, rollback, sauvegardes, limites des offres gratuites |
+| **[Installer pour votre club](installation-simple.md)** | **Bouton « Deploy », écran de premier démarrage, mises à jour en un clic. Sans compétence technique** |
+| [Installation avancée : Vercel + Neon](DEPLOIEMENT.md) | Rôle de base sans droits sur le schéma, migrations depuis un poste, rollback, sauvegardes, limites des offres gratuites |
 | [Installation avec Docker](installation-docker.md) | Démonstration en 5 minutes, production auto-hébergée, sauvegardes |
 | [Configuration](configuration.md) | Toutes les variables d'environnement, la marque blanche, les commandes |
 

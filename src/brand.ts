@@ -9,6 +9,7 @@ import { getAppearance } from "@/server/services/appearance";
  * - APP_NAME              nom de l'application (défaut « Race jeunes »)
  * - CLUB_NAME             nom complet du club, affiché sur la connexion et les fiches (défaut : aucun)
  * - CLUB_SHORT_NAME       sigle affiché sous le nom de l'app dans l'en-tête (défaut : aucun)
+ *   Le nom et le sigle saisis à l'installation ou dans « Apparence » (spec 016) priment sur ces deux variables.
  * - BRAND_LOGO            logo par défaut du thème sombre (ex. /logo/club-clair.svg ; défaut /icon.svg)
  * - BRAND_LOGO_LIGHT      logo par défaut du thème clair et de l'impression (défaut : BRAND_LOGO)
  *
@@ -35,13 +36,13 @@ const localPath = (v: string) => (v.startsWith("/") && !v.startsWith("//") ? v :
 export const DEFAULT_ICON: BrandIcon = { src: "/icon.svg", type: "image/svg+xml" };
 
 export async function getBrand(): Promise<Brand> {
-  const { logoVersion } = await getAppearance();
+  const { logoVersion, clubName, clubShortName } = await getAppearance();
   const envDark = localPath(clean(process.env.BRAND_LOGO)) || "/icon.svg";
   const uploaded = logoVersion !== null ? `/club-logo?v=${logoVersion}` : "";
   return {
     appName: clean(process.env.APP_NAME) || "Race jeunes",
-    clubName: clean(process.env.CLUB_NAME),
-    clubShortName: clean(process.env.CLUB_SHORT_NAME),
+    clubName: clubName ?? clean(process.env.CLUB_NAME),
+    clubShortName: clubShortName ?? clean(process.env.CLUB_SHORT_NAME),
     logoDark: uploaded || envDark,
     logoLight: uploaded || localPath(clean(process.env.BRAND_LOGO_LIGHT)) || envDark,
   };

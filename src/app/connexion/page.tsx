@@ -4,14 +4,16 @@ import { getSessionUser } from "@/server/auth/session";
 import { Icon } from "@/components/ui";
 import { LoginForm } from "./login-form";
 import { getBrand } from "@/brand";
+import { needsInstallation } from "@/server/services/installation";
 
 export const metadata: Metadata = { title: "Connexion" };
 export const dynamic = "force-dynamic";
 
-/** E01 — seule page publique. Aucun lien d'inscription (FR-002). */
+/** E01 — page publique. Aucun lien d'inscription (FR-002). Sans admin, renvoi vers l'installation (spec 016). */
 export default async function ConnexionPage() {
   const user = await getSessionUser();
   if (user) redirect(user.mustChangePassword ? "/mot-de-passe" : user.role === "ADMIN" ? "/admin" : "/accueil");
+  if (await needsInstallation()) redirect("/installation");
   const brand = await getBrand();
   return (
     <div className="app">

@@ -9,21 +9,28 @@ Toute la configuration passe par des **variables d'environnement**. Le modèle e
 
 | Variable | Rôle | Où |
 |---|---|---|
-| `DATABASE_URL` | Connexion de l'application. Sur Neon : URL **poolée** (hôte `-pooler`), rôle `race_app` sans droit de modifier le schéma | partout |
-| `DATABASE_URL_UNPOOLED` | Connexion directe, rôle propriétaire, **pour les migrations uniquement** | poste local, Docker. **Jamais dans Vercel** |
+| `DATABASE_URL` | Connexion de l'application. Sur Neon : URL **poolée** (hôte `-pooler`) ; en installation avancée, rôle `race_app` sans droit de modifier le schéma | partout |
+| `DATABASE_URL_UNPOOLED` | Connexion directe, rôle propriétaire, **pour les migrations uniquement**. Sur Vercel, sa présence déclenche les migrations automatiques au déploiement | poste local, Docker ; sur Vercel **uniquement** en [installation en un clic](installation-simple.md) (posée par l'intégration Neon) |
+| `SKIP_AUTO_MIGRATIONS` | `true` désactive les migrations automatiques au déploiement Vercel même si `DATABASE_URL_UNPOOLED` est présente | Vercel (facultatif) |
 
 ### Sessions
 
 | Variable | Rôle | Où |
 |---|---|---|
-| `SESSION_SECRET` | Clé HMAC des sessions et des compteurs anti-abus, 32 caractères minimum, différente par environnement. La changer déconnecte tout le monde | obligatoire en production |
+| `SESSION_SECRET` | Clé HMAC des sessions et des compteurs anti-abus, 32 caractères minimum, différente par environnement. La changer déconnecte tout le monde. **Facultative** : sans elle, l'application génère sa clé au premier besoin et la conserve en base (table `AppSecret`) | recommandée en installation avancée |
 | `COOKIE_SECURE` | `false` pour tester en HTTP en local. Par défaut le cookie est `Secure` dès que `NODE_ENV=production` | Docker, local |
 
-Générer un secret :
+Générer un secret (installation avancée) :
 
 ```bash
 node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"
 ```
+
+### Installation (spec 016)
+
+| Variable | Rôle | Où |
+|---|---|---|
+| `INSTALL_CODE` | Code choisi par le club (8 caractères minimum) et demandé par l'écran de premier démarrage `/installation`, tant qu'aucun admin n'existe. Inutile une fois l'installation faite | Vercel ([installation en un clic](installation-simple.md)) |
 
 ### Marque blanche
 
@@ -33,15 +40,16 @@ facultatives.
 | Variable | Rôle | Défaut |
 |---|---|---|
 | `APP_NAME` | Nom de l'application | `Race jeunes` |
-| `CLUB_NAME` | Nom complet du club (connexion, fiches imprimables, manifeste) | aucun |
-| `CLUB_SHORT_NAME` | Sigle affiché sous le nom de l'app dans l'en-tête | aucun |
+| `CLUB_NAME` | Nom complet du club (connexion, fiches imprimables, manifeste). Le nom saisi à l'installation ou dans **Apparence** prime | aucun |
+| `CLUB_SHORT_NAME` | Sigle affiché sous le nom de l'app dans l'en-tête. Même priorité que `CLUB_NAME` | aucun |
 | `BRAND_LOGO` | Logo pour le thème sombre, chemin servi par l'app (ex. `/logo/club-clair.svg`) | `/icon.svg` |
 | `BRAND_LOGO_LIGHT` | Logo pour le thème clair et l'impression | `BRAND_LOGO` |
 
 Les logos par fichier se déposent dans `public/logo/` : la politique de sécurité du contenu n'autorise aucune
 origine tierce.
 
-**Depuis l'interface** : la page admin **Apparence** permet de déposer le logo et de régler quatre couleurs.
+**Depuis l'interface** : la page admin **Apparence** permet de modifier le nom et le sigle du club, de déposer
+le logo et de régler quatre couleurs.
 Ces réglages sont stockés en base et s'appliquent sans redéploiement.
 
 Ordre de priorité du logo : logo déposé dans l'interface, puis `BRAND_LOGO` / `BRAND_LOGO_LIGHT`, puis logo du
