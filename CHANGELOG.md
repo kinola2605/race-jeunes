@@ -4,6 +4,27 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
+## [1.13.0] — 2026-11-15
+
+### Installation en un clic (spec 016)
+Pour qu'un club installe **sa propre** application sans compétence technique. Une installation = un club.
+- **Bouton « Deploy »** dans le README : Vercel crée le projet du club et lui associe une base **Neon** gratuite,
+  sans URL à recopier. Une seule valeur à choisir : le **code d'installation** (`INSTALL_CODE`).
+- **Écran de premier démarrage** `/installation` : tant qu'aucun admin n'existe, la connexion y renvoie. Il
+  demande le code, le nom et le sigle du club, puis crée l'admin et le connecte. Il disparaît ensuite (404).
+- **Migrations automatiques** au déploiement Vercel quand l'URL directe de la base est fournie
+  (`DATABASE_URL_UNPOOLED`, posée par l'intégration Neon). Sans elle, rien ne change : l'installation avancée
+  garde ses migrations manuelles.
+- **Clé de session automatique** : sans `SESSION_SECRET`, l'application génère sa clé et la conserve en base.
+  En Docker, les sessions survivent désormais aux redémarrages.
+- **Nom et sigle du club** modifiables dans **Apparence** ; ils priment sur `CLUB_NAME` / `CLUB_SHORT_NAME`.
+- **Mises à jour en un clic** pour les clubs : workflow GitHub « Mettre à jour Race jeunes » (onglet Actions),
+  qui installe la dernière version publiée. La CI du projet ne tourne plus dans les dépôts des clubs.
+- Guide [Installer pour votre club](docs/installation-simple.md) ; la procédure détaillée devient
+  « installation avancée ».
+- **Migration** `20261115100000_installation` (colonnes `ClubAppearance.clubName` et `clubShortName`, table
+  `AppSecret`), additive.
+
 ## [1.12.2] — 2026-11-14
 
 ### Préparation du dépôt public
@@ -274,7 +295,8 @@ Première version de la Race jeunes.
 - CI GitHub Actions : lint, typage, tests unitaires, E2E Playwright, démarrage Docker.
 - Logo et bannière du projet.
 
-[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.12.2...HEAD
+[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.13.0...HEAD
+[1.13.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.13.0
 [1.12.2]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.12.2
 [1.12.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.12.1
 [1.12.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.12.0

@@ -1,4 +1,5 @@
 import "server-only";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { UserError } from "@/server/services/common";
 
@@ -32,4 +33,11 @@ export async function attempt<T>(fn: () => Promise<T>): Promise<{ ok: true; data
 export function str(fd: FormData, key: string): string {
   const v = fd.get(key);
   return typeof v === "string" ? v : "";
+}
+
+/** Origine réseau du client. Sur Vercel, `x-vercel-forwarded-for` est posé par la plateforme (non falsifiable). */
+export async function clientIp(): Promise<string> {
+  const h = await headers();
+  const first = (v: string | null) => v?.split(",")[0]?.trim();
+  return first(h.get("x-vercel-forwarded-for")) || first(h.get("x-forwarded-for")) || h.get("x-real-ip") || "local";
 }

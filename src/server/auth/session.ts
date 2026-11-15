@@ -6,6 +6,7 @@ import { cache } from "react";
 import type { Role } from "@prisma/client";
 import { db } from "@/server/db";
 import { keyedDigest } from "@/server/auth/secret";
+import { ensureSessionSecret } from "@/server/auth/stored-secret";
 
 export const SESSION_COOKIE = "race_session";
 const SESSION_DAYS = 30;
@@ -31,6 +32,7 @@ function secureCookie(): boolean {
 }
 
 export async function createSession(userId: string): Promise<void> {
+  await ensureSessionSecret();
   const token = randomBytes(32).toString("base64url");
   const expiresAt = new Date(Date.now() + SESSION_DAYS * 24 * 3600 * 1000);
   await db.session.create({ data: { id: digest(token), userId, expiresAt } });
@@ -45,6 +47,7 @@ export async function createSession(userId: string): Promise<void> {
 }
 
 export async function destroyCurrentSession(): Promise<void> {
+  await ensureSessionSecret();
   const jar = await cookies();
   const token = jar.get(SESSION_COOKIE)?.value;
   if (token) await db.session.deleteMany({ where: { id: digest(token) } });
@@ -53,6 +56,7 @@ export async function destroyCurrentSession(): Promise<void> {
 
 /** Révoque toutes les sessions d'un utilisateur, sauf éventuellement la session courante. */
 export async function revokeSessions(userId: string, keepCurrent = false): Promise<void> {
+  await ensureSessionSecret();
   let keep: string | undefined;
   if (keepCurrent) {
     const token = (await cookies()).get(SESSION_COOKIE)?.value;
@@ -65,6 +69,7 @@ export async function revokeSessions(userId: string, keepCurrent = false): Promi
 export const getSessionUser = cache(async (): Promise<SessionUser | null> => {
   const token = (await cookies()).get(SESSION_COOKIE)?.value;
   if (!token) return null;
+  await ensureSessionSecret();
   const session = await db.session.findUnique({ where: { id: digest(token) }, include: { user: true } });
   if (!session) return null;
   if (session.expiresAt < new Date() || session.user.status !== "ACTIVE") {

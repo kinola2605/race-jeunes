@@ -277,16 +277,26 @@ model AuditLog {
 /// Identité visuelle du club, configurée par l'admin (specs 003 et 004). Ligne unique (id = "club").
 /// Une valeur nulle = valeur par défaut (variables d'environnement, puis design/tokens.json).
 model ClubAppearance {
-  id          String   @id @default("club")
+  id            String   @id @default("club")
   /// logo déposé (PNG, JPEG, WebP ou SVG, 512 Ko au plus), type contrôlé d'après le contenu
-  logo        Bytes?
-  logoType    String?
+  logo          Bytes?
+  logoType      String?
   /// incrémenté à chaque changement de logo (invalide les caches via ?v=)
-  logoVersion Int      @default(0)
+  logoVersion   Int      @default(0)
   /// couleurs #RRGGBB, contrôlées (contraste WCAG) avant enregistrement
-  accentDark  String?
-  actionDark  String?
-  accentLight String?
-  actionLight String?
-  updatedAt   DateTime @updatedAt
+  accentDark    String?
+  actionDark    String?
+  accentLight   String?
+  actionLight   String?
+  /// spec 016 : nom et sigle du club saisis à l'installation (priment sur CLUB_NAME / CLUB_SHORT_NAME)
+  clubName      String?
+  clubShortName String?
+  updatedAt     DateTime @updatedAt
+}
+
+/// spec 016 : secrets générés par l'application elle-même (clé de session quand SESSION_SECRET n'est pas fourni)
+model AppSecret {
+  id        String   @id
+  value     String
+  createdAt DateTime @default(now())
 }
