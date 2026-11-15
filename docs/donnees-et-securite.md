@@ -87,8 +87,9 @@ journal. Le club reste le responsable du traitement : c'est à lui d'informer le
 | CSRF | Vérification d'origine des server actions, et refus (403) par le middleware de toute écriture d'une autre origine |
 | En-têtes | CSP sans tiers, HSTS, `X-Frame-Options: DENY`, `nosniff`, `Referrer-Policy: no-referrer` ; API en `no-store` |
 | Logo déposé | Type contrôlé d'après le contenu, 512 Ko au plus, servi sous une CSP qui interdit tout script |
-| Base de données | En production, l'application utilise un rôle **sans droit de modifier le schéma** ; les migrations partent du poste de l'exploitant, avec confirmation |
-| Secrets | Hors du dépôt ; `SESSION_SECRET` obligatoire en production |
+| Base de données | En [installation avancée](DEPLOIEMENT.md), l'application utilise un rôle **sans droit de modifier le schéma** ; les migrations partent du poste de l'exploitant, avec confirmation. En [installation en un clic](installation-simple.md), elle utilise le rôle fourni par l'intégration Neon (droits sur le schéma) et les migrations s'appliquent au déploiement : compromis assumé au profit de la simplicité |
+| Secrets | Hors du dépôt. `SESSION_SECRET` fourni par l'exploitant, ou clé générée par l'application et conservée en base : elle ne permet pas de retrouver les jetons de session, dont seules les empreintes sont stockées |
+| Premier démarrage | L'écran d'installation n'existe que tant qu'aucun admin n'existe ; il exige le code d'installation (`INSTALL_CODE`), comparé à temps constant, avec le verrouillage anti-abus par origine réseau. Le code n'est ni stocké ni journalisé |
 | Journaux techniques | Ni mot de passe, ni jeton, ni adresse IP persistée |
 | Traçabilité | Journal d'audit en ajout seul pour toute action d'administration |
 
@@ -96,5 +97,6 @@ Détail côté hébergement : [DEPLOIEMENT.md § 11](DEPLOIEMENT.md#11-récapitu
 
 ## 8. Signaler un problème de sécurité
 
-N'ouvrez pas de ticket public : contactez directement le mainteneur du dépôt. En cas de doute sur une fuite,
-changez `SESSION_SECRET` et redéployez : toutes les sessions sont coupées.
+N'ouvrez pas de ticket public : suivez la [politique de sécurité](../SECURITY.md) (signalement privé sur
+GitHub). En cas de doute sur une fuite, changez `SESSION_SECRET` (ou, sans `SESSION_SECRET`, supprimez la ligne
+`session` de la table `AppSecret`) et redéployez : toutes les sessions sont coupées.

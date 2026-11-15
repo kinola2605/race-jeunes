@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getBrand } from "@/brand";
-import { getAppearance } from "@/server/services/appearance";
-import { clearLogoAction, resetColorsAction, uploadLogoAction } from "@/app/actions/appearance";
+import { CLUB_NAME_MAX, CLUB_SHORT_NAME_MAX, getAppearance } from "@/server/services/appearance";
+import { clearLogoAction, resetColorsAction, saveClubIdentityAction, uploadLogoAction } from "@/app/actions/appearance";
 import { ConfirmButton, SubmitButton } from "@/components/forms";
 import { Flash, Icon, PageHead } from "@/components/ui";
 import { COLOR_KEYS, THEME_BASE } from "@/appearance/colors";
@@ -9,7 +9,7 @@ import { ColorForm } from "./color-form";
 
 export const metadata: Metadata = { title: "Apparence" };
 
-/** Specs 003 (logo) et 004 (couleurs) : identité du club configurée par l'admin. */
+/** Specs 003 (logo), 004 (couleurs) et 016 (nom du club) : identité du club configurée par l'admin. */
 export default async function AppearancePage({
   searchParams,
 }: {
@@ -25,9 +25,50 @@ export default async function AppearancePage({
       <PageHead
         eyebrow="Administration"
         title="Apparence"
-        lead="Logo et couleurs du club, appliqués immédiatement pour tous les utilisateurs."
+        lead="Nom, logo et couleurs du club, appliqués immédiatement pour tous les utilisateurs."
       />
       <Flash ok={sp.ok} error={sp.erreur} />
+
+      <section className="section" aria-labelledby="t-club">
+        <h2 className="section-title" id="t-club">
+          Nom du club
+        </h2>
+        <form className="case" action={saveClubIdentityAction}>
+          <div className="field">
+            <label htmlFor="clubName">Nom du club</label>
+            <input
+              className="input"
+              id="clubName"
+              name="clubName"
+              defaultValue={brand.clubName}
+              maxLength={CLUB_NAME_MAX}
+              required
+              aria-describedby="clubName-h"
+            />
+            <p className="hint" id="clubName-h">
+              Affiché sur la page de connexion, les fiches imprimables et l&apos;application installée.
+            </p>
+          </div>
+          <div className="field">
+            <label htmlFor="clubShortName">Sigle (facultatif)</label>
+            <input
+              className="input"
+              id="clubShortName"
+              name="clubShortName"
+              defaultValue={brand.clubShortName}
+              maxLength={CLUB_SHORT_NAME_MAX}
+              aria-describedby="clubShortName-h"
+            />
+            <p className="hint" id="clubShortName-h">
+              Affiché sous le nom de l&apos;application, en haut de chaque page ({CLUB_SHORT_NAME_MAX} caractères maximum).
+            </p>
+          </div>
+          <SubmitButton>
+            <Icon name="check" />
+            Enregistrer le nom
+          </SubmitButton>
+        </form>
+      </section>
 
       <section className="section" aria-labelledby="t-logo">
         <h2 className="section-title" id="t-logo">

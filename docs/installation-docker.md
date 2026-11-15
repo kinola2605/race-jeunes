@@ -27,8 +27,8 @@ inconnu : ils illustrent le suivi « mot de passe jamais changé ». Réinitiali
 
 > ⚠️ Ces identifiants sont publics : **ne jamais activer la démo en production** (`SEED_DEMO=false`).
 
-Sans `SESSION_SECRET`, le conteneur en génère un à chaque démarrage : les sessions sont perdues au
-redémarrage. C'est voulu pour la démonstration.
+Sans `SESSION_SECRET`, l'application génère sa clé de session et la conserve en base : les sessions survivent
+aux redémarrages du conteneur.
 
 ## 2. Production auto-hébergée
 
@@ -36,7 +36,7 @@ redémarrage. C'est voulu pour la démonstration.
 
    ```bash
    POSTGRES_PASSWORD=un-mot-de-passe-long-et-aleatoire
-   SESSION_SECRET=au-moins-32-caracteres-aleatoires
+   SESSION_SECRET=au-moins-32-caracteres-aleatoires   # facultatif : sinon, clé générée et conservée en base
    SEED_DEMO=false
    COOKIE_SECURE=true          # derrière un proxy HTTPS
    ADMIN_PSEUDO=admin.club

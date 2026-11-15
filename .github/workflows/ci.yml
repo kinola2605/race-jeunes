@@ -8,6 +8,7 @@ on:
 permissions:
   contents: read
 
+# Dans le dépôt d'un club (installation en un clic, spec 016), la CI ne tourne pas : elle sert au projet.
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -15,6 +16,7 @@ concurrency:
 jobs:
   qualite:
     name: Lint, typage, tests unitaires
+    if: github.repository == 'kinola2605/race-jeunes'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -35,6 +37,7 @@ jobs:
 
   e2e:
     name: Build et tests E2E
+    if: github.repository == 'kinola2605/race-jeunes'
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -73,6 +76,7 @@ jobs:
 
   docker:
     name: docker compose up
+    if: github.repository == 'kinola2605/race-jeunes'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

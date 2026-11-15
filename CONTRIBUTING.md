@@ -44,12 +44,17 @@ pourquoi ; la documentation dit comment s'en servir.
 2. Spec passée au statut « Déployée (vX.Y.Z) » et déplacée dans [`specs/livrees/`](specs/README.md).
 3. Migration éventuelle appliquée en production **avant** la fusion
    (`npm run db:migrate:remote -- .env.neon.production`, voir [DEPLOIEMENT.md](docs/DEPLOIEMENT.md)).
+   Les migrations doivent rester **additives** (ajout de table ou de colonne facultative) : les installations
+   en un clic des clubs les appliquent automatiquement au déploiement, sans relecture (spec 016).
 
 Après la fusion et le déploiement Vercel de production prêt :
 
 ```bash
 gh release create vX.Y.Z --target main --title "Race jeunes X.Y.Z" --notes "…section du CHANGELOG…"
 ```
+
+La release compte aussi pour les clubs : leur workflow « Mettre à jour Race jeunes » installe la **dernière
+version publiée** (le tag `vX.Y.Z` le plus récent), jamais `main`.
 
 Une fois la release créée, supprimez la branche de l'évolution, sur GitHub et en local :
 

@@ -44,6 +44,7 @@ se testent sans rien démarrer. Les services lisent la base, appellent ces fonct
 | Zone | Routes | Accès |
 |---|---|---|
 | Publique | `/connexion`, `/hors-ligne`, manifeste, service worker, `/club-logo`, `/api/health` | tous |
+| Installation | `/installation` (spec 016) : premier admin et nom du club, protégé par `INSTALL_CODE` | tous, **tant qu'aucun admin n'existe** (404 ensuite) |
 | Mot de passe | `/mot-de-passe` | session ; seule page accessible avec un mot de passe temporaire |
 | Joueur | `/accueil`, `/classement`, `/matchs`, `/matchs/nouveau`, `/saisons`, `/compte` | session |
 | Admin | `/admin` (suivi), `/admin/matchs`, `/admin/joueurs`, `/admin/saisons/…`, `/admin/journal`, `/admin/apparence` | rôle Admin |
@@ -89,7 +90,8 @@ erDiagram
 | `PointsEntry` | Points d'un joueur pour un match, avec la version de barème et le détail du calcul |
 | `RecalcRun` | Trace d'un recalcul, avec son résumé avant/après |
 | `AuditLog` | Journal d'audit, en ajout seul |
-| `ClubAppearance` | Logo et couleurs du club |
+| `ClubAppearance` | Nom, sigle, logo et couleurs du club |
+| `AppSecret` | Clé de session générée par l'application quand `SESSION_SECRET` n'est pas fourni (spec 016) |
 
 Le classement n'est **pas stocké** : il est recalculé à l'affichage en agrégeant les `PointsEntry` des matchs
 validés (`aggregate` puis `rankStandings`). Le profil mental non plus.
@@ -193,6 +195,16 @@ démonstration : relancer `npm run db:seed` sur une base neuve pour retrouver un
 
 ## 8. Déploiement
 
-Deux cibles, même code : [Vercel + Neon](DEPLOIEMENT.md) (production actuelle, région Francfort) et
-[Docker](installation-docker.md). Les migrations sont additives et appliquées **avant** le déploiement du code
-qui les utilise ; sur Vercel elles ne sont jamais lancées automatiquement.
+Même code, trois façons d'installer :
+
+- [Installation en un clic](installation-simple.md) : bouton « Deploy » Vercel avec l'intégration Neon. Vercel
+  lance `npm run vercel-build` ([`scripts/vercel-build.mjs`](../scripts/vercel-build.mjs)) : si
+  `DATABASE_URL_UNPOOLED` est présente, `prisma migrate deploy` passe avant `next build`. L'écran
+  `/installation` crée ensuite le premier admin. Mises à jour : workflow GitHub `mise-a-jour.yml`, lancé à la
+  main par le club, qui remplace le code par la dernière version publiée.
+- [Installation avancée Vercel + Neon](DEPLOIEMENT.md) : sans `DATABASE_URL_UNPOOLED` dans Vercel, aucune
+  migration automatique ; elles partent du poste de l'exploitant **avant** le déploiement du code qui les
+  utilise.
+- [Docker](installation-docker.md) : migrations au démarrage du conteneur.
+
+Les migrations sont **additives** : une installation en un clic les applique sans relecture humaine.

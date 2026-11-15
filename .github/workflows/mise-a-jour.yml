@@ -1,0 +1,67 @@
+# Spec 016 (FR-1609) — mise à jour d'une installation de club en un clic.
+#
+# Dans le dépôt GitHub du club (créé par le bouton « Déployer sur Vercel ») :
+#   onglet Actions → « Mettre à jour Race jeunes » → Run workflow.
+# Le workflow remplace le code par la dernière version publiée du projet, puis pousse sur main :
+# Vercel redéploie et applique les migrations (scripts/vercel-build.mjs). La configuration du club
+# (variables Vercel, données, logo, couleurs) n'est pas touchée : elle n'est pas dans le code.
+name: Mettre à jour Race jeunes
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mise-a-jour
+  cancel-in-progress: false
+
+env:
+  UPSTREAM: https://github.com/kinola2605/race-jeunes.git
+
+jobs:
+  mise-a-jour:
+    name: Mise à jour vers la dernière version
+    # Rien à faire dans le dépôt du projet lui-même.
+    if: github.repository != 'kinola2605/race-jeunes'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Trouver la dernière version publiée
+        id: version
+        run: |
+          TAG=$(git ls-remote --tags --refs "$UPSTREAM" 'v*' | sed 's#.*refs/tags/##' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -1)
+          if [ -z "$TAG" ]; then echo "::error::Aucune version publiée trouvée sur $UPSTREAM"; exit 1; fi
+          CURRENT="v$(node -p "require('./package.json').version")"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
+          echo "Version installée : $CURRENT · dernière version : $TAG"
+
+      - name: Déjà à jour
+        if: steps.version.outputs.tag == steps.version.outputs.current
+        run: echo "::notice::Votre application est déjà à jour (${{ steps.version.outputs.current }})."
+
+      - name: Remplacer le code par la nouvelle version
+        if: steps.version.outputs.tag != steps.version.outputs.current
+        env:
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch --depth=1 "$UPSTREAM" "refs/tags/$TAG"
+          git rm -rq --ignore-unmatch .
+          git checkout FETCH_HEAD -- .
+          # Les droits du workflow ne permettent pas de modifier .github/workflows : on garde ces fichiers.
+          if ! git diff --cached --quiet HEAD -- .github/workflows; then
+            git restore --staged --worktree --source=HEAD -- .github/workflows
+            echo "::warning::Les workflows GitHub ont changé dans $TAG : ils n'ont pas été mis à jour automatiquement (voir docs/installation-simple.md, « Mettre à jour »)."
+          fi
+          if git diff --cached --quiet; then
+            echo "::notice::Aucune différence de code avec $TAG."
+            exit 0
+          fi
+          git commit -q -m "Mise à jour vers Race jeunes $TAG"
+          git push origin HEAD:main
+          echo "::notice::Mise à jour vers $TAG poussée : Vercel redéploie l'application (2 à 3 minutes)."

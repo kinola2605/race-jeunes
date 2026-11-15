@@ -14,7 +14,16 @@ import { UserError, assertAdmin, audit, db, type Actor } from "./common";
 const ID = "club";
 const NO_COLORS: ColorSet = { accentDark: null, actionDark: null, accentLight: null, actionLight: null };
 
-export type Appearance = { logoVersion: number | null; logoType: string | null; colors: ColorSet };
+export type Appearance = {
+  logoVersion: number | null;
+  logoType: string | null;
+  colors: ColorSet;
+  /** spec 016 : nom et sigle saisis à l'installation ou dans Apparence (null : variables d'environnement) */
+  clubName: string | null;
+  clubShortName: string | null;
+};
+
+const EMPTY: Appearance = { logoVersion: null, logoType: null, colors: NO_COLORS, clubName: null, clubShortName: null };
 
 /**
  * Identité configurée par l'admin (specs 003 et 004), lue une fois par requête.
@@ -31,9 +40,11 @@ export const getAppearance = cache(async (): Promise<Appearance> => {
         actionDark: true,
         accentLight: true,
         actionLight: true,
+        clubName: true,
+        clubShortName: true,
       },
     });
-    if (!row) return { logoVersion: null, logoType: null, colors: NO_COLORS };
+    if (!row) return EMPTY;
     return {
       logoVersion: row.logoType ? row.logoVersion : null,
       logoType: row.logoType,
@@ -43,9 +54,11 @@ export const getAppearance = cache(async (): Promise<Appearance> => {
         accentLight: row.accentLight,
         actionLight: row.actionLight,
       },
+      clubName: row.clubName,
+      clubShortName: row.clubShortName,
     };
   } catch {
-    return { logoVersion: null, logoType: null, colors: NO_COLORS };
+    return EMPTY;
   }
 });
 
@@ -136,5 +149,37 @@ async function saveColors(actor: Actor, next: ColorSet, action: string): Promise
       undefined,
       Object.fromEntries(changed.map((k) => [COLOR_LABELS[k], `${show(prev[k])} → ${show(next[k])}`])),
     );
+  });
+}
+
+// ---------------------------------------------------------------- nom du club (spec 016)
+
+export const CLUB_NAME_MAX = 80;
+export const CLUB_SHORT_NAME_MAX = 12;
+
+/** Contrôle du nom (obligatoire) et du sigle (facultatif) ; renvoie les valeurs nettoyées. */
+export function checkClubIdentity(nameInput: string, shortInput: string): { clubName: string; clubShortName: string | null } {
+  const clubName = nameInput.trim().replace(/\s+/g, " ");
+  const short = shortInput.trim().replace(/\s+/g, " ");
+  if (!clubName) throw new UserError("Indiquez le nom du club.");
+  if (clubName.length > CLUB_NAME_MAX) throw new UserError(`Nom du club trop long (${CLUB_NAME_MAX} caractères maximum).`);
+  if (short.length > CLUB_SHORT_NAME_MAX) throw new UserError(`Sigle trop long (${CLUB_SHORT_NAME_MAX} caractères maximum).`);
+  return { clubName, clubShortName: short || null };
+}
+
+/** FR-1608 */
+export async function setClubIdentity(actor: Actor, nameInput: string, shortInput: string): Promise<void> {
+  assertAdmin(actor);
+  const next = checkClubIdentity(nameInput, shortInput);
+  await db.$transaction(async (tx) => {
+    const before = await tx.clubAppearance.findUnique({ where: { id: ID }, select: { clubName: true, clubShortName: true } });
+    if (before?.clubName === next.clubName && before?.clubShortName === next.clubShortName) {
+      throw new UserError("Aucune modification.");
+    }
+    await tx.clubAppearance.upsert({ where: { id: ID }, create: { id: ID, ...next }, update: next });
+    await audit(tx, actor, "Apparence", "Nom du club modifié", undefined, {
+      nom: `${before?.clubName ?? "non défini"} → ${next.clubName}`,
+      sigle: `${before?.clubShortName ?? "aucun"} → ${next.clubShortName ?? "aucun"}`,
+    });
   });
 }
