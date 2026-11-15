@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/kinola2605/race-jeunes/actions/workflows/ci.yml"><img src="https://github.com/kinola2605/race-jeunes/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-1.12.2-E28C57" alt="Version 1.12.2"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-1.13.0-E28C57" alt="Version 1.13.0"></a>
   <img src="https://img.shields.io/badge/couverture_moteur-100%25-6FDC9C" alt="Couverture du moteur de points : 100 %">
   <img src="https://img.shields.io/badge/donn%C3%A9es_personnelles-aucune-6FDC9C" alt="Aucune donnée personnelle">
   <img src="https://img.shields.io/badge/marque-blanche-EBB08C" alt="Marque blanche">
@@ -44,7 +44,8 @@ saison**, que le club règle lui-même sans toucher au code.
 - **Un barème par saison, sans recalcul silencieux.** Versionné, avec simulateur ; un changement ne s'applique
   aux matchs passés qu'après un aperçu d'impact et un recalcul explicite, tracé au journal.
 - **Marque blanche.** Nom, logo et couleurs du club se règlent depuis l'interface.
-- **Gratuite à héberger.** Vercel + Neon en offres gratuites, données en Union européenne ; ou Docker.
+- **Gratuite et simple à installer.** Un bouton « Deploy », Vercel + Neon en offres gratuites, données en Union
+  européenne ; ou Docker.
 
 ## Fonctionnalités
 
@@ -58,7 +59,20 @@ saison**, que le club règle lui-même sans toucher au code.
 | Saisons passées | Suivi : matchs à valider, anomalies, mots de passe jamais changés, engagés sans match |
 | Avatar composé d'un pictogramme et d'une couleur | Profil mental calculé à partir des scores (tie-breaks, sets décisifs, retours, perfs) |
 | « Mes données » : consulter et télécharger (RGPD) | Exports CSV, journal d'audit |
-| Thèmes sombre et clair, installable sur le téléphone | Apparence : logo et couleurs du club, contraste vérifié |
+| Thèmes sombre et clair, installable sur le téléphone | Apparence : nom, logo et couleurs du club, contraste vérifié |
+
+## Installer pour votre club
+
+Chaque club a **sa propre** application, sur ses propres comptes gratuits (Vercel et Neon), sans terminal ni
+ligne de code : un clic, un code d'installation à choisir, puis l'écran de premier démarrage crée votre compte
+administrateur.
+
+<p align="center">
+  <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fkinola2605%2Frace-jeunes&project-name=race-jeunes&repository-name=race-jeunes&env=INSTALL_CODE&envDescription=Code%20d%E2%80%99installation%20de%20votre%20choix%20%288%20caract%C3%A8res%20minimum%29%2C%20demand%C3%A9%20une%20seule%20fois%20au%20premier%20d%C3%A9marrage&envLink=https%3A%2F%2Fgithub.com%2Fkinola2605%2Frace-jeunes%2Fblob%2Fmain%2Fdocs%2Finstallation-simple.md%235-choisir-le-code-dinstallation&stores=%5B%7B%22type%22%3A%22integration%22%2C%22protocol%22%3A%22storage%22%2C%22productSlug%22%3A%22neon%22%2C%22integrationSlug%22%3A%22neon%22%7D%5D"><img src="https://vercel.com/button" alt="Déployer sur Vercel"></a>
+</p>
+
+Pas à pas, pour un non-technicien : **[Installer Race jeunes pour votre club](docs/installation-simple.md)**
+(20 minutes, 0 €). Les mises à jour se font ensuite en un clic depuis GitHub.
 
 ## Essayer en 5 minutes
 
@@ -86,7 +100,8 @@ barèmes différents, 20 pseudos, environ 120 matchs).
 |---|---|
 | Admin du club | [Guide de l'admin](docs/guide-admin.md) · [Le barème expliqué](docs/bareme.md) |
 | Joueur ou parent | [Guide du joueur](docs/guide-joueur.md) |
-| Hébergeur | [Vercel + Neon (gratuit)](docs/DEPLOIEMENT.md) · [Docker](docs/installation-docker.md) · [Configuration](docs/configuration.md) |
+| Responsable du club | [Installer pour votre club](docs/installation-simple.md) (un clic, sans technique) |
+| Hébergeur | [Installation avancée Vercel + Neon](docs/DEPLOIEMENT.md) · [Docker](docs/installation-docker.md) · [Configuration](docs/configuration.md) |
 | Développeur | [Architecture](docs/architecture.md) · [Données personnelles et sécurité](docs/donnees-et-securite.md) · [Contribuer](CONTRIBUTING.md) · [Signaler une faille](SECURITY.md) |
 
 Sommaire complet : [docs/README.md](docs/README.md).

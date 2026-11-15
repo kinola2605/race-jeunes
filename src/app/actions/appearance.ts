@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/server/auth/session";
-import { clearLogo, resetColors, setColors, setLogo } from "@/server/services/appearance";
+import { clearLogo, resetColors, setClubIdentity, setColors, setLogo } from "@/server/services/appearance";
 import { UserError } from "@/server/services/common";
 import { COLOR_KEYS, type ColorKey } from "@/appearance/colors";
 import { run, str } from "./util";
@@ -48,5 +48,15 @@ export async function resetColorsAction(): Promise<void> {
     await resetColors(admin);
     revalidatePath("/", "layout");
     return "Couleurs par défaut rétablies.";
+  });
+}
+
+/** Spec 016 — FR-1608 */
+export async function saveClubIdentityAction(fd: FormData): Promise<void> {
+  const admin = await requireAdmin();
+  await run(PATH, async () => {
+    await setClubIdentity(admin, str(fd, "clubName"), str(fd, "clubShortName"));
+    revalidatePath("/", "layout");
+    return "Nom du club enregistré.";
   });
 }

@@ -33,3 +33,4 @@ sur l'ensemble des deux répertoires : la prochaine spec prend le numéro suivan
 | Spec | Statut |
 |---|---|
 | [002-evolutions-club](002-evolutions-club/spec.md) | Brouillon — préparation du rendez-vous club |
+| [016-installation-un-clic](016-installation-un-clic/spec.md) | En développement (v1.13.0) — installation en un clic par chaque club |

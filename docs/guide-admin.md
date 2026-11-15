@@ -210,6 +210,8 @@ pas être modifié et s'exporte aussi en CSV. Il est conservé 5 ans.
 
 **Mon compte → Apparence.**
 
+- **Nom du club** et **sigle** : saisis lors de l'installation, modifiables ici. Le nom apparaît sur la page de
+  connexion, les fiches imprimables et l'application installée ; le sigle en haut de chaque page.
 - **Logo** : déposez celui du club (PNG, JPEG, WebP ou SVG, 512 Ko au plus). Il est utilisé dans les deux
   thèmes, sur la page de connexion, sur les fiches imprimables et comme icône de l'application installée.
 - **Couleurs** : quatre couleurs (accent et action, en thème sombre et en thème clair), avec aperçu en direct.

@@ -1,4 +1,12 @@
-# Mise en production — Vercel (Hobby) + Neon (Free)
+# Installation avancée — Vercel (Hobby) + Neon (Free)
+
+> **Vous êtes responsable d'un club et non technicien ?** Suivez plutôt
+> [Installer pour votre club](installation-simple.md) : un bouton « Deploy », sans terminal.
+>
+> Ce guide-ci garde le maximum de contrôle : rôle de base **sans droits sur le schéma**, migrations lancées et
+> confirmées depuis votre poste, `SESSION_SECRET` fourni par vous. Dans cette configuration,
+> `DATABASE_URL_UNPOOLED` n'est **pas** déclarée dans Vercel, donc aucune migration automatique n'a lieu au
+> déploiement (spec 016).
 
 Ce guide décrit **les étapes manuelles** à faire soi-même pour mettre la Race jeunes en ligne, 100 % sur
 offres gratuites. Aucun secret ne doit jamais être écrit dans le dépôt, un ticket, un chat ou une capture.
