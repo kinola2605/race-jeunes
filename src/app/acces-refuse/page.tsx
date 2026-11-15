@@ -5,7 +5,7 @@ export const metadata = { title: "Accès refusé" };
 
 export default function AccesRefuse() {
   return (
-    <div className="app">
+    <div className="app app-public">
       <main id="main" className="main main-narrow">
         <EmptyState icon="ban" title="Accès refusé">
           <p>Cette page est réservée aux administrateurs.</p>
