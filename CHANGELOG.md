@@ -4,6 +4,13 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/), ver
 
 ## [Non publié]
 
+## [1.14.1] — 2026-11-20
+
+### Correctif
+Aucune migration.
+- **« Terminer » ferme enfin la fenêtre du nouveau mot de passe** après une réinitialisation : le bouton
+  renvoyait vers la page déjà affichée, la fenêtre restait ouverte et le clic semblait sans effet.
+
 ## [1.14.0] — 2026-11-15
 
 ### Page de connexion revue (spec 017)
@@ -310,7 +317,8 @@ Première version de la Race jeunes.
 - CI GitHub Actions : lint, typage, tests unitaires, E2E Playwright, démarrage Docker.
 - Logo et bannière du projet.
 
-[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.14.0...HEAD
+[Non publié]: https://github.com/kinola2605/race-jeunes/compare/v1.14.1...HEAD
+[1.14.1]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.14.1
 [1.14.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.14.0
 [1.13.0]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.13.0
 [1.12.2]: https://github.com/kinola2605/race-jeunes/releases/tag/v1.12.2

@@ -40,4 +40,9 @@ test("réinitialisation : le même bouton est proposé avec le nouveau mot de pa
   const temp = (await page.getByTestId("temp-password").textContent())!.trim();
   const href = (await page.getByRole("link", { name: "Envoyer par e-mail" }).getAttribute("href"))!;
   expect(new URL(href).searchParams.get("body")).toContain(`Mot de passe temporaire : ${temp}`);
+  // « Terminer » ferme la fenêtre (le lien vers la même page la laissait ouverte).
+  await page.getByLabel(/J'ai remis/).check();
+  await page.getByRole("button", { name: "Terminer" }).click();
+  await expect(page.getByTestId("temp-password")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Réinitialiser le mot de passe" })).toBeVisible();
 });
