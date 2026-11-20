@@ -24,7 +24,7 @@ export function MailButton({ pseudo, password }: { pseudo: string; password: str
 }
 
 /** E08c — remise unique du mot de passe temporaire (FR-021). Rien n'est conservé après avoir quitté l'écran. */
-export function Handover({ pseudo, password, context, doneHref, againHref }: { pseudo: string; password: string; context: "creation" | "reset"; doneHref: string; againHref?: string }) {
+export function Handover({ pseudo, password, context, doneHref, onDone, againHref }: { pseudo: string; password: string; context: "creation" | "reset"; doneHref?: string; onDone?: () => void; againHref?: string }) {
   const [ack, setAck] = useState(false);
   return (
     <>
@@ -61,7 +61,11 @@ export function Handover({ pseudo, password, context, doneHref, againHref }: { p
           <input type="checkbox" checked={ack} onChange={(e) => setAck(e.target.checked)} /> J&apos;ai remis, imprimé ou envoyé le mot de passe
         </label>
         <div className="actions">
-          {ack ? (
+          {ack && onDone ? (
+            <button className="btn btn-primary" type="button" onClick={onDone}>
+              Terminer
+            </button>
+          ) : ack && doneHref ? (
             <Link className="btn btn-primary" href={doneHref}>
               Terminer
             </Link>
